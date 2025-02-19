@@ -1,14 +1,160 @@
 "use client"
 import { useState,useEffect,useRef } from "react";
 import { useRouter } from "next/navigation";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
+import { FaCalendarAlt, FaPhoneAlt } from "react-icons/fa";
 
 const doctors = [
-    { name: "Dr. L K Desai", specialty: "Dermatologist", expertise: "Acne / Pimples Treatment",location:"pune" },
-    { name: "Dr. Sonal Chavan", specialty: "Dermatologist", expertise: "Hair Loss Treatment",location:"pune"  },
-    { name: "Dr. Rajesh Sharma", specialty: "Cosmetologist", expertise: "Acne/ Pimple Scars Treatment",location:"pune"  },
-    { name: "Dr. Priya Mehta", specialty: "Dermatologist", expertise: "Skin Treatment",location:"pune"  },
-  ];
+    {
+        id: 1,
+        name: "Dr. L K Desai",
+        specialty: "Dermatologist",
+        expertise: ["Acne Treatment", "Skin Allergy", "Eczema", "Psoriasis"],
+        experience: 30,
+        location: "Sopan Baug, Pune",
+        clinic: "Dr. Desai Dermacare",
+        consultationFee: 700,
+        patientStories: 338,
+        rating: 94,
+        availability: "Available Tomorrow",
+        gender: "Male",
+        img: "/doctor1.jpg",
+      },
+      {
+        id: 2,
+        name: "Dr. Sonal Chavan",
+        specialty: "Dermatologist",
+        expertise: ["Hair Loss Treatment", "Laser Hair Removal", "Skin Rejuvenation"],
+        experience: 19,
+        location: "Pimple Saudagar, Pune",
+        clinic: "Viva Luxe Aesthetic Clinic",
+        consultationFee: 700,
+        patientStories: 1531,
+        rating: 90,
+        availability: "Available Today",
+        gender: "Female",
+        img: "/doctor2.jpg",
+      },
+      {
+        id: 3,
+        name: "Dr. Rajeev Agarwal",
+        specialty: "Cosmetologist",
+        expertise: ["Botox & Fillers", "Anti-Aging Treatment", "Chemical Peeling"],
+        experience: 15,
+        location: "Koregaon Park, Pune",
+        clinic: "Skin Glow Clinic",
+        consultationFee: 800,
+        patientStories: 421,
+        rating: 88,
+        availability: "Available Tomorrow",
+        gender: "Male",
+        img: "/doctor3.jpg",
+      },
+      {
+        id: 4,
+        name: "Dr. Priya Sharma",
+        specialty: "Dermatologist",
+        expertise: ["Pigmentation Treatment", "Dark Circle Removal", "Acne Scars"],
+        experience: 10,
+        location: "Andheri, Mumbai",
+        clinic: "DermaCare Skin Clinic",
+        consultationFee: 600,
+        patientStories: 210,
+        rating: 92,
+        availability: "Available Today",
+        gender: "Female",
+        img: "/doctor4.jpg",
+      },
+      {
+        id: 5,
+        name: "Dr. Aditya Mehta",
+        specialty: "Plastic Surgeon",
+        expertise: ["Rhinoplasty", "Face Lift", "Scar Revision Surgery"],
+        experience: 20,
+        location: "Bandra, Mumbai",
+        clinic: "Aesthetic Surgeons",
+        consultationFee: 1200,
+        patientStories: 500,
+        rating: 96,
+        availability: "Available Next Week",
+        gender: "Male",
+        img: "/doctor5.jpg",
+      },
+      {
+        id: 6,
+        name: "Dr. Neha Kapoor",
+        specialty: "Trichologist",
+        expertise: ["Hair Transplant", "Dandruff Treatment", "PRP Therapy"],
+        experience: 8,
+        location: "Powai, Mumbai",
+        clinic: "Hair & Scalp Care",
+        consultationFee: 650,
+        patientStories: 189,
+        rating: 85,
+        availability: "Available Today",
+        gender: "Female",
+        img: "/doctor6.jpg",
+      },
+      {
+        id: 7,
+        name: "Dr. Vikram Singh",
+        specialty: "Dermatologist",
+        expertise: ["Laser Treatment", "Mole & Wart Removal", "Tattoo Removal"],
+        experience: 25,
+        location: "Vashi, Navi Mumbai",
+        clinic: "Healthy Skin Clinic",
+        consultationFee: 900,
+        patientStories: 620,
+        rating: 94,
+        availability: "Available Tomorrow",
+        gender: "Male",
+        img: "/doctor7.jpg",
+      },
+      {
+        id: 8,
+        name: "Dr. Radhika Nair",
+        specialty: "Cosmetologist",
+        expertise: ["Skin Brightening", "HydraFacial", "Body Contouring"],
+        experience: 12,
+        location: "Whitefield, Bangalore",
+        clinic: "Glow & Glam Clinic",
+        consultationFee: 700,
+        patientStories: 378,
+        rating: 91,
+        availability: "Available Today",
+        gender: "Female",
+        img: "/doctor8.jpg",
+      },
+      {
+        id: 9,
+        name: "Dr. Anil Verma",
+        specialty: "Aesthetic Surgeon",
+        expertise: ["Liposuction", "Fat Grafting", "Breast Augmentation"],
+        experience: 18,
+        location: "Indiranagar, Bangalore",
+        clinic: "Aesthetic Solutions",
+        consultationFee: 1500,
+        patientStories: 450,
+        rating: 97,
+        availability: "Available Next Week",
+        gender: "Male",
+        img: "/doctor9.jpg",
+      },
+      {
+        id: 10,
+        name: "Dr. Pooja Saxena",
+        specialty: "Dermatologist",
+        expertise: ["Stretch Marks Removal", "Chemical Peeling", "Microneedling"],
+        experience: 9,
+        location: "South Delhi",
+        clinic: "Skin Perfection",
+        consultationFee: 750,
+        patientStories: 276,
+        rating: 89,
+        availability: "Available Tomorrow",
+        gender: "Female",
+        img: "/doctor10.jpg",
+      }, ];
 
 
 export default function Home() {
@@ -77,17 +223,43 @@ export default function Home() {
           : searchOptions
       );
     };
-  
-    const handleSearch = (searchTerm) => {
-      setQuery(searchTerm);
-      setShowDropdown(false);
+
+
+    useEffect(() => {
+        const filterDoctors = () => {
+            console.log(query)
+            console.log(selectedGender)
+            console.log(selectedLocation)
+        //   const filtered = doctors.filter((doctor) => query ? doctor.expertise.some((exp) => exp.toLowerCase().includes(query.toLowerCase())): true
+        //     )
+        //     .filter((doctor) =>
+        //       selectedLocation ? doctor.location.toLowerCase() === selectedLocation.toLowerCase() : true
+        //     )
+        //     .filter((doctor) =>
+        //       selectedExperience ? doctor.experience >= parseInt(selectedExperience) : true
+        //     )
+        //     .filter((doctor) =>
+        //       selectedStories ? doctor.patientStories >= parseInt(selectedStories) : true
+        //     )
+        //     .filter((doctor) =>
+        //       selectedGender ? doctor.gender.toLowerCase() === selectedGender.toLowerCase() : true
+        //     )
+        //     .sort((a, b) => {
+        //       if (sortOption === "Patient Stories - High to Low") return b.patientStories - a.patientStories;
+        //       if (sortOption === "Experience - High to Low") return b.experience - a.experience;
+        //       if (sortOption === "Consultation Fee - High to Low") return b.fee - a.fee;
+        //       if (sortOption === "Consultation Fee - Low to High") return a.fee - b.fee;
+        //       return 0;
+        //     });
       
-      const filtered = doctors.filter((doctor) => doctor.expertise.toLowerCase().includes(searchTerm.toLowerCase())
-      )
+        //   setFilteredDoctors(filtered);
+
+
+        const filtered = doctors.filter((doctor) => doctor.expertise.some((exp) => exp.toLowerCase().includes(query.toLowerCase())))
       .filter((doctor) => doctor.location.toLowerCase().includes(selectedLocation.toLowerCase()))
       .filter((doctor) => (selectedExperience ? doctor.experience >= parseInt(selectedExperience) : true))
       .filter((doctor) => (selectedStories ? doctor.patientStories >= parseInt(selectedStories) : true))
-      .filter((doctor) => (selectedGender ? doctor.gender === selectedGender : true))
+      .filter((doctor) => (selectedGender ? doctor.gender.toLowerCase() === selectedGender.toLowerCase() : true))
       .filter((doctor) => doctor.name.toLowerCase().includes(search.toLowerCase()))
       .sort((a, b) => {
         if (sortOption === "Patient Stories - High to Low") return b.patientStories - a.patientStories;
@@ -97,6 +269,34 @@ export default function Home() {
         return 0;
       });
       setFilteredDoctors(filtered);
+          console.log(filtered)
+        };
+      
+        filterDoctors();
+      }, [query, selectedLocation, selectedExperience, selectedStories, selectedGender, sortOption, doctors]);
+      
+  
+    const handleSearch = (searchTerm) => {
+
+      setQuery(searchTerm);
+      setShowDropdown(false);
+      console.log(searchTerm)
+      
+    //   const filtered = doctors.filter((doctor) => doctor.expertise.some((exp) => exp.toLowerCase().includes(searchTerm.toLowerCase())))
+    //   .filter((doctor) => doctor.location.toLowerCase().includes(selectedLocation.toLowerCase()))
+    //   .filter((doctor) => (selectedExperience ? doctor.experience >= parseInt(selectedExperience) : true))
+    //   .filter((doctor) => (selectedStories ? doctor.patientStories >= parseInt(selectedStories) : true))
+    //   .filter((doctor) => (selectedGender ? doctor.gender.toLowerCase() === selectedGender.toLowerCase() : true))
+    //   .filter((doctor) => doctor.name.toLowerCase().includes(search.toLowerCase()))
+    //   .sort((a, b) => {
+    //     if (sortOption === "Patient Stories - High to Low") return b.patientStories - a.patientStories;
+    //     if (sortOption === "Experience - High to Low") return b.experience - a.experience;
+    //     if (sortOption === "Consultation Fee - High to Low") return b.fee - a.fee;
+    //     if (sortOption === "Consultation Fee - Low to High") return a.fee - b.fee;
+    //     return 0;
+    //   });
+    //   setFilteredDoctors(filtered);
+    //   console.log(filtered)
     };
   
     const handleKeyDown = (e) => {
@@ -104,7 +304,8 @@ export default function Home() {
         handleSearch(filteredOptions[0]); // Auto-select first option
       }
     };
-  
+
+    
     
   return (
     <div className="p-6 bg-gray-100 mt-16 min-h-screen">
@@ -114,7 +315,8 @@ export default function Home() {
         <select
           className="p-2 border rounded"
           value={selectedLocation}
-          onChange={(e) => setSelectedLocation(e.target.value)}
+          onChange={(e) =>{ setSelectedLocation(e.target.value)
+          }}
         >
           <option value="Pune">Pune</option>
           <option value="Pimple Saudagar">Pimple Saudagar</option>
@@ -124,7 +326,7 @@ export default function Home() {
         </select>
 
         {/* Search Bar */}
-        <div className="flex items-center border rounded-lg overflow-hidden shadow-sm">
+        <div ref={dropdownRef} className="flex items-center border  rounded-lg overflow-hidden shadow-sm">
         <FaSearch className="ml-3 text-gray-500" />
         <input
           type="text"
@@ -138,7 +340,7 @@ export default function Home() {
       </div>
 
       {showDropdown && filteredOptions.length > 0 && (
-        <ul className="absolute w-full bg-white border rounded-lg mt-1 shadow-lg">
+        <ul ref={dropdownRef} className="absolute w-72 top-36 left-52 bg-white border rounded-lg mt-1 shadow-lg">
           {filteredOptions.map((option, index) => (
             <li
               key={index}
@@ -152,7 +354,8 @@ export default function Home() {
       )}
 
         {/* Experience */}
-        <select className="p-2 border rounded" onChange={(e) => setSelectedExperience(e.target.value)}>
+        <select className="p-2 border rounded" onChange={(e) => {setSelectedExperience(e.target.value)
+        }}>
           <option value="">Experience</option>
           <option value="5">5+ Years</option>
           <option value="10">10+ Years</option>
@@ -161,7 +364,8 @@ export default function Home() {
         </select>
 
         {/* Patient Stories */}
-        <select className="p-2 border rounded" onChange={(e) => setSelectedStories(e.target.value)}>
+        <select className="p-2 border rounded" onChange={(e) =>{ setSelectedStories(e.target.value)
+        }}>
           <option value="">Patient Stories</option>
           <option value="30">30+ Stories</option>
           <option value="80">80+ Stories</option>
@@ -169,14 +373,16 @@ export default function Home() {
         </select>
 
         {/* Gender */}
-        <select className="p-2 border rounded" onChange={(e) => setSelectedGender(e.target.value)}>
+        <select className="p-2 border rounded" onChange={(e) => {setSelectedGender(e.target.value)
+        }}>
           <option value="">Gender</option>
           <option value="Male">Male Doctor</option>
           <option value="Female">Female Doctor</option>
         </select>
 
         {/* Sorting */}
-        <select className="p-2 border rounded" onChange={(e) => setSortOption(e.target.value)}>
+        <select className="p-2 border rounded" onChange={(e) => {setSortOption(e.target.value)
+        }}>
           <option value="Relevance">Sort By: Relevance</option>
           <option value="Patient Stories - High to Low">Patient Stories - High to Low</option>
           <option value="Experience - High to Low">Experience - High to Low</option>
@@ -188,19 +394,85 @@ export default function Home() {
       {/* Doctor List */}
       <div className="mt-6 space-y-4">
         {filteredDoctors.length > 0 ? (
-          filteredDoctors.map((doctor, index) => (
-            <div key={index} className="bg-white p-4 rounded-lg shadow-md flex items-center gap-4">
-              <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
-              <div className="flex-1">
-                <h2 className="text-lg font-semibold text-blue-600">{doctor.name}</h2>
-                <p className="text-gray-600">{doctor.experience} years experience</p>
-                <p className="text-gray-500">{doctor.location}</p>
-                <p className="text-gray-700">₹{doctor.fee} Consultation Fee</p>
-              </div>
-              <button className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600">
-                Book Clinic Visit
-              </button>
-            </div>
+        //   filteredDoctors.map((doctor, index) => (
+        //     <div key={index} className="bg-white p-4 rounded-lg shadow-md flex items-center gap-4">
+        //       <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
+        //       <div className="flex-1">
+        //         <h2 className="text-lg font-semibold text-blue-600">{doctor.name}</h2>
+        //         <p className="text-gray-600">{doctor.experience} years experience</p>
+        //         <p className="text-gray-500">{doctor.location}</p>
+        //         <p className="text-gray-700">₹{doctor.fee} Consultation Fee</p>
+        //       </div>
+        //       <button className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600">
+        //         Book Clinic Visit
+        //       </button>
+        //     </div>
+        //   ))
+        
+
+        filteredDoctors.map((doctor) => (
+            // <div key={doc.id} className="flex items-center border p-4 rounded-lg mb-4 shadow-md bg-white">
+            //   <img src={doc.img} alt={doc.name} className="w-20 h-20 rounded-full mr-4" />
+            //   <div className="flex-1">
+            //     <h3 className="text-lg font-semibold text-blue-600">{doc.name}</h3>
+            //     <p className="text-gray-600">{doc.specialty} • {doc.experience} years experience</p>
+            //     <p className="text-gray-500"><FaMapMarkerAlt className="inline mr-1" /> {doc.location}</p>
+            //     <p className="text-gray-700">₹{doc.consultationFee} Consultation Fee</p>
+            //     <p className="text-green-600 font-semibold">{doc.availability}</p>
+            //   </div>
+            //   <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">Book Appointment</button>
+            // </div>
+
+
+
+            <div key={doctor.id} className="flex bg-white p-4 rounded-lg shadow-md items-center gap-4 border">
+      {/* Doctor's Image */}
+      <img
+        src={doctor.img}
+        alt={doctor.name}
+        className="w-20 h-20 rounded-full border"
+      />
+
+      {/* Doctor's Info */}
+      <div className="flex-1">
+        <h2 className="text-blue-500 font-semibold text-lg">{doctor.name}</h2>
+        <p className="text-gray-600">{doctor.specialty}</p>
+        <p className="text-gray-500 text-sm">{doctor.experience} years experience overall</p>
+
+        {/* Clinic Info */}
+        <p className="font-semibold text-gray-700">
+          {doctor.clinicName}, <span className="text-gray-500">{doctor.location}</span>
+        </p>
+        <p className="text-gray-600 text-sm">{doctor.fee} Consultation fee at clinic</p>
+
+        {/* Ratings & Reviews */}
+        <div className="flex items-center mt-2">
+          <span className="bg-green-500 text-white text-xs px-2 py-1 rounded">
+            {doctor.rating}%
+          </span>
+          <span className="ml-2 text-blue-600 font-semibold cursor-pointer">
+            {doctor.patientStories} Patient Stories
+          </span>
+        </div>
+      </div>
+
+      {/* Availability & Buttons */}
+      <div className="flex flex-col items-end">
+        <p className="text-gray-500 flex items-center gap-1">
+          <FaCalendarAlt className="text-gray-400 text-sm" /> Available Tomorrow
+        </p>
+
+        <button className="bg-blue-500 text-sm text-white px-7 py-1 rounded-lg mt-2 font-semibold shadow">
+          Book Clinic Visit
+          <p className="text-xs font-medium">No Booking Fee</p>
+        </button>
+
+        <button className="border text-blue-500 text-sm px-6 py-3 rounded-lg mt-2 flex items-center gap-2 shadow">
+          <FaPhoneAlt />
+          Contact Clinic
+        </button>
+      </div>
+    </div>
           ))
         ) : (
           <p className="text-center text-gray-500">No doctors found.</p>
