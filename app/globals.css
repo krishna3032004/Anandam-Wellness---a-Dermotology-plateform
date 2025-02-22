@@ -79,3 +79,44 @@
 .animate-fadeIn {
   animation: fadeIn 1s ease-in-out forwards;
 }
+
+
+
+
+
+
+
+
+@keyframes slideFromRight {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide {
+  animation: slideFromRight 2s ease-in-out forwards;
+}
+
+
+
+
+
+
+
+
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.5);
+}

@@ -1,29 +1,31 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Footer from "@/Components/Footer";
-
+import { FaUserCircle,FaComments} from "react-icons/fa";
+import ChatBot from "@/Components/ChatBot";
 
 const reviews = [
   {
     question: "How was your experience with our service?",
     answers: [
-      { name: "Amit", answer: "It was fantastic! Loved the support.", image: "/user1.jpg" },
-      { name: "Priya", answer: "Great experience, highly recommended!", image: "/user2.jpg" },
+      { name: "Amit", answer: "It was fantastic! Loved the support.", image: "https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=" },
+      { name: "Priya", answer: "Great experience, highly recommended!", image: "https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=" },
     ],
   },
   {
     question: "Did you find our platform helpful?",
     answers: [
-      { name: "Ravi", answer: "Yes, it made everything super easy.", image: "/user3.jpg" },
-      { name: "Neha", answer: "Absolutely! The best service I’ve used.", image: "/user4.jpg" },
+      { name: "Ravi", answer: "Yes, it made everything super easy.", image: "https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=" },
+      { name: "Neha", answer: "Absolutely! The best service I’ve used.", image: "https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=" },
     ],
   },
   {
     question: "Would you recommend us to others?",
     answers: [
-      { name: "Arjun", answer: "100%! My friends already love it.", image: "/user5.jpg" },
-      { name: "Sonia", answer: "Yes, the best experience ever!", image: "/user6.jpg" },
+      { name: "Arjun", answer: "100%! My friends already love it.", image: "https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=" },
+      { name: "Sonia", answer: "Yes, the best experience ever!", image: "https://media.istockphoto.com/id/1223671392/vector/default-profile-picture-avatar-photo-placeholder-vector-illustration.jpg?s=612x612&w=0&k=20&c=s0aTdmT5aU6b8ot7VKm11DeID6NctRCpB755rA1BIP0=" },
     ],
   },
 ];
@@ -76,38 +78,45 @@ const HomePage = () => {
     "https://www.shutterstock.com/image-photo/closeup-woman-face-acne-600w-2461413987.jpg"
   ];
 
-  // const doctors = [
-  //   { id: 1, name: "Dr. Aryan Mehta", img: "https://www.practostatic.com/consumer-home/desktop/images/1597423628/dweb_find_doctors.png", quote: "Your health, our priority!" },
-  //   { id: 2, name: "Dr. Sophia Kapoor", img: "https://www.practostatic.com/consumer-home/desktop/images/1597423628/dweb_find_doctors.png", quote: "Healing with care and compassion." },
-  //   { id: 3, name: "Dr. Rahul Singh", img: "https://www.practostatic.com/consumer-home/desktop/images/1597423628/dweb_find_doctors.png", quote: "Better care, better health." },
-  //   { id: 4, name: "Dr. Priya Sharma", img: "https://www.practostatic.com/consumer-home/desktop/images/1597423628/dweb_find_doctors.png", quote: "Your well-being matters!" },
-  //   { id: 5, name: "Dr. Rajan Verma", img: "https://www.practostatic.com/consumer-home/desktop/images/1597423628/dweb_find_doctors.png", quote: "Dedicated to your care." }
-  // ];
+ 
 
 
   const dermatologyServices = [
     {
       title: "Acne & Skincare",
+      problem: "Acne Treatment",
       description: "Get expert advice on acne, scars, and skincare routines.",
-      image: "https://www.practostatic.com/consumer-home/desktop/images/1558283618/sp-dietitian@2x.jpg", // Add proper images
+      image: "/skincare.webp", // Add proper images
     },
     {
       title: "Hair & Scalp Treatments",
+      problem: "Hair Loss Treatment",
       description: "Solutions for hair loss, dandruff, and scalp infections.",
-      image: "https://www.practostatic.com/consumer-home/desktop/images/1558283618/sp-dietitian@2x.jpg",
+      image: "/skincare2.webp",
     },
     {
       title: "Skin Allergies & Rashes",
+      problem: "Skin Allergy",
       description: "Find relief for skin allergies, irritation, and redness.",
-      image: "https://www.practostatic.com/consumer-home/desktop/images/1558283618/sp-dietitian@2x.jpg",
+      image: "/skincare3.webp",
     },
     {
       title: "Anti-Aging & Botox",
+      problem: "Anti-Aging Treatment",
       description: "Advanced treatments for youthful and glowing skin.",
-      image: "https://www.practostatic.com/consumer-home/desktop/images/1558283618/sp-dietitian@2x.jpg",
+      image: "/skincare4.webp",
     },
 
   ];
+
+  const router = useRouter();
+
+  // Function to navigate when a service is clicked
+  const handleClick = (title) => {
+    const formattedTitle = encodeURIComponent(title.toLowerCase().replace(/[^a-z0-9]+/g, "-")); // Convert to URL-friendly format
+    router.push(`/search?problem=${formattedTitle}`); // Using ?problem= format
+  };
+
 
   const [flippedIndex, setFlippedIndex] = useState(null);
 
@@ -156,53 +165,6 @@ const HomePage = () => {
 
 
 
-  // const reviews = [
-  //   {
-  //     question: "How was the consultation process?",
-  //     answers: [
-  //       {
-  //         name: "Rahul Sharma",
-  //         image: "/images/user1.jpg",
-  //         answer: "It was amazing! The doctors were very professional and helpful.",
-  //       },
-  //       {
-  //         name: "Neha Mehta",
-  //         image: "/images/user2.jpg",
-  //         answer: "Very smooth experience. I got my consultation within minutes!",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     question: "Was the platform easy to use?",
-  //     answers: [
-  //       {
-  //         name: "Amit Patel",
-  //         image: "/images/user3.jpg",
-  //         answer: "Yes, the UI is very user-friendly and simple to navigate.",
-  //       },
-  //       {
-  //         name: "Pooja Singh",
-  //         image: "/images/user4.jpg",
-  //         answer: "I loved the minimal and clean design. It made booking super easy.",
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     question: "Would you recommend it to others?",
-  //     answers: [
-  //       {
-  //         name: "Sneha Kapoor",
-  //         image: "/images/user5.jpg",
-  //         answer: "Absolutely! The consultation process was smooth and fast.",
-  //       },
-  //       {
-  //         name: "Vikram Joshi",
-  //         image: "/images/user6.jpg",
-  //         answer: "Highly recommended! Great support and professional doctors.",
-  //       },
-  //     ],
-  //   },
-  // ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
@@ -252,141 +214,98 @@ const HomePage = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // const [ischatopen, setischatopen] = useState(false);
+  const [showChat, setShowChat] = useState(false);
+  const [animate, setAnimate] = useState(true);
 
-
-
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAnimate(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <>
 
-      {/* <img src="https://www.shutterstock.com/image-photo/closeup-woman-face-acne-600w-2461413987.jpg" alt="Skin 1" className="w-1/3 h-full object-cover"/> */}
-
-      {/* <div className="relative w-full min-h-screen overflow-hidden bg-gray-50">
-      <div className="absolute inset-0 flex items-center justify-center w-full h-full gap-5">
-        <img src="https://www.shutterstock.com/image-photo/closeup-woman-face-acne-600w-2461413987.jpg" alt="Skin 1" className="w-[22%] h-[80%] object-cover rounded-lg shadow-lg transition-all duration-700"/>
-        <img src="https://www.themodelbuilders.co.uk/wp-content/uploads/2022/05/shutterstock_1093078484.jpg" alt="Skin 2" className="w-[22%] h-[90%] object-cover rounded-lg shadow-lg transition-all duration-700"/>
-        <img src="https://plus.unsplash.com/premium_photo-1706044172154-b16cc0126275?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmFjZSUyMHdpdGglMjBwaW1wbGVzfGVufDB8fDB8fHww" alt="Skin 3" className="w-[22%] h-[85%] object-cover rounded-lg shadow-lg transition-all duration-700"/>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLAhwzAWsDZw0qNTbA1P99xFhR25XHdfKcb5EG3hCKoI3SBcnDw4bnDAGjpWgmFafQwYs&usqp=CAU" alt="Skin 4" className="w-[22%] h-[80%] object-cover rounded-lg shadow-lg transition-all duration-700"/>
-      </div>
-
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-transparent to-gray-100 opacity-90"></div>
-
-      <div className="relative z-10 flex flex-col items-center justify-center h-screen text-center text-gray-800 px-6"
-        style={{ 
-          opacity: Math.max(1 - scrollY / 300, 0), 
-          transform: `translateY(-${scrollY * 1.5}px)`, // Moves up fast
-          transition: "transform 0.3s ease-out, opacity 0.3s ease-out"
-        }}> 
-        <h1 className="text-5xl sm:text-6xl font-extrabold tracking-wide drop-shadow-lg animate-fadeIn">
-          Reveal Your Best Skin ✨
-        </h1>
-        <p className="text-lg sm:text-xl mt-4 max-w-xl animate-fadeIn delay-200">
-          Advanced dermatology solutions for glowing skin.
-        </p>
-        <button className="mt-6 px-8 py-3 bg-blue-600 text-white text-lg font-semibold rounded-full shadow-lg transition-all transform hover:scale-110 animate-fadeIn delay-400">
-          Book a Consultation
+<div className="fixed bg-[#f6d365] min-h-screen z-50 flex justify-center items-center text-[#222222]">
+      
+      {/* Chat Button */}
+      {/* <button
+        onClick={() => setShowChat(!showChat)}
+        className={`fixed bottom-5 right-5 px-6 py-3 rounded-full text-lg font-semibold shadow-lg 
+          bg-[#222222] text-[#f6d365] transition-all hover:scale-105 
+          ${animate ? "animate-slide" : ""}`}
+      >
+        Chat with Bot
+      </button> */}
+      <button
+          onClick={() => setShowChat(true)}
+          className="flex items-center fixed right-5 bottom-5 space-x-2 bg-[#f6d365] text-gray-900 px-4 py-2 rounded-full shadow-lg 
+                     transition hover:scale-110 animate-slide-in"
+        >
+          <FaComments className="text-lg" />
+          <span className="text-sm font-medium">Chat with Bot</span>
         </button>
-      </div>
-    </div> */}
 
-
-
-
-
-    <div className="relative w-full min-h-screen mt-16 overflow-hidden bg-gradient-to-br from-[#f6d365] to-[#fda085]">
-      {/* Animated Background Glow */}
-      <div className="absolute inset-0 bg-opacity-20">
-        <div className="absolute w-[500px] h-[500px] bg-blue-400 opacity-20 blur-3xl top-[-10%] left-[-10%] animate-glow"></div>
-        <div className="absolute w-[400px] h-[400px] bg-pink-400 opacity-20 blur-3xl bottom-[-10%] right-[-10%] animate-glow"></div>
-      </div>
-
-      {/* Background Image Row */}
-      <div className="absolute inset-0 flex items-center justify-center w-full h-full gap-5">
-        <img src="https://st.depositphotos.com/1719616/53474/i/450/depositphotos_534748396-stock-photo-face-teenage-girl-pimples-acne.jpg" alt="Skin 1" className="w-[20%] h-[75%] object-cover rounded-xl shadow-lg"/>
-        <img src="https://www.themodelbuilders.co.uk/wp-content/uploads/2022/05/shutterstock_1093078484.jpg" alt="Skin 2" className="w-[20%] h-[85%] object-cover rounded-xl shadow-lg"/>
-        <img src="https://plus.unsplash.com/premium_photo-1706044172154-b16cc0126275?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmFjZSUyMHdpdGglMjBwaW1wbGVzfGVufDB8fDB8fHww" alt="Skin 3" className="w-[20%] h-[80%] object-cover rounded-xl shadow-lg"/>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLAhwzAWsDZw0qNTbA1P99xFhR25XHdfKcb5EG3hCKoI3SBcnDw4bnDAGjpWgmFafQwYs&usqp=CAU" alt="Skin 4" className="w-[20%] h-[75%] object-cover rounded-xl shadow-lg"/>
-      </div>
-
-      {/* Fading Gradient Effect */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#f6d365] via-transparent to-[#fda085] opacity-90"></div>
-
-      {/* Writing Section with Font & Animation */}
-      <div className="relative z-10 flex flex-col items-center justify-center h-screen text-center text-white px-6"
-        style={{ 
-          opacity: Math.max(1 - scrollY / 250, 0), 
-          transform: `translateY(-${scrollY * 1.5}px)`,
-          transition: "transform 0.3s ease-out, opacity 0.3s ease-out"
-        }}>
-        
-        <h1 className="text-5xl sm:text-7xl font-extrabold tracking-wide drop-shadow-lg animate-fadeIn font-serif">
-           Radiate Confidence, Glow Naturally 
-        </h1>
-        <p className="text-lg sm:text-2xl mt-4 max-w-xl font-light italic animate-fadeIn delay-200">
-          Discover advanced skincare treatments for a flawless, youthful look.
-        </p>
-        <button className="mt-6 px-8 py-3 bg-white text-gray-800 text-lg font-semibold rounded-full shadow-lg 
-                   transition-all transform hover:scale-110 hover:shadow-2xl relative overflow-hidden 
-                   before:absolute before:inset-0 before:bg-gradient-to-r before:from-[#ffafbd] before:to-[#ffc3a0] 
-                   before:opacity-0 before:transition-opacity before:duration-500 hover:before:opacity-100 
-                   before:z-0">
-  <span className="relative z-10">Book Your Glow-Up Now</span>
-</button>
-      </div>
+      {/* Chat Window */}
+      {showChat && (
+        <div className="fixed bottom-16 right-5 w-0 h-0 bg-white rounded-lg shadow-lg p-4">
+          <ChatBot onClose={() => setShowChat(false)} />
+        </div>
+      )}
     </div>
 
 
 
 
-
-      {/* <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center pb-10 relative">
-        <div className="relative w-full bg-gray-50 py-10 overflow-hidden">
-          <div className="absolute top-0 left-0 h-full w-24 bg-gradient-to-r from-gray-200 to-transparent z-10"></div>
-          <div className="absolute top-0 right-0 h-full w-24 bg-gradient-to-l from-gray-200 to-transparent z-10"></div>
-
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
-            Skin & Hair Transformations
-          </h2>
-          <div className="relative w-full overflow-hidden">
-            <div className="flex w-max animate-scroll">
-              {images.concat(images).map((src, index) => (
-                <div key={index} className="relative w-[220px] h-[320px] mx-2 group overflow-hidden rounded-lg shadow-lg">
-                  <img
-                    src={src}
-                    alt={`Patient ${index + 1}`}
-                    layout="fill"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+      <div className="relative w-full min-h-screen mt-16 overflow-hidden bg-gradient-to-br from-[#f6d365] to-[#fda085]">
+        {/* Animated Background Glow */}
+        <div className="absolute inset-0 bg-opacity-20">
+          <div className="absolute w-[500px] h-[500px] bg-blue-400 opacity-20 blur-3xl top-[-10%] left-[-10%] animate-glow"></div>
+          <div className="absolute w-[400px] h-[400px] bg-pink-400 opacity-20 blur-3xl bottom-[-10%] right-[-10%] animate-glow"></div>
         </div>
-      </div> */}
+
+        {/* Background Image Row */}
+        <div className="absolute inset-0 flex items-center justify-center w-full h-full gap-5">
+          <img src="https://st.depositphotos.com/1719616/53474/i/450/depositphotos_534748396-stock-photo-face-teenage-girl-pimples-acne.jpg" alt="Skin 1" className="w-[20%] h-[75%] object-cover rounded-xl shadow-lg" />
+          <img src="https://www.themodelbuilders.co.uk/wp-content/uploads/2022/05/shutterstock_1093078484.jpg" alt="Skin 2" className="w-[20%] h-[85%] object-cover rounded-xl shadow-lg" />
+          <img src="https://plus.unsplash.com/premium_photo-1706044172154-b16cc0126275?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmFjZSUyMHdpdGglMjBwaW1wbGVzfGVufDB8fDB8fHww" alt="Skin 3" className="w-[20%] h-[80%] object-cover rounded-xl shadow-lg" />
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLAhwzAWsDZw0qNTbA1P99xFhR25XHdfKcb5EG3hCKoI3SBcnDw4bnDAGjpWgmFafQwYs&usqp=CAU" alt="Skin 4" className="w-[20%] h-[75%] object-cover rounded-xl shadow-lg" />
+        </div>
+
+        {/* Fading Gradient Effect */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#f6d365] via-transparent to-[#fda085] opacity-90"></div>
+
+        {/* Writing Section with Font & Animation */}
+        <div className="relative z-10 flex flex-col items-center justify-center h-screen text-center text-white px-6"
+          style={{
+            opacity: Math.max(1 - scrollY / 250, 0),
+            transform: `translateY(-${scrollY * 1.5}px)`,
+            transition: "transform 0.3s ease-out, opacity 0.3s ease-out"
+          }}>
+
+          <h1 className="text-5xl sm:text-7xl font-extrabold tracking-wide drop-shadow-lg animate-fadeIn font-serif">
+            Radiate Confidence, Glow Naturally
+          </h1>
+          <p className="text-lg sm:text-2xl mt-4 max-w-[38rem] font-light italic animate-fadeIn delay-200">
+            {/* Discover advanced skincare treatments for a flawless, youthful look. */}
+            Embrace it with patience, nourish it with care, and remember true beauty shines from confidence, not perfection
+          </p>
+          <button onClick={()=>router.push(`/search`)} className="mt-6 px-8 py-3  text-gray-800 text-lg font-semibold rounded-full shadow-lg 
+                   transition-all transform hover:scale-110 hover:shadow-2xl relative overflow-hidden 
+                   before:absolute before:inset-0 bg-gradient-to-r from-[#ffafbd] to-[#ffc3a0] 
+                   before:opacity-0 before:transition-opacity before:duration-500 hover:before:opacity-100 
+                   before:z-0">
+            <span className="relative z-10">Book Your Glow-Up Now</span>
+          </button>
+        </div>
+      </div>
 
 
 
 
-      {/* Meet Our Doctors Section */}
-      {/* <div className="w-full mt-16 px-10">
-          <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">Meet Our Doctors</h2>
 
-          <div className="flex overflow-x-auto space-x-6 p-4 scrollbar-hide">
-            {doctors.map((doctor) => (
-              <div key={doctor.id} className="min-w-[250px] bg-white shadow-lg rounded-lg p-4 flex flex-col items-center">
-                <div className="relative w-[180px] h-[180px] mb-4">
-                  <img
-                    src={doctor.img}
-                    alt={doctor.name}
-                    layout="fill"
-                    className="rounded-full border-4 object-cover border-blue-500"
-                  />
-                </div>
-                <h3 className="text-lg font-semibold text-gray-700">{doctor.name}</h3>
-                <p className="text-sm text-gray-500 italic text-center">"{doctor.quote}"</p>
-              </div>
-            ))}
-          </div>
-        </div> */}
+      
       <div className=" py-16 relative bg-gradient-to-b from-[#fda085] to-white">
         {/* Soft Background Elements */}
         <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-16 h-16 bg-blue-100 rounded-full blur-lg opacity-40"></div>
@@ -409,6 +328,7 @@ const HomePage = () => {
             {dermatologyServices.map((service, index) => (
               <div
                 key={index}
+                onClick={() => handleClick(service.problem)}
                 className="w-[260px] h-[350px] bg-white shadow-md rounded-lg overflow-hidden flex-shrink-0 hover:shadow-2xl hover:scale-105 transition-all duration-300 snap-center group"
               >
                 {/* Image Section */}
@@ -578,6 +498,7 @@ const HomePage = () => {
                           alt={user.name}
                           className="w-14 h-14 rounded-full border-2 border-indigo-500 object-cover"
                         />
+                        {/* <FaUserCircle className="text-white text-4xl cursor-pointer hover:text-[#f6d365] transition" /> */}
                         <div className="ml-4 text-left">
                           <p className="text-gray-900 font-medium text-lg">{user.name}</p>
                           <p className="text-gray-600 text-sm italic">

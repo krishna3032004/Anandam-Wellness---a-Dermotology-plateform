@@ -1,8 +1,10 @@
 "use client"
 import { useState,useEffect,useRef } from "react";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/router";
 import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
 import { FaCalendarAlt, FaPhoneAlt } from "react-icons/fa";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 const doctors = [
     {
@@ -18,7 +20,7 @@ const doctors = [
         rating: 94,
         availability: "Available Tomorrow",
         gender: "Male",
-        img: "/doctor1.jpg",
+        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
       },
       {
         id: 2,
@@ -33,7 +35,7 @@ const doctors = [
         rating: 90,
         availability: "Available Today",
         gender: "Female",
-        img: "/doctor2.jpg",
+        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
       },
       {
         id: 3,
@@ -48,7 +50,7 @@ const doctors = [
         rating: 88,
         availability: "Available Tomorrow",
         gender: "Male",
-        img: "/doctor3.jpg",
+        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
       },
       {
         id: 4,
@@ -63,7 +65,7 @@ const doctors = [
         rating: 92,
         availability: "Available Today",
         gender: "Female",
-        img: "/doctor4.jpg",
+        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
       },
       {
         id: 5,
@@ -78,7 +80,7 @@ const doctors = [
         rating: 96,
         availability: "Available Next Week",
         gender: "Male",
-        img: "/doctor5.jpg",
+        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
       },
       {
         id: 6,
@@ -93,7 +95,7 @@ const doctors = [
         rating: 85,
         availability: "Available Today",
         gender: "Female",
-        img: "/doctor6.jpg",
+        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
       },
       {
         id: 7,
@@ -108,7 +110,7 @@ const doctors = [
         rating: 94,
         availability: "Available Tomorrow",
         gender: "Male",
-        img: "/doctor7.jpg",
+        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
       },
       {
         id: 8,
@@ -123,7 +125,7 @@ const doctors = [
         rating: 91,
         availability: "Available Today",
         gender: "Female",
-        img: "/doctor8.jpg",
+        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
       },
       {
         id: 9,
@@ -138,7 +140,7 @@ const doctors = [
         rating: 97,
         availability: "Available Next Week",
         gender: "Male",
-        img: "/doctor9.jpg",
+        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
       },
       {
         id: 10,
@@ -153,7 +155,7 @@ const doctors = [
         rating: 89,
         availability: "Available Tomorrow",
         gender: "Female",
-        img: "/doctor10.jpg",
+        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
       }, ];
 
 
@@ -164,6 +166,23 @@ export default function Home() {
   const [selectedStories, setSelectedStories] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
   const [sortOption, setSortOption] = useState("Relevance");
+
+
+  // const router = useRouter();
+  // const { problem } = router.query;
+  const searchParams = useSearchParams();
+  const problem = searchParams.get("problem");
+  console.log(problem)
+  useEffect(() => {
+    if(problem){
+      const formattedProblem = problem ? problem.replace(/-/g, " ") : "Loading...";
+      setQuery(formattedProblem)
+    }
+  
+    
+  }, [])
+  
+  
 
 //   const filteredDoctors = doctorsData
 //     .filter((doctor) => doctor.location.includes(selectedLocation))
@@ -435,7 +454,12 @@ export default function Home() {
 
       {/* Doctor's Info */}
       <div className="flex-1">
-        <h2 className="text-blue-500 font-semibold text-lg">{doctor.name}</h2>
+        {/* <h2 className="text-blue-500 font-semibold text-lg">{doctor.name}</h2> */}
+        <Link href={`/doctor?id=${doctor.id}`} passHref>
+  <h2 className="text-blue-500 font-semibold text-lg cursor-pointer hover:underline">
+    {doctor.name}
+  </h2>
+</Link>
         <p className="text-gray-600">{doctor.specialty}</p>
         <p className="text-gray-500 text-sm">{doctor.experience} years experience overall</p>
 

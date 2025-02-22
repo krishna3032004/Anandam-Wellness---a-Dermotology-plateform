@@ -1,0 +1,76 @@
+[
+    {
+      "id": 1,
+      "name": "Dr. L K Desai",
+      "specialty": "Dermatologist",
+      "experience": 30,
+      "clinicName": "Dr. Desai Dermacare - Skin, Hair & Laser Clinic",
+      "location": "Sopan Baug, Pune",
+      "fee": 700,
+      "rating": 4.5,
+      "verified": true,
+      "image": "/images/dr_lk_desai.jpg",
+      "patientStories": [
+        {
+          "title": "Visited for Skin Disease Treatment",
+          "review": "I visited Dr. L K Desai after suffering a lot. I went to top hospitals but got no relief for my eczema. After visiting Dr. Desai, he explained everything clearly, and I got relief with the first dose."
+        }
+      ],
+      "qa": [
+        {
+          "question": "Where does Dr. L K Desai practice?",
+          "answer": "Dr. L K Desai practices at Dr. Desai Dermacare - Skin, Hair & Laser Clinic, Sopan Baug."
+        },
+        {
+          "question": "How can I take Dr. L K Desai's appointment?",
+          "answer": "You can take Dr. L K Desai's appointment online through Practo for an in-clinic visit."
+        },
+        {
+          "question": "Why do patients visit Dr. L K Desai?",
+          "answer": "Patients frequently visit Dr. L K Desai for Dermabrasion, Laser Resurfacing, and Acne treatment."
+        }
+      ],
+      "timeSlots": [
+        "06:30 PM",
+        "06:40 PM",
+        "07:00 PM",
+        "07:20 PM",
+        "07:40 PM",
+        "08:00 PM",
+        "08:20 PM"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Dr. Neha Sharma",
+      "specialty": "Cosmetic Dermatologist",
+      "experience": 15,
+      "clinicName": "Skin Glow Clinic",
+      "location": "Koregaon Park, Pune",
+      "fee": 800,
+      "rating": 4.8,
+      "verified": true,
+      "image": "/images/dr_neha_sharma.jpg",
+      "patientStories": [
+        {
+          "title": "Visited for Acne Treatment",
+          "review": "Dr. Neha is very friendly and explains everything in detail. My acne improved within a few weeks!"
+        }
+      ],
+      "qa": [
+        {
+          "question": "Where does Dr. Neha Sharma practice?",
+          "answer": "Dr. Neha Sharma practices at Skin Glow Clinic, Koregaon Park."
+        }
+      ],
+      "timeSlots": [
+        "10:00 AM",
+        "10:30 AM",
+        "11:00 AM",
+        "11:30 AM",
+        "12:00 PM",
+        "12:30 PM"
+      ]
+    }
+  ]
+  

@@ -1,57 +1,41 @@
-"use client"
-import React, { useEffect, useState } from "react";
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 
-const HomePage = () => {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+const ContactPage = () => {
   return (
-    <div className="relative w-full h-96">
-      {/* Hero Section with Shrinking Effect */}
-      <div
-        className="fixed top-0 left-0 w-full bg-cover bg-center bg-no-repeat transition-all duration-500 ease-out z-[-1]"
-        style={{
-          backgroundImage: "url('https://www.shutterstock.com/image-photo/closeup-woman-face-acne-600w-2461413987.jpg')",
-          height: `${Math.max(250, 500 - scrollY)}px`, // Shrinks from 500px to 250px
-          backgroundPosition: `center ${scrollY / 3}px`, // Parallax Effect
-        }}
-      ></div>
+    <div className="min-h-screen flex flex-col mt-16 items-center justify-center bg-white p-6">
+      {/* Contact Card */}
+      <div className="bg-white rounded-lg shadow-xl p-8 max-w-3xl w-full text-center border border-gray-200 animate-fade-in">
+        <h2 className="text-4xl font-extrabold text-blue-700 mb-3">📩 Get in Touch</h2>
+        <p className="text-gray-600 mb-6">We'd love to hear from you! Feel free to reach out.</p>
 
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center min-h-screen pt-32 px-6">
-        <h1
-          className="text-4xl sm:text-5xl font-bold text-gray-900 transition-all duration-500"
-          style={{
-            transform: `scale(${1 - scrollY / 2000})`,
-            opacity: `${1 - scrollY / 500}`,
-          }}
-        >
-          Glow With Confidence ✨
-        </h1>
-        <p
-          className="text-lg text-gray-600 mt-4 max-w-2xl transition-all duration-500"
-          style={{
-            transform: `translateY(${scrollY / 10}px) scale(${1 - scrollY / 1800})`,
-            opacity: `${1 - scrollY / 400}`,
-          }}
-        >
-          Your skin deserves expert care. Get personalized dermatology treatments now!
-        </p>
-        <button
-          className="mt-6 px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white text-lg font-semibold rounded-lg shadow-lg transition-all transform hover:scale-105"
-        >
-          Book a Consultation
-        </button>
+        {/* Contact Info */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="flex flex-col items-center">
+            <FaPhoneAlt className="text-blue-600 text-3xl mb-2" />
+            <p className="text-gray-700 font-semibold">+91 123 456 7890</p>
+          </div>
+          <div className="flex flex-col items-center">
+            <FaEnvelope className="text-blue-600 text-3xl mb-2" />
+            <p className="text-gray-700 font-semibold">support@dermatology.com</p>
+          </div>
+          <div className="flex flex-col items-center">
+            <FaMapMarkerAlt className="text-blue-600 text-3xl mb-2" />
+            <p className="text-gray-700 font-semibold">Pune, India</p>
+          </div>
+        </div>
+
+        {/* Contact Form */}
+        <form className="space-y-4">
+          <input type="text" placeholder="Your Name" className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+          <input type="email" placeholder="Your Email" className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500" required />
+          <textarea placeholder="Your Message" rows="4" className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500" required></textarea>
+          <button className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition duration-300">
+            Send Message
+          </button>
+        </form>
       </div>
     </div>
   );
 };
 
-export default HomePage;
+export default ContactPage;

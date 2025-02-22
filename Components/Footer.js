@@ -1,5 +1,5 @@
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
-
+import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="relative bg-gray-900 text-white w-full py-12 px-6">
@@ -10,7 +10,11 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
         {/* Logo & Description */}
         <div>
-          <h2 className="text-3xl font-extrabold text-white mb-4">MediCare+</h2>
+          {/* <h2 className="text-3xl font-extrabold text-white mb-4">Anandam Wellness</h2> */}
+          <Link href="/">
+    <span className="text-[#f6d365] text-3xl font-semibold font-[Poppins]">Anandam</span>
+    <span className="text-white font-thin font-[Lora] italic">Well</span>
+  </Link>
           <p className="text-gray-300 text-sm leading-6">
             Your trusted healthcare partner for a healthier life. Stay connected with us for the best medical solutions.
           </p>

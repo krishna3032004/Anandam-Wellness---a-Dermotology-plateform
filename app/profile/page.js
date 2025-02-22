@@ -1,7 +1,9 @@
 "use client"
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     name: "Krishna Gupta",
     phone: "+919109697516",
@@ -27,6 +29,11 @@ export default function ProfilePage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSaveChanges = () => {
+    // Navigate to the search page
+    router.push("/search");
   };
 
   return (
@@ -193,7 +200,7 @@ export default function ProfilePage() {
 
       {/* Save Changes Button */}
       <div className="mt-6 flex justify-end">
-        <button className="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md shadow-md hover:bg-blue-600 transition">
+        <button onClick={handleSaveChanges} className="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md shadow-md hover:bg-blue-600 transition">
           Save Changes
         </button>
       </div>
