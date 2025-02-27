@@ -3,6 +3,7 @@ import connectDB from "@/db/connectDB";
 import User from "@/models/User";
 import Doctor from "@/models/Doctor";
 import nodemailer from "nodemailer";
+import Razorpay from "razorpay";
 import crypto from "crypto";
 let verificationToken
 export const registerUser = async (email, isDoctor) => {
@@ -163,3 +164,31 @@ export const sendotpforforgoting = async (email) => {
     await transporter.sendMail(mailOptions);
 
 };
+
+
+
+export const updateProfilefull = async (data) => {
+    await connectDB();
+    console.log(data)
+    // await User.updateOne({ email: data.email }, data);
+};
+
+
+
+export const initiatepayment = async (amount, email) => {
+// export const initiatepayment = async (amount, email, form) => {
+    await connectDB()
+
+    // let add = `${form.address} ,${form.city} ${form.state} ${form.postalCode}`
+    const id = process.env.NEXT_PUBLIC_KEY_ID
+    const Secret = process.env.NEXT_PUBLIC_KEY_SECRET
+
+    var instance = new Razorpay({ key_id: id, key_secret: Secret })
+    let options = {
+        amount: Number.parseInt(amount) * 100,
+        currency: "INR"
+    }
+    let x = await instance.orders.create(options)
+    // await Payment.create({ oid: x.id, amount: amount, email: email, address: add, phone: form.phone, name: form.name })
+    return x;
+}

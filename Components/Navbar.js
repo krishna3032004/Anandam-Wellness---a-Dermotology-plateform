@@ -1,5 +1,5 @@
 "use client";
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 import { Menu, Transition } from "@headlessui/react";
@@ -12,6 +12,12 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { data: session, status } = useSession()
   const router = useRouter()
+  // useEffect(() => {
+  //   console.log(session.user)
+  
+    
+  // }, [])
+  
 
 
   return (
@@ -19,9 +25,9 @@ export default function Navbar() {
   backdrop-blur-md bg-[#222222] text-white shadow-md">
 
       <div className=" tracking-wide">
-      <Link href="/">
-  <span className="text-[#f6d365] text-2xl font-bold font-[Inter] tracking-wide">Anandam</span>
-</Link>
+        <Link href="/">
+          <span className="text-[#f6d365] text-2xl font-bold font-[Inter] tracking-wide">Anandam</span>
+        </Link>
       </div>
       {/* Links */}
       <ul className="flex space-x-6 items-center text-lg font-medium">
@@ -29,13 +35,13 @@ export default function Navbar() {
         <Link href={"/services"}><li className="hover:text-[#f6d365] transition-all cursor-pointer">Services</li></Link>
         <Link href={"/contact"}><li className="hover:text-[#f6d365] transition-all cursor-pointer">Contact</li></Link>
         {/* <li className="hover:text-[#f6d365] transition-all cursor-pointer">Consultation</li> */}
-      <button
-        onClick={() => router.push("/search")}
-        className="p-3 bg-[#f6d365] text-gray-900 rounded-full shadow-lg 
+        <button
+          onClick={() => router.push("/search")}
+          className="p-3 bg-[#f6d365] text-gray-900 rounded-full shadow-lg 
                    transition-all hover:scale-110 flex items-center justify-center"
-      >
-        <FaSearch className="text-xl" />
-      </button>
+        >
+          <FaSearch className="text-xl" />
+        </button>
       </ul>
       {/* Search Button */}
 

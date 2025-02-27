@@ -1,6 +1,8 @@
 "use client"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { updateProfilefull } from "@/actions/useraction";
+import { FaCamera } from "react-icons/fa";
 
 export default function ProfilePage() {
   const router = useRouter()
@@ -31,10 +33,18 @@ export default function ProfilePage() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSaveChanges = () => {
+  const handleSaveChanges = async () => {
+    await updateProfilefull(formData)
     // Navigate to the search page
     router.push("/search");
   };
+
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    setFormData((prev) => ({ ...prev, photo: URL.createObjectURL(file) }));
+  };
+
 
   return (
     <div className="max-w-4xl mx-auto mt-16 p-6 bg-white shadow-md rounded-lg border border-gray-200">
@@ -44,9 +54,20 @@ export default function ProfilePage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Profile Photo */}
         <div className="flex flex-col items-center space-y-2">
-          <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-gray-500">
-            Photo
-          </div>
+          <label className="relative cursor-pointer">
+            {formData.photo ? (
+              <img
+                src={formData.photo}
+                alt="Doctor"
+                className="w-24 h-24 rounded-full object-cover border-4 border-blue-500"
+              />
+            ) : (
+              <div className="w-24 h-24 rounded-full flex items-center justify-center bg-gray-200 border-4 border-gray-300">
+                <FaCamera className="text-gray-500 text-2xl" />
+              </div>
+            )}
+            <input type="file" className="hidden" onChange={handleFileUpload} />
+          </label>
           <p className="text-blue-500 text-sm font-medium cursor-pointer hover:underline">Add Photo</p>
         </div>
 

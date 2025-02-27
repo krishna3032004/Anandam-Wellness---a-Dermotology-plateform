@@ -31,6 +31,7 @@ const Sidebar = () => {
         }
         else {
             // Only push to login if session is explicitly null/undefined
+            console.log(session)
             console.log(session.user.name)
             console.log(session.user.email)
             setisLoading(false)

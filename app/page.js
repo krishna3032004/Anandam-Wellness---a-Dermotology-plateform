@@ -86,25 +86,28 @@ const HomePage = () => {
       title: "Acne & Skincare",
       problem: "Acne Treatment",
       description: "Get expert advice on acne, scars, and skincare routines.",
-      image: "/skincare.webp", // Add proper images
+      image: "https://www.shutterstock.com/image-photo/young-beautiful-girl-undergoes-medical-600nw-2251288587.jpg", // Add proper images
+      // image: "/skincare.webp", // Add proper images
     },
     {
       title: "Hair & Scalp Treatments",
       problem: "Hair Loss Treatment",
       description: "Solutions for hair loss, dandruff, and scalp infections.",
-      image: "/skincare2.webp",
+      // image: "https://media.istockphoto.com/id/1470018432/photo/hair-therapist-is-checking-a-mans-scalp.jpg?s=612x612&w=0&k=20&c=Dn_Fi4NvxI_zJD1tr4o_2d7DuP-NVOA5Yal3tnhmcYE=",
+      image: "https://www.shutterstock.com/image-photo/doctor-examining-young-mans-hair-600nw-2323849531.jpg",
+      // image: "/skincare2.webp",
     },
     {
       title: "Skin Allergies & Rashes",
       problem: "Skin Allergy",
       description: "Find relief for skin allergies, irritation, and redness.",
-      image: "/skincare3.webp",
+      image: "https://media.istockphoto.com/id/1462387172/photo/kid-patient-suffering-from-a-skin-rash.jpg?s=612x612&w=0&k=20&c=uEgGi9n6Owsa8OoPjoG-dD7ZxPCM2IBo_bAvSqz9Z4k=",
     },
     {
       title: "Anti-Aging & Botox",
       problem: "Anti-Aging Treatment",
       description: "Advanced treatments for youthful and glowing skin.",
-      image: "/skincare4.webp",
+      image: "https://media.istockphoto.com/id/874020412/photo/doctor-doing-botox-injections-on-a-mature-clients-face.jpg?s=612x612&w=0&k=20&c=xbdSyUMgrC9KiTMExPXC041QRI5bxcTsXjVPcLDWxZM=",
     },
 
   ];
