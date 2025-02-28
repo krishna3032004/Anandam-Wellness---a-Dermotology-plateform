@@ -26,11 +26,10 @@ const AddressSchema = new mongoose.Schema({
 //     createdAt: { type: Date, default: Date.now },
 //     updatedAt: { type: Date, default: Date.now }
 // })
-const UserSchema = new Schema(  {
-    name: { type: String, required: true, trim: true },
+const UserSchema = new Schema({
+    name: { type: String, trim: true },
     username: { type: String, required: true },
     password: { type: String },
-    phone: { type: String, required: true, unique: true, trim: true },
     email: { type: String, trim: true, lowercase: true },
     dob: { type: Date },
     gender: { type: String, enum: ["Male", "Female", "Other"], trim: true },

@@ -34,7 +34,7 @@ export default function ProfilePage() {
   };
 
   const handleSaveChanges = async () => {
-    await updateProfilefull(formData)
+    // await updateProfilefull(formData)
     // Navigate to the search page
     router.push("/search");
   };
