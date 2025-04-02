@@ -1,11 +1,13 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { updateProfilefull } from "@/actions/useraction";
 import { FaCamera } from "react-icons/fa";
+import { useSession } from "next-auth/react";
 
 export default function ProfilePage() {
   const router = useRouter()
+  const { data: session, status } = useSession()
   const [formData, setFormData] = useState({
     name: "Krishna Gupta",
     phone: "+919109697516",
@@ -27,6 +29,13 @@ export default function ProfilePage() {
       language: "English",
     },
   });
+  useEffect(() => {
+    if(session){
+    console.log(session)
+    }
+  
+  }, [session])
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;

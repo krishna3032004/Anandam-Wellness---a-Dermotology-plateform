@@ -6,9 +6,10 @@ import GoogleProvider from 'next-auth/providers/google'
 import CredentialsProvider from "next-auth/providers/credentials";
 import mongoose from 'mongoose'
 import User from '@/models/User'
+import Doctor from '@/models/Doctor';
 import connectDB from '@/db/connectDB'
 import bcrypt from 'bcryptjs'; // ✅ Use bcrypt for password hashing
-import { fetchUser,fetchDoctor } from '@/actions/useraction'
+import { fetchUser, fetchDoctor } from '@/actions/useraction'
 
 const handler = NextAuth({
     secret: process.env.NEXTAUTH_SECRET, // ✅ Required in production
@@ -41,11 +42,12 @@ const handler = NextAuth({
             async authorize(credentials) {
                 try {
                     // Fetch user from the database
+                    let doctor = 0;
                     let user = await fetchUser(credentials.email); // Ensure fetchUser is implemented correctly
-                    
-                    if(!user){
-                        user = await fetchDoctor(credentials.email); // Ensure fetchUser is implemented correctly
 
+                    if (!user) {
+                        user = await fetchDoctor(credentials.email); // Ensure fetchUser is implemented correctly
+                        doctor = 1;
                     }
                     // Check if the user exists
                     if (!user) {
@@ -69,6 +71,7 @@ const handler = NextAuth({
                         email: user.email,
                         password: user.password,
                         name: user.username,
+                        doctor: doctor,
                         callbackUrl: "/profile",
 
                     };
@@ -78,31 +81,36 @@ const handler = NextAuth({
                 }
             },
         }),
-       
+
     ],
     callbacks: {
-        async signIn({ user, account, profile }) {
-            if ( account.provider === "google") {
-                await connectDB();
-                const existingUser = await User.findOne({ email: user.email });
+        // async signIn({ user, account, profile }) {
+        //     if ( account.provider === "google") {
+        //         await connectDB();
+        //         const existingUser = await User.findOne({ email: user.email });
 
-                if (!existingUser) {
-                    const hashedPassword = await bcrypt.hash("default_password", 10); // ✅ Hash the default password
-                    await User.create({
-                        email: user.email,
-                        username: user.email.split("@")[0],
-                        password: hashedPassword, // ✅ Store hashed password
-                    });
-                }
-            }
-            return true;
-        },
+        //         if (!existingUser) {
+        //             const hashedPassword = await bcrypt.hash("default_password", 10); // ✅ Hash the default password
+        //             await User.create({
+        //                 email: user.email,
+        //                 username: user.email.split("@")[0],
+        //                 password: hashedPassword, // ✅ Store hashed password
+        //             });
+        //         }
+        //     }
+        //     return true;
+        // },
         async session({ session }) {
             await connectDB();
-            const dbUser = await User.findOne({ email: session.user.email });
-
+            let doctor=false;
+            let dbUser = await User.findOne({ email: session.user.email });
+            if (!dbUser) {
+                dbUser = await Doctor.findOne({ email: session.user.email });
+                doctor=true;
+            }
             if (dbUser) {
                 session.user.name = dbUser.username;
+                session.user.doctor = doctor;
             }
             return session;
         }

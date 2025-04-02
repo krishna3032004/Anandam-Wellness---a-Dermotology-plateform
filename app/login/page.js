@@ -22,8 +22,12 @@ export default function AuthPage() {
   const [isOTPMode, setIsOTPMode] = useState(false); // OTP input state
 
   useEffect(() => {
-    if (session) {
-      router.push("profile")
+    if (session ) {
+      if(session.user.doctor){
+        router.push("doctorprofile");
+      }else{
+        router.push("profile");
+      }
     }
   }, [session])
 
@@ -66,7 +70,7 @@ export default function AuthPage() {
     } else {
       const result = await signIn("credentials", {
         redirect: false,
-        callbackUrl: "/profile",
+        callbackUrl: "/doctorprofile",
         email: form.email,
         password: form.password,
       });
