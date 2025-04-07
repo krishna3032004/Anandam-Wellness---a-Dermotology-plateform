@@ -7,51 +7,51 @@ export default function ArticlesPage() {
       id: 1,
       title: "How to Build a Skincare Routine",
       content: `A good skincare routine includes four essential steps: cleansing, exfoliating, moisturizing, and sun protection. 
-      - **Cleansing:** Wash your face twice daily using a gentle cleanser to remove dirt and excess oil.
-      - **Exfoliating:** Use chemical exfoliants like AHA/BHA 2-3 times a week to remove dead skin cells.
-      - **Moisturizing:** Hydrate your skin with a moisturizer that suits your skin type.
-      - **Sun Protection:** Apply SPF 30+ sunscreen daily to prevent premature aging and sun damage.`,
+      - Cleansing: Wash your face twice daily using a gentle cleanser to remove dirt and excess oil.
+      - Exfoliating: Use chemical exfoliants like AHA/BHA 2-3 times a week to remove dead skin cells.
+      - Moisturizing: Hydrate your skin with a moisturizer that suits your skin type.
+      - Sun Protection: Apply SPF 30+ sunscreen daily to prevent premature aging and sun damage.`,
     },
     {
       id: 2,
       title: "Best Ingredients for Acne-Prone Skin",
       content: `If you struggle with acne, the right ingredients can make a huge difference:
-      - **Salicylic Acid:** Helps unclog pores and reduce breakouts.
-      - **Niacinamide:** Controls oil production and reduces inflammation.
-      - **Benzoyl Peroxide:** Fights acne-causing bacteria effectively.
-      - **Hyaluronic Acid:** Provides hydration without clogging pores.
-      - **Tea Tree Oil:** Natural antibacterial properties to calm breakouts.
+      - Salicylic Acid: Helps unclog pores and reduce breakouts.
+      - Niacinamide: Controls oil production and reduces inflammation.
+      - Benzoyl Peroxide: Fights acne-causing bacteria effectively.
+      - Hyaluronic Acid: Provides hydration without clogging pores.
+      - Tea Tree Oil: Natural antibacterial properties to calm breakouts.
       Always patch-test new products before adding them to your routine!`,
     },
     {
       id: 3,
       title: "Daily Skincare Tips for Glowing Skin",
       content: `Follow these dermatologist-approved tips to maintain a radiant complexion:
-      - **Drink Enough Water:** Hydration is key to healthy skin.
-      - **Use Vitamin C:** Helps brighten skin and reduce hyperpigmentation.
-      - **Get Enough Sleep:** Poor sleep can lead to dull skin and breakouts.
-      - **Avoid Touching Your Face:** Reduces the risk of bacteria spreading.
-      - **Eat a Balanced Diet:** Include fruits, veggies, and healthy fats for better skin.`,
+      - Drink Enough Water: Hydration is key to healthy skin.
+      - Use Vitamin C: Helps brighten skin and reduce hyperpigmentation.
+      - Get Enough Sleep: Poor sleep can lead to dull skin and breakouts.
+      - Avoid Touching Your Face: Reduces the risk of bacteria spreading.
+      - Eat a Balanced Diet: Include fruits, veggies, and healthy fats for better skin.`,
     },
     {
       id: 4,
       title: "How to Identify Your Skin Type",
       content: `Your skincare products should match your skin type. Here’s how to find out yours:
-      - **Oily Skin:** Looks shiny, especially on the T-zone, with frequent breakouts.
-      - **Dry Skin:** Feels tight and flaky, needs deep hydration.
-      - **Combination Skin:** Oily in some areas (T-zone), dry in others.
-      - **Sensitive Skin:** Easily irritated, prone to redness.
-      - **Normal Skin:** Balanced, not too dry or oily.
+      - Oily Skin: Looks shiny, especially on the T-zone, with frequent breakouts.
+      - Dry Skin: Feels tight and flaky, needs deep hydration.
+      - Combination Skin: Oily in some areas (T-zone), dry in others.
+      - Sensitive Skin: Easily irritated, prone to redness.
+      - Normal Skin: Balanced, not too dry or oily.
       Choose products specifically formulated for your skin type!`,
     },
     {
       id: 5,
       title: "Myths About Skincare Debunked",
       content: `There are many skincare myths that can mislead people:
-      - **"Oily skin doesn't need moisturizer."** False! Hydration is still essential.
-      - **"Natural ingredients are always better."** Not always! Some natural ingredients can be irritating.
-      - **"You don't need sunscreen on cloudy days."** UV rays penetrate clouds and still cause damage.
-      - **"Pores can open and close."** Nope, they don't have muscles to do that!
+      - "Oily skin doesn't need moisturizer." False! Hydration is still essential.
+      - "Natural ingredients are always better." Not always! Some natural ingredients can be irritating.
+      - "You don't need sunscreen on cloudy days." UV rays penetrate clouds and still cause damage.
+      - "Pores can open and close." Nope, they don't have muscles to do that!
       Understanding the facts will help you make better skincare choices.`,
     },
   ]);

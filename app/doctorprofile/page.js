@@ -1,10 +1,17 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaCamera } from "react-icons/fa";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { saveDoctorProfile, getDoctorProfileFromDB } from "@/actions/useraction";
 
 const DoctorDashboard = () => {
+  const { data: session, status } = useSession()
+  const router = useRouter()
+
   const [doctorData, setDoctorData] = useState({
-    name: "",
+    username: "",
+    email: "",
     licenseNumber: "",
     experience: "",
     degree: "",
@@ -16,20 +23,95 @@ const DoctorDashboard = () => {
     clinicName: "",
     location: "",
     timings: [],
-    specialization: [],
+    specialty: "",
     onlineSlots: [],
     availableDays: [],
     category: "",
+    expertise: [],
   });
+
+  const expertiseOptions = [
+    "Acne Treatment", "Skin Allergy", "Eczema", "Psoriasis", "Hair Loss Treatment",
+    "Laser Hair Removal", "Skin Rejuvenation", "Botox & Fillers", "Anti-Aging Treatment",
+    "Chemical Peeling", "Pigmentation Treatment", "Dark Circle Removal", "Acne Scars",
+    "Rhinoplasty", "Face Lift", "Scar Revision Surgery", "Hair Transplant",
+    "Dandruff Treatment", "PRP Therapy", "Laser Treatment", "Mole & Wart Removal",
+    "Tattoo Removal", "Skin Brightening", "HydraFacial", "Body Contouring",
+    "Liposuction", "Fat Grafting", "Breast Augmentation", "Stretch Marks Removal",
+    "Microneedling"
+  ];
+
+
+
+  useEffect(() => {
+    async function fetchData() {
+      if (session?.user?.email) {
+        setDoctorData((prev) => ({
+          ...prev,
+          email: session.user.email,
+        }));
+        const doctor = await getDoctorProfileFromDB(session.user.email);
+        console.log(doctor)
+        if (doctor) {
+          setDoctorData((prev) => ({
+            ...prev,
+            ...doctor,
+          }));
+        }
+
+      } else {
+        router.push("/login")
+      }
+    }
+    fetchData();
+  }, [session]);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setDoctorData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // const handleFileUpload = (e) => {
+  //   const file = e.target.files[0];
+  //   setDoctorData((prev) => ({ ...prev, photo: URL.createObjectURL(file) }));
+  // };
+
+
+  // const handleFileUpload = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setDoctorData((prev) => ({
+  //       ...prev,
+  //       photo: file, // store actual File object, not URL
+  //     }));
+  //   }
+  // };
+
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
-    setDoctorData((prev) => ({ ...prev, photo: URL.createObjectURL(file) }));
+    if (file) {
+      const previewUrl = URL.createObjectURL(file); // for preview
+
+      setDoctorData((prev) => ({
+        ...prev,
+        photo: file,            // actual file for upload
+        preview: previewUrl,    // temp preview for UI
+      }));
+    }
+  };
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const result = await saveDoctorProfile(doctorData);
+
+    if (result.success) {
+      alert("Profile saved!");
+    } else {
+      alert(result.message);
+    }
   };
 
   return (
@@ -44,7 +126,7 @@ const DoctorDashboard = () => {
           <label className="relative cursor-pointer">
             {doctorData.photo ? (
               <img
-                src={doctorData.photo}
+                src={doctorData.preview || doctorData.photo}
                 alt="Doctor"
                 className="w-24 h-24 rounded-full object-cover border-4 border-blue-500"
               />
@@ -59,15 +141,15 @@ const DoctorDashboard = () => {
         </div>
 
         {/* Form Fields */}
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="font-medium">Doctor Name</label>
             <input
               type="text"
-              name="name"
+              name="username"
               placeholder="Enter your full name"
               className="w-full p-3 border rounded mt-1"
-              value={doctorData.name}
+              value={doctorData.username}
               onChange={handleChange}
               required
             />
@@ -181,11 +263,11 @@ const DoctorDashboard = () => {
 
           {/* Category */}
           <div>
-            <label className="font-medium">Category</label>
+            <label className="font-medium">Specialty</label>
             <select
-              name="category"
+              name="specialty"
               className="w-full p-3 border rounded mt-1"
-              value={doctorData.category}
+              value={doctorData.specialty}
               onChange={handleChange}
               required
             >
@@ -194,6 +276,55 @@ const DoctorDashboard = () => {
               <option value="Dermatology">Dermatology</option>
               <option value="Cosmetology">Cosmetology</option>
             </select>
+          </div>
+          <div>
+            <label className="font-medium">Expertise</label>
+            <div className="border p-2 rounded mt-1 bg-white relative">
+              <div className="flex flex-wrap gap-2">
+                {doctorData.expertise?.map((item, index) => (
+                  <span
+                    key={index}
+                    className="bg-blue-100 text-blue-700 px-2 py-1 rounded-full text-sm flex items-center gap-1"
+                  >
+                    {item}
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setDoctorData((prev) => ({
+                          ...prev,
+                          expertise: prev.expertise.filter((exp) => exp !== item),
+                        }))
+                      }
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+
+              {/* Dropdown */}
+              <select
+                className="w-full mt-2 p-2 border rounded"
+                value=""
+                onChange={(e) => {
+                  const selected = e.target.value;
+                  if (selected && !doctorData.expertise.includes(selected)) {
+                    setDoctorData((prev) => ({
+                      ...prev,
+                      expertise: [...prev.expertise, selected],
+                    }));
+                  }
+                  e.target.selectedIndex = 0;
+                }}
+              >
+                <option value="">Select expertise</option>
+                {expertiseOptions.map((option, index) => (
+                  <option key={index} value={option}>
+                    {option}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <button

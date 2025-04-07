@@ -43,11 +43,11 @@ export default function AuthPage() {
         if (!form.verification.trim()) newErrors.verification = "verification code is required";
 
       }
-      if (isDoctor) {
-        if (!form.license.trim()) newErrors.license = "Medical License is required";
-        if (!form.specialization.trim()) newErrors.specialization = "Specialization is required";
-        if (!form.clinic.trim()) newErrors.clinic = "Hospital/Clinic Name is required";
-      }
+      // if (isDoctor) {
+      //   if (!form.license.trim()) newErrors.license = "Medical License is required";
+      //   if (!form.specialization.trim()) newErrors.specialization = "Specialization is required";
+      //   if (!form.clinic.trim()) newErrors.clinic = "Hospital/Clinic Name is required";
+      // }
     } else {
       if (!form.email.trim()) newErrors.email = "Email is required";
       if (!form.password.trim()) newErrors.password = "Password is required";
@@ -398,7 +398,7 @@ export default function AuthPage() {
                 {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
               </div>
 
-              <div>
+              {/* <div>
                 <label className="block text-gray-600 font-medium">Medical License Number</label>
                 <input type="text" className="w-full px-3 py-2 border rounded" placeholder="Enter your license number" value={form.license} onChange={(e) => setForm({ ...form, license: e.target.value })} />
                 {errors.license && <p className="text-red-500 text-sm">{errors.license}</p>}
@@ -414,7 +414,7 @@ export default function AuthPage() {
                 <label className="block text-gray-600 font-medium">Hospital/Clinic Name</label>
                 <input type="text" className="w-full px-3 py-2 border rounded" placeholder="Where do you work?" value={form.clinic} onChange={(e) => setForm({ ...form, clinic: e.target.value })} />
                 {errors.clinic && <p className="text-red-500 text-sm">{errors.clinic}</p>}
-              </div>
+              </div> */}
 
               <div>
                 <label className="block text-gray-600 font-medium">Create Password</label>
@@ -428,6 +428,7 @@ export default function AuthPage() {
                   // toast.dismiss();
                   setmode2(true)
                   setIsLoading(false)
+                  setMessage("")
                   console.log("verification code sent")
                   // toast.success(`Verification Code sent to ${form.email}!`, {
                   //         position: "bottom-right",

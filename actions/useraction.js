@@ -1,4 +1,5 @@
 "use server"
+import cloudinary from "@/lib/cloudinary";
 import connectDB from "@/db/connectDB";
 import User from "@/models/User";
 import Doctor from "@/models/Doctor";
@@ -20,6 +21,132 @@ export const registerUser = async (email, isDoctor) => {
     await sendVerificationEmail(email);
     return true;
 };
+
+
+
+
+export const getDoctorsByExpertise = async (expertise, skip = 0, limit = 20) => {
+    try {
+      await connectDB();
+    //   console.log(expertise)
+      
+      const doctors = await Doctor.find({
+        expertise: { $in: [new RegExp(expertise, "i")] },
+      })
+        .select("-password") // Exclude password
+        .skip(skip)
+        .limit(limit);
+
+        // const doctor2 = doctors1.toObject({ flattenObjectIds: true })
+        const plainDoctors = JSON.parse(JSON.stringify(doctors));
+        console.log(plainDoctors)
+  
+      const totalCount = await Doctor.countDocuments({
+        expertise: { $in: [new RegExp(expertise, "i")] },
+      });
+  
+      return { plainDoctors, hasMore: skip + limit < totalCount };
+    } catch (err) {
+      console.error(err);
+      return { doctors: [], hasMore: false };
+    }
+  };
+
+
+
+
+const bufferToBase64 = async (file) => {
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    return `data:${file.type};base64,${buffer.toString("base64")}`;
+};
+
+
+export const getDoctorProfileFromDB = async (email) => {
+    try {
+        await connectDB();
+
+        if (!email) {
+            throw new Error("Email is required to fetch doctor profile.");
+        }
+
+        const a = await Doctor.findOne({ email });
+
+        const doctor = a.toObject({ flattenObjectIds: true })
+        return doctor || null;
+    } catch (error) {
+        console.error("Error fetching doctor profile:", error.message);
+        return null;
+    }
+};
+
+export async function saveDoctorProfile(doctorData) {
+    await connectDB();
+
+    // const session = await getServerSession(authOptions);
+    // const email = session?.user?.email;
+    const email = doctorData.email;
+    // if (!email) throw new Error("Unauthorized");
+
+    let photoUrl = "";
+
+    if (doctorData.photo && typeof doctorData.photo !== "string") {
+        const base64Image = await bufferToBase64(doctorData.photo);
+        const uploadRes = await cloudinary.uploader.upload(base64Image, {
+            folder: "doctor_profiles",
+        });
+        photoUrl = uploadRes.secure_url;
+    } else {
+        photoUrl = doctorData.photo || "";
+    }
+
+    const updatedDoctor = await Doctor.findOneAndUpdate(
+        { email },
+        {
+            ...doctorData,
+            email,
+            photo: photoUrl,
+        },
+        { upsert: true, new: true }
+    );
+
+    const updatedDoctor2 = updatedDoctor.toObject({ flattenObjectIds: true })
+    return { success: true, data: updatedDoctor2 };
+}
+
+
+// export const saveDoctorProfile = async (doctorData) => {
+//     try {
+//       await connectDB();
+
+//       if (!doctorData.email) {
+//         throw new Error("Email is required to identify the doctor.");
+//       }
+
+//       // Find doctor by email and update if exists, else create new
+//       const updatedDoctor = await Doctor.findOneAndUpdate(
+//         { email: doctorData.email },
+//         { $set: doctorData },
+//         { new: true, upsert: true } // upsert = insert if not found
+//       );
+
+//       return {
+//         success: true,
+//         message: "Doctor profile saved successfully.",
+//         doctor: updatedDoctor,
+//       };
+//     } catch (error) {
+//       console.error("Error saving doctor profile:", error);
+//       return {
+//         success: false,
+//         message: "Failed to save doctor profile.",
+//         error: error.message,
+//       };
+//     }
+//   };
+
+
+
 
 export const sendVerificationEmail = async (email) => {
     verificationToken = crypto.randomBytes(3).toString("hex");
@@ -118,7 +245,7 @@ export const resetPassword = async (email) => {
 export const updateProfile = async (email, password) => {
     await connectDB();
     let a = await User.updateOne({ email: email }, { password: password });
-    if(!a){
+    if (!a) {
         let a = await Doctor.updateOne({ email: email }, { password: password });
 
     }
@@ -176,7 +303,7 @@ export const updateProfilefull = async (data) => {
 
 
 export const initiatepayment = async (amount, email) => {
-// export const initiatepayment = async (amount, email, form) => {
+    // export const initiatepayment = async (amount, email, form) => {
     await connectDB()
 
     // let add = `${form.address} ,${form.city} ${form.state} ${form.postalCode}`

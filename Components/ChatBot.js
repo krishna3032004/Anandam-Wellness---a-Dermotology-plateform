@@ -29,7 +29,7 @@ const Chatbot = ({ onClose }) => {
     setMessages([
       {
         sender: "bot",
-        text: "👋 Hello! I'm Gemini, your AI assistant. Ask me anything about dermotology! 🛍️",
+        text: "👋 Hello! I'm your AI assistant. Ask me anything about dermotology! 🛍️",
       },
     ]);
   }, []);
@@ -41,20 +41,45 @@ const Chatbot = ({ onClose }) => {
   };
 
   const ecommerceContext = `
-  Anandam Wellness is a comprehensive dermatology platform designed to provide expert guidance, consultations, and resources for skin health and self-care.
+   Anandam Wellness is a comprehensive dermatology platform designed to provide expert guidance, consultations, and resources for skin health and self-care.
 
-🌿 Key Features:
-✅ AI-Powered Chatbot – Get instant answers to skincare queries.
-✅ Doctor Consultations – Book new, follow-up, or second-opinion appointments.
-✅ Common Skincare Articles – Learn about skin conditions, treatments, and best practices.
-✅ Personalized Advice – Tailored recommendations based on your skin type, concerns, and medical history.
-✅ User-Friendly Interface – A modern, easy-to-use platform for seamless navigation.
+  🌿 Key Features:
+  ✅ AI-Powered Chatbot – Get instant answers to skincare queries.
+  ✅ Doctor Consultations – Book new, follow-up, or second-opinion appointments.
+  ✅ Common Skincare Articles – Learn about skin conditions, treatments, and best practices.
+  ✅ Personalized Advice – Tailored recommendations based on your skin type, concerns, and medical history.
+  ✅ User-Friendly Interface – A modern, easy-to-use platform for seamless navigation.
 
-💡 Empower yourself with expert skincare knowledge and consultation at your fingertips!
+  💡 Empower yourself with expert skincare knowledge and consultation at your fingertips!
 
+  📍 **Jabalpur-Specific Services:**
+  ✅ Top dermatologists in Jabalpur available for consultations.
+  ✅ Local skincare product recommendations based on Jabalpur’s climate.
+  ✅ Nearby skincare clinics and treatment centers.
+  ✅ Seasonal skincare tips suited for Jabalpur’s weather conditions.
 
+  📊 **Example Dermatology Data for Jabalpur:**
+  - **Top Dermatologists:**
+    - **Dr. Ramesh Kumar** – 15+ years of experience, specializes in acne and pigmentation treatments. (Glow Skin Clinic, Jabalpur)
+    - **Dr. Anjali Sharma** – Expert in laser skin treatments and anti-aging procedures. (DermaCare Jabalpur)
+    - **Dr. Vivek Mehra** – Renowned for treating eczema and skin allergies. (SkinGlow Center)
+    - **Dr. Priya Sinha** – Specialist in pediatric dermatology and hair loss treatment. (Jabalpur Skin & Hair Clinic)
+    - **Dr. Rajesh Verma** – Focuses on advanced dermatological surgeries and mole removal. (Elite Derma Jabalpur)
+
+  - **Popular Skin Clinics:**
+    - Glow Skin Clinic, Wright Town
+    - DermaCare Jabalpur, Napier Town
+    - SkinGlow Center, Civil Lines
+    - Jabalpur Skin & Hair Clinic, Sadar Bazaar
+    - Elite Derma Jabalpur, Madan Mahal
+
+  - **Weather-Based Skin Tips:**
+    - Summers: Use SPF 50+ sunscreen and lightweight moisturizers.
+    - Winters: Hydrating creams and oil-based serums for dry skin.
+  - **Common Skin Issues in Jabalpur:** Acne, sunburn, pigmentation due to high humidity.
+  `;
   
-`;
+
 
   const sendMessage = async () => {
     if (!input) return;
@@ -69,7 +94,8 @@ const Chatbot = ({ onClose }) => {
     const conversationHistory = messages.map(msg => msg.text).join('\n');
 
     // Add the current user message to the history
-    const fullConversation = ecommerceContext + "\n" + conversationHistory + "\n" + input;
+    const fullConversation =  `This is a dermatology-focused chatbot. It should only provide responses related to skincare, dermatology, and related topics. If the user asks something unrelated, kindly guide them to ask about skincare.\n\n${ecommerceContext}\n${conversationHistory}\nUser: ${input}`;
+    // const fullConversation = ecommerceContext + "\n" + conversationHistory + "\n" + input;
     setInput("");
     setLoading(true);
 
@@ -81,8 +107,25 @@ const Chatbot = ({ onClose }) => {
       });
 
       const data = await response.json();
-      const botMessage = { sender: "bot", text: data.candidates?.[0]?.content.parts[0].text || "No response" };
-      setMessages((prev) => [...prev, botMessage]);
+      console.log(data);
+      // const botMessage = { sender: "bot", text: data.candidates?.[0]?.content.parts[0].text || "No response" };
+      // setMessages((prev) => [...prev, botMessage]);
+
+      const botResponse = data.candidates?.[0]?.content.parts[0].text || "No response";
+      
+      // Check if response contains bullet points
+      let formattedMessage;
+      if (botResponse.includes("•") || botResponse.includes("*")) {
+        formattedMessage = botResponse
+          .replace(/\*/g, "•") // Convert asterisks to bullet points
+          .split('\n')
+          .map(line => `<li>${line.trim()}</li>`)
+          .join('');
+        formattedMessage = `<ul>${formattedMessage}</ul>`;
+      } else {
+        formattedMessage = `<p>${botResponse.replace(/\n/g, '<br/>')}</p>`;
+      }
+      setMessages((prev) => [...prev, { sender: "bot", text: formattedMessage }]);
     } catch (error) {
       setMessages((prev) => [...prev, { sender: "bot", text: "Error: Could not fetch response" }]);
     } finally {
@@ -104,8 +147,9 @@ const Chatbot = ({ onClose }) => {
         <div className="flex-1 flex-col flex p-3 text-sm overflow-y-auto space-y-2">
           {messages.map((msg, index) => (
             <div key={index}
-              className={`p-2 rounded-md inline-block text-gray-900 ${msg.sender === "user" ? "bg-[#f6d365] self-end" : "bg-gray-200"} max-w-max`}>
-              {msg.text}
+              className={`p-2 rounded-md text-justify inline-block text-gray-900 ${msg.sender === "user" ? "bg-[#f6d365] self-end" : "bg-gray-200"} max-w-max`}>
+              {/* {msg.text} */}
+              <div dangerouslySetInnerHTML={{ __html: msg.text }} />
             </div>
           ))}
           {Loading && (

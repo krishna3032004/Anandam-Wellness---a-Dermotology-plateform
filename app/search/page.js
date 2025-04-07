@@ -5,158 +5,9 @@ import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
 import { FaCalendarAlt, FaPhoneAlt } from "react-icons/fa";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { getDoctorsByExpertise } from "@/actions/useraction";
 
-const doctors = [
-    {
-        id: 1,
-        name: "Dr. L K Desai",
-        specialty: "Dermatologist",
-        expertise: ["Acne Treatment", "Skin Allergy", "Eczema", "Psoriasis"],
-        experience: 30,
-        location: "Sopan Baug, Pune",
-        clinic: "Dr. Desai Dermacare",
-        consultationFee: 700,
-        patientStories: 338,
-        rating: 94,
-        availability: "Available Tomorrow",
-        gender: "Male",
-        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-      },
-      {
-        id: 2,
-        name: "Dr. Sonal Chavan",
-        specialty: "Dermatologist",
-        expertise: ["Hair Loss Treatment", "Laser Hair Removal", "Skin Rejuvenation"],
-        experience: 19,
-        location: "Pimple Saudagar, Pune",
-        clinic: "Viva Luxe Aesthetic Clinic",
-        consultationFee: 700,
-        patientStories: 1531,
-        rating: 90,
-        availability: "Available Today",
-        gender: "Female",
-        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-      },
-      {
-        id: 3,
-        name: "Dr. Rajeev Agarwal",
-        specialty: "Cosmetologist",
-        expertise: ["Botox & Fillers", "Anti-Aging Treatment", "Chemical Peeling"],
-        experience: 15,
-        location: "Koregaon Park, Pune",
-        clinic: "Skin Glow Clinic",
-        consultationFee: 800,
-        patientStories: 421,
-        rating: 88,
-        availability: "Available Tomorrow",
-        gender: "Male",
-        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-      },
-      {
-        id: 4,
-        name: "Dr. Priya Sharma",
-        specialty: "Dermatologist",
-        expertise: ["Pigmentation Treatment", "Dark Circle Removal", "Acne Scars"],
-        experience: 10,
-        location: "Andheri, Mumbai",
-        clinic: "DermaCare Skin Clinic",
-        consultationFee: 600,
-        patientStories: 210,
-        rating: 92,
-        availability: "Available Today",
-        gender: "Female",
-        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-      },
-      {
-        id: 5,
-        name: "Dr. Aditya Mehta",
-        specialty: "Plastic Surgeon",
-        expertise: ["Rhinoplasty", "Face Lift", "Scar Revision Surgery"],
-        experience: 20,
-        location: "Bandra, Mumbai",
-        clinic: "Aesthetic Surgeons",
-        consultationFee: 1200,
-        patientStories: 500,
-        rating: 96,
-        availability: "Available Next Week",
-        gender: "Male",
-        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-      },
-      {
-        id: 6,
-        name: "Dr. Neha Kapoor",
-        specialty: "Trichologist",
-        expertise: ["Hair Transplant", "Dandruff Treatment", "PRP Therapy"],
-        experience: 8,
-        location: "Powai, Mumbai",
-        clinic: "Hair & Scalp Care",
-        consultationFee: 650,
-        patientStories: 189,
-        rating: 85,
-        availability: "Available Today",
-        gender: "Female",
-        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-      },
-      {
-        id: 7,
-        name: "Dr. Vikram Singh",
-        specialty: "Dermatologist",
-        expertise: ["Laser Treatment", "Mole & Wart Removal", "Tattoo Removal"],
-        experience: 25,
-        location: "Vashi, Navi Mumbai",
-        clinic: "Healthy Skin Clinic",
-        consultationFee: 900,
-        patientStories: 620,
-        rating: 94,
-        availability: "Available Tomorrow",
-        gender: "Male",
-        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-      },
-      {
-        id: 8,
-        name: "Dr. Radhika Nair",
-        specialty: "Cosmetologist",
-        expertise: ["Skin Brightening", "HydraFacial", "Body Contouring"],
-        experience: 12,
-        location: "Whitefield, Bangalore",
-        clinic: "Glow & Glam Clinic",
-        consultationFee: 700,
-        patientStories: 378,
-        rating: 91,
-        availability: "Available Today",
-        gender: "Female",
-        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-      },
-      {
-        id: 9,
-        name: "Dr. Anil Verma",
-        specialty: "Aesthetic Surgeon",
-        expertise: ["Liposuction", "Fat Grafting", "Breast Augmentation"],
-        experience: 18,
-        location: "Indiranagar, Bangalore",
-        clinic: "Aesthetic Solutions",
-        consultationFee: 1500,
-        patientStories: 450,
-        rating: 97,
-        availability: "Available Next Week",
-        gender: "Male",
-        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-      },
-      {
-        id: 10,
-        name: "Dr. Pooja Saxena",
-        specialty: "Dermatologist",
-        expertise: ["Stretch Marks Removal", "Chemical Peeling", "Microneedling"],
-        experience: 9,
-        location: "South Delhi",
-        clinic: "Skin Perfection",
-        consultationFee: 750,
-        patientStories: 276,
-        rating: 89,
-        availability: "Available Tomorrow",
-        gender: "Female",
-        img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-      }, ];
+// const doctors = [];
 
 
 export default function Home() {
@@ -166,9 +17,29 @@ export default function Home() {
   const [selectedStories, setSelectedStories] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
   const [sortOption, setSortOption] = useState("Relevance");
+  const [doctors, setDoctors] = useState([]);
+const [loading, setLoading] = useState(false);
+// const [page, setPage] = useState(0);
+const [skip, setSkip] = useState(0);
+const [hasMore, setHasMore] = useState(true);
 
+const searchOptions = [
+  "Acne / Pimples Treatment",
+  "Acne/ Pimple Scars Treatment",
+  "Hair Loss Treatment",
+  "Acne",
+  "Skin Treatment",
+  "Varicose Veins Treatment",
+  "Acne Treatment",
+  "Arm Pimples",
+];
 
-  // const router = useRouter();
+// const router = useRouter();
+const [query, setQuery] = useState("");
+const [filteredOptions, setFilteredOptions] = useState(searchOptions);
+const [showDropdown, setShowDropdown] = useState(false);
+const dropdownRef = useRef(null);
+const [filteredDoctors, setFilteredDoctors] = useState(doctors);
   // const { problem } = router.query;
   const searchParams = useSearchParams();
   const problem = searchParams.get("problem");
@@ -182,7 +53,33 @@ export default function Home() {
     
   }, [])
   
+  useEffect(() => {
+    if (query) {
+      fetchDoctors(true);
+    }
+  }, [query]);
   
+
+  const fetchDoctors = async (reset = false) => {
+    if (!query) return;
+
+    const data = await getDoctorsByExpertise(query, reset ? 0 : skip, 20);
+
+    console.log(data)
+    if (reset) {
+      console.log(data)
+      // console.log(data)
+      setDoctors(data.plainDoctors);
+      console.log(data.plainDoctors)
+
+      setSkip(20);
+    } else {
+      setDoctors((prev) => [...prev, ...data.doctors]);
+      setSkip((prev) => prev + 20);
+    }
+
+    setHasMore(data.hasMore);
+  };
 
 //   const filteredDoctors = doctorsData
 //     .filter((doctor) => doctor.location.includes(selectedLocation))
@@ -198,25 +95,6 @@ export default function Home() {
 //       return 0;
 //     });
 
-
-
-  const searchOptions = [
-    "Acne / Pimples Treatment",
-    "Acne/ Pimple Scars Treatment",
-    "Hair Loss Treatment",
-    "Acne",
-    "Skin Treatment",
-    "Varicose Veins Treatment",
-    "Acne Treatment",
-    "Arm Pimples",
-  ];
-
-    const [query, setQuery] = useState("");
-    const [filteredOptions, setFilteredOptions] = useState(searchOptions);
-    const [showDropdown, setShowDropdown] = useState(false);
-    const dropdownRef = useRef(null);
-    const [filteredDoctors, setFilteredDoctors] = useState(doctors);
-  
     useEffect(() => {
       const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -249,7 +127,9 @@ export default function Home() {
             console.log(query)
             console.log(selectedGender)
             console.log(selectedLocation)
-        //   const filtered = doctors.filter((doctor) => query ? doctor.expertise.some((exp) => exp.toLowerCase().includes(query.toLowerCase())): true
+            if (!Array.isArray(doctors)) return;
+            //   const filtered = doctors.filter((doctor) => query ? doctor.expertise.some((exp) => exp.toLowerCase().includes(query.toLowerCase())): true
+            console.log(doctors)
         //     )
         //     .filter((doctor) =>
         //       selectedLocation ? doctor.location.toLowerCase() === selectedLocation.toLowerCase() : true
@@ -274,12 +154,12 @@ export default function Home() {
         //   setFilteredDoctors(filtered);
 
 
-        const filtered = doctors.filter((doctor) => doctor.expertise.some((exp) => exp.toLowerCase().includes(query.toLowerCase())))
+        const filtered = doctors.filter((doctor) => Array.isArray(doctor.expertise) && doctor.expertise.some((exp) => exp.toLowerCase().includes(query.toLowerCase())))
       .filter((doctor) => doctor.location.toLowerCase().includes(selectedLocation.toLowerCase()))
       .filter((doctor) => (selectedExperience ? doctor.experience >= parseInt(selectedExperience) : true))
       .filter((doctor) => (selectedStories ? doctor.patientStories >= parseInt(selectedStories) : true))
       .filter((doctor) => (selectedGender ? doctor.gender.toLowerCase() === selectedGender.toLowerCase() : true))
-      .filter((doctor) => doctor.name.toLowerCase().includes(search.toLowerCase()))
+      .filter((doctor) => doctor.username.toLowerCase().includes(search.toLowerCase()))
       .sort((a, b) => {
         if (sortOption === "Patient Stories - High to Low") return b.patientStories - a.patientStories;
         if (sortOption === "Experience - High to Low") return b.experience - a.experience;
@@ -412,6 +292,7 @@ export default function Home() {
 
       {/* Doctor List */}
       <div className="mt-6 space-y-4">
+      {!query && <p>Please select a treatment</p>}
         {filteredDoctors.length > 0 ? (
         //   filteredDoctors.map((doctor, index) => (
         //     <div key={index} className="bg-white p-4 rounded-lg shadow-md flex items-center gap-4">
@@ -444,22 +325,22 @@ export default function Home() {
 
 
 
-            <div key={doctor.id} className="flex bg-white p-4 rounded-lg shadow-md items-center gap-4 border">
+            <div key={doctor._id} className="flex bg-white p-4 rounded-lg shadow-md items-center gap-4 border">
       {/* Doctor's Image */}
       <img
-        src={doctor.img}
-        alt={doctor.name}
+        src={doctor.photo}
+        alt={doctor.username}
         className="w-20 h-20 rounded-full border"
       />
 
       {/* Doctor's Info */}
       <div className="flex-1">
         {/* <h2 className="text-blue-500 font-semibold text-lg">{doctor.name}</h2> */}
-        <Link href={`/doctor?id=${doctor.id}`} passHref>
-  <h2 className="text-blue-500 font-semibold text-lg cursor-pointer hover:underline">
-    {doctor.name}
-  </h2>
-</Link>
+        <Link href={`/doctor?id=${doctor._id}`} passHref>
+          <h2 className="text-blue-500 font-semibold text-lg cursor-pointer hover:underline">
+            {doctor.username}
+          </h2>
+        </Link>
         <p className="text-gray-600">{doctor.specialty}</p>
         <p className="text-gray-500 text-sm">{doctor.experience} years experience overall</p>
 
@@ -502,6 +383,11 @@ export default function Home() {
           <p className="text-center text-gray-500">No doctors found.</p>
         )}
       </div>
+      {hasMore && query && (
+  <button onClick={() => fetchDoctors(false)} disabled={loading} className="bg-blue-500 text-white px-4 py-2 rounded">
+     {loading ? "Loading..." : "Show More"}
+  </button>
+)}
     </div>
   );
 }
