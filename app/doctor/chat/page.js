@@ -160,7 +160,13 @@ export default function chat() {
   //   }
   // }, [session]);
 
-  const roomId = [doctorId, patientId].sort().join('-');
+  const [roomId, setRoomId] = useState(null)
+  useEffect(() => {
+  if (doctorId && patientId) {
+    setRoomId([doctorId, patientId].sort().join('-'));
+  }
+}, [doctorId, patientId]);
+  // const roomId = [doctorId, patientId].sort().join('-');
 
   useEffect(() => {
     const fetchPatients = async () => {
