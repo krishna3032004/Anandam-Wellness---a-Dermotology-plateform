@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 import { SquareDashedMousePointer } from 'lucide-react';
 import io from 'socket.io-client';
 import SimplePeer from 'simple-peer';
@@ -17,13 +17,13 @@ export default function Chat() {
 
     const { data: session, status } = useSession()
 
-    const searchParams = useSearchParams();
+    // const searchParams = useSearchParams();
     const [doctorId, setDoctorId] = useState(null);
 
     useEffect(() => {
-        const id = searchParams.get("doctorId");
+        const id = new URLSearchParams(window.location.search).get("doctorId");
         if (id) setDoctorId(id);
-      }, [searchParams]);
+      }, []);
     // const userId = "67c04abd7270925f79ef38a1"; // Replace with actual user ID from session or auth
     const [userId, setuserId] = useState("")
 
