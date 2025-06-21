@@ -18,7 +18,7 @@ export default function Chat() {
     const { data: session, status } = useSession()
 
     const searchParams = useSearchParams();
-    const doctorId = searchParams.get("doctorId");
+    const doctorId = typeof window !== "undefined" ? searchParams.get("doctorId") : null;
     // const userId = "67c04abd7270925f79ef38a1"; // Replace with actual user ID from session or auth
     const [userId, setuserId] = useState("")
 
