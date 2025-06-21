@@ -50,9 +50,16 @@ const [filteredDoctors, setFilteredDoctors] = useState(doctors);
 const [showFilters, setShowFilters] = useState(false);
 
   // const { problem } = router.query;
-  const searchParams = useSearchParams();
-  const problem = searchParams.get("problem");
-  console.log(problem)
+  // const searchParams = useSearchParams();
+  // const problem = searchParams.get("problem");
+  const [problem, setproblem] = useState(null)
+  // console.log(problem)
+  useEffect(() => {
+    const searchParams = useSearchParams();
+    const id2 = searchParams.get("problem");
+    setproblem(id2)
+  }, []);
+
   useEffect(() => {
     if(problem){
       const formattedProblem = problem ? problem.replace(/-/g, " ") : "Loading...";
