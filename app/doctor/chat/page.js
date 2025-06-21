@@ -14,7 +14,12 @@ export default function chat() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const patientId = searchParams.get("userId");
+  const [patientId, setPatientId] = useState(null);
+
+  useEffect(() => {
+    const id = searchParams.get("userId");
+    if (id) setPatientId(id);
+  }, [searchParams]);
 
   const { data: session, status } = useSession();
   const [doctorId, setDoctorId] = useState("");
@@ -52,12 +57,12 @@ export default function chat() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (status === "loading"){
+    if (status === "loading") {
       console.log("loading")
       setIsLoading(true)
       return;
     }  // wait till session loads
-    
+
     if (!session) {
       console.log("kyu loggin")
       router.push("/login"); // redirect if no session
