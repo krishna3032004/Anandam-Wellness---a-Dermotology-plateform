@@ -21,13 +21,13 @@ export default function Chat() {
     const [doctorId, setDoctorId] = useState(null);
 
     useEffect(() => {
-        const param = searchParams.get("doctorId");
-        setDoctorId(param);
-    }, [searchParams]);
+        const id = searchParams.get("doctorId");
+        if (id) setDoctorId(id);
+      }, [searchParams]);
     // const userId = "67c04abd7270925f79ef38a1"; // Replace with actual user ID from session or auth
     const [userId, setuserId] = useState("")
 
-    const roomId = [doctorId, userId].sort().join('-');
+    const roomId =  doctorId && userId ? [doctorId, userId].sort().join('-') : null;
     const [doctors, setDoctors] = useState([]);
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
