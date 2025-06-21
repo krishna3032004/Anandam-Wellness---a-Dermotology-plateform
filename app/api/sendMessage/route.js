@@ -1,6 +1,7 @@
 // import connectDB from '@/app/db/connectDB';
 import connectDB from '@/db/connectDB';
-import Chat from '@/app/models/Chat';
+// import Chat from '@/app/models/Chat';
+import Chat from '@/models/Chat';
 
 export default async function handler(req, res) {
   await connectDB();
