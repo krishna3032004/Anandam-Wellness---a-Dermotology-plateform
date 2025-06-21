@@ -19,23 +19,23 @@ import { fetchDoctorbyid } from "@/actions/useraction";
 //     availability: ["Mon, Thu, Sat: 11:30 AM - 02:00 PM", "06:30 PM - 08:30 PM"],
 //     slots: ["06:30 PM", "06:40 PM", "07:00 PM", "07:20 PM"],
 //     reviews: [
-      // {
-      //   title: "Visited For Skin Disease Treatment",
-      //   date: "8 months ago",
-      //   recommended: true,
-      //   tags: ["Doctor Friendliness", "Treatment Satisfaction", "Value for Money"],
-      //   comment: "I visited Dr. L K Desai after suffering a lot. He explained everything clearly, and I started getting relief with the 1st dose itself.",
-      // },
+// {
+//   title: "Visited For Skin Disease Treatment",
+//   date: "8 months ago",
+//   recommended: true,
+//   tags: ["Doctor Friendliness", "Treatment Satisfaction", "Value for Money"],
+//   comment: "I visited Dr. L K Desai after suffering a lot. He explained everything clearly, and I started getting relief with the 1st dose itself.",
+// },
 //     ],
 //     faqs: [
-      // {
-      //   question: "Where does Dr. L K Desai practice?",
-      //   answer: "Dr. L K Desai practices at Dr. Desai Dermacare - Skin, Hair & Laser Clinic - Sopan Baug.",
-      // },
-      // {
-      //   question: "How can I take Dr. L K Desai's appointment?",
-      //   answer: "You can take an appointment online through Practo for in-clinic visits with the doctor.",
-      // },
+// {
+//   question: "Where does Dr. L K Desai practice?",
+//   answer: "Dr. L K Desai practices at Dr. Desai Dermacare - Skin, Hair & Laser Clinic - Sopan Baug.",
+// },
+// {
+//   question: "How can I take Dr. L K Desai's appointment?",
+//   answer: "You can take an appointment online through Practo for in-clinic visits with the doctor.",
+// },
 //     ],
 //   }
 // ]
@@ -46,7 +46,12 @@ const Page = () => {
   // const unwrappedParams = use(params); // Unwrap params using use()
   const [doctor, setDoctor] = useState(null);
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  // const id = searchParams.get("id");
+  const [id, setid] = useState(null)
+  useEffect(() => {
+    const id2 = searchParams.get("doctorId");
+    setid(id2)
+  }, [searchParams]);
   useEffect(() => {
     async function fetchdoctor() {
       if (id) {
