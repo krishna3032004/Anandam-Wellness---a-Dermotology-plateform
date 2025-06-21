@@ -14,10 +14,16 @@ export default function PaymentPage() {
     const router = useRouter();
     //   const { doctorId } = router.query;
     const [doctor, setDoctor] = useState(null);
-    const searchParams = useSearchParams();
-    const doctorId = searchParams.get("doctorId");
+    const [doctorId, setdoctorId] = useState(null)
+    // const searchParams = useSearchParams();
+    // const doctorId = searchParams.get("doctorId");
     const [isLoading, setIsLoading] = useState(true);
 
+    useEffect(() => {
+        const searchParams = useSearchParams();
+        const id2 = searchParams.get("doctorId");
+        setdoctorId(id2)
+      }, []);
 
     useEffect(() => {
         if (status === "loading") return; // wait till session loads
