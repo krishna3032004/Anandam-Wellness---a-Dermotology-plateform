@@ -17,9 +17,9 @@ export default function chat() {
   const [patientId, setPatientId] = useState(null);
 
   useEffect(() => {
-    const id = searchParams.get("userId");
-    if (id) setPatientId(id);
-  }, []);
+        const id = new URLSearchParams(window.location.search).get("userId");
+        if (id) setPatientId(id);
+      }, []);
 
   const { data: session, status } = useSession();
   const [doctorId, setDoctorId] = useState("");
