@@ -45,13 +45,13 @@ const Page = () => {
   // const { id } = param.slug2;
   // const unwrappedParams = use(params); // Unwrap params using use()
   const [doctor, setDoctor] = useState(null);
-  const searchParams = useSearchParams();
   // const id = searchParams.get("id");
   const [id, setid] = useState(null)
   useEffect(() => {
+    const searchParams = useSearchParams();
     const id2 = searchParams.get("doctorId");
     setid(id2)
-  }, [searchParams]);
+  }, []);
   useEffect(() => {
     async function fetchdoctor() {
       if (id) {
