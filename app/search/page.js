@@ -5,14 +5,14 @@ import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
 import { FaCalendarAlt, FaPhoneAlt } from "react-icons/fa";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { getDoctorsByExpertise } from "@/actions/useraction";
-
+import { fetchDoctor, getDoctorsByExpertise,getDoctorAll } from "@/actions/useraction";
+import { FaStar } from "react-icons/fa";
 // const doctors = [];
 
 
 export default function Home() {
   const [search, setSearch] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState("Pune");
+  const [selectedLocation, setSelectedLocation] = useState("");
   const [selectedExperience, setSelectedExperience] = useState("");
   const [selectedStories, setSelectedStories] = useState("");
   const [selectedGender, setSelectedGender] = useState("");
@@ -31,7 +31,14 @@ const searchOptions = [
   "Skin Treatment",
   "Varicose Veins Treatment",
   "Acne Treatment",
-  "Arm Pimples",
+  "Arm Pimples","Acne Treatment", "Skin Allergy", "Eczema", "Psoriasis", "Hair Loss Treatment",
+    "Laser Hair Removal", "Skin Rejuvenation", "Botox & Fillers", "Anti-Aging Treatment",
+    "Chemical Peeling", "Pigmentation Treatment", "Dark Circle Removal", "Acne Scars",
+    "Rhinoplasty", "Face Lift", "Scar Revision Surgery", "Hair Transplant",
+    "Dandruff Treatment", "PRP Therapy", "Laser Treatment", "Mole & Wart Removal",
+    "Tattoo Removal", "Skin Brightening", "HydraFacial", "Body Contouring",
+    "Liposuction", "Fat Grafting", "Breast Augmentation", "Stretch Marks Removal",
+    "Microneedling",
 ];
 
 // const router = useRouter();
@@ -40,6 +47,8 @@ const [filteredOptions, setFilteredOptions] = useState(searchOptions);
 const [showDropdown, setShowDropdown] = useState(false);
 const dropdownRef = useRef(null);
 const [filteredDoctors, setFilteredDoctors] = useState(doctors);
+const [showFilters, setShowFilters] = useState(false);
+
   // const { problem } = router.query;
   const searchParams = useSearchParams();
   const problem = searchParams.get("problem");
@@ -54,10 +63,34 @@ const [filteredDoctors, setFilteredDoctors] = useState(doctors);
   }, [])
   
   useEffect(() => {
+    
     if (query) {
+      console.log("baki sabh theek")
       fetchDoctors(true);
+    }else{
+      
+      console.log("bhas chl rha hai")
+      fetchDoctorAll(true)
     }
   }, [query]);
+  
+
+  const fetchDoctorAll = async (reset = false) => {
+    const skipValue = reset ? 0 : skip;
+    const limitValue = 20;
+  
+    const data = await getDoctorAll(skipValue, limitValue);
+  
+    if (reset) {
+      setDoctors(data.plainDoctors);
+      setSkip(limitValue);
+    } else {
+      setDoctors((prev) => [...prev, ...data.plainDoctors]);
+      setSkip((prev) => prev + limitValue);
+    }
+  
+    setHasMore(data.hasMore);
+  };
   
 
   const fetchDoctors = async (reset = false) => {
@@ -154,16 +187,17 @@ const [filteredDoctors, setFilteredDoctors] = useState(doctors);
         //   setFilteredDoctors(filtered);
 
 
-        const filtered = doctors.filter((doctor) => Array.isArray(doctor.expertise) && doctor.expertise.some((exp) => exp.toLowerCase().includes(query.toLowerCase())))
-      .filter((doctor) => doctor.location.toLowerCase().includes(selectedLocation.toLowerCase()))
+        const filtered = doctors.filter((doctor) => Array.isArray(doctor.expertise) && query ? doctor.expertise.some((exp) => exp?.toLowerCase().includes(query.toLowerCase())): true)
+      .filter((doctor) =>selectedLocation ?  doctor.location.toLowerCase().includes(selectedLocation.toLowerCase()) : true)
       .filter((doctor) => (selectedExperience ? doctor.experience >= parseInt(selectedExperience) : true))
       .filter((doctor) => (selectedStories ? doctor.patientStories >= parseInt(selectedStories) : true))
-      .filter((doctor) => (selectedGender ? doctor.gender.toLowerCase() === selectedGender.toLowerCase() : true))
-      .filter((doctor) => doctor.username.toLowerCase().includes(search.toLowerCase()))
+      .filter((doctor) =>  (selectedGender ? doctor.gender.toLowerCase() === selectedGender.toLowerCase() : true))
+      .filter((doctor) => search ? doctor.username.toLowerCase().includes(search.toLowerCase()) : true)
       .sort((a, b) => {
         if (sortOption === "Patient Stories - High to Low") return b.patientStories - a.patientStories;
         if (sortOption === "Experience - High to Low") return b.experience - a.experience;
         if (sortOption === "Consultation Fee - High to Low") return b.fee - a.fee;
+      
         if (sortOption === "Consultation Fee - Low to High") return a.fee - b.fee;
         return 0;
       });
@@ -207,175 +241,165 @@ const [filteredDoctors, setFilteredDoctors] = useState(doctors);
     
     
   return (
-    <div className="p-6 bg-gray-100 mt-16 min-h-screen">
+    <div className="p-6 pt-20 bg-gray-100  min-h-screen">
       {/* Search & Filters */}
-      <div className="bg-white p-4 rounded-lg shadow-md flex flex-wrap gap-4">
-        {/* Location */}
-        <select
-          className="p-2 border rounded"
-          value={selectedLocation}
-          onChange={(e) =>{ setSelectedLocation(e.target.value)
-          }}
+      <div className="bg-white p-4 rounded-lg shadow-md">
+  {/* Search + Filter Row */}
+  <div className="flex flex-col md:flex-row items-center gap-4">
+    {/* Search Bar */}
+    <div ref={dropdownRef} className="flex items-center border rounded-lg overflow-hidden shadow-sm w-full md:w-[400px]">
+      <FaSearch className="ml-3 text-gray-500" />
+      <input
+        type="text"
+        placeholder="Search for treatments, symptoms, doctors..."
+        value={query}
+        onChange={handleInputChange}
+        onFocus={() => setShowDropdown(true)}
+        onKeyDown={handleKeyDown}
+        className="w-full px-4 py-2 focus:outline-none"
+      />
+    </div>
+
+    {/* Filter Toggle Button */}
+    <button
+      onClick={() => setShowFilters(!showFilters)}
+      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+    >
+      {showFilters ? "Hide Filters" : "Show Filters"}
+    </button>
+  </div>
+
+  {/* Suggestion Dropdown */}
+  {showDropdown && filteredOptions.length > 0 && (
+    <ul ref={dropdownRef} className="absolute z-10 mt-2 w-[90%] md:w-[400px] bg-white border rounded-lg shadow-lg max-h-60 overflow-auto">
+      {filteredOptions.map((option, index) => (
+        <li
+          key={index}
+          className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+          onClick={() => handleSearch(option)}
         >
-          <option value="Pune">Pune</option>
-          <option value="Pimple Saudagar">Pimple Saudagar</option>
-          <option value="Hadapsar">Hadapsar</option>
-          <option value="Kharadi">Kharadi</option>
-          <option value="">All Locations</option>
-        </select>
+          {option}
+        </li>
+      ))}
+    </ul>
+  )}
 
-        {/* Search Bar */}
-        <div ref={dropdownRef} className="flex items-center border  rounded-lg overflow-hidden shadow-sm">
-        <FaSearch className="ml-3 text-gray-500" />
-        <input
-          type="text"
-          placeholder="Search for treatments, symptoms, doctors..."
-          value={query}
-          onChange={handleInputChange}
-          onFocus={() => setShowDropdown(true)}
-          onKeyDown={handleKeyDown}
-          className="w-full px-4 py-2 focus:outline-none"
-        />
-      </div>
+  {/* Filter Panel (Conditional) */}
+  {showFilters && (
+    <div className="mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {/* Location */}
+      <select
+        className="p-2 border rounded"
+        value={selectedLocation}
+        onChange={(e) => setSelectedLocation(e.target.value)}
+      >
+        <option value="">All Locations</option>
+        <option value="Pimple Saudagar">Pimple Saudagar</option>
+        <option value="Hadapsar">Hadapsar</option>
+        <option value="Kharadi">Kharadi</option>
+        <option value="Pune">Pune</option>
+      </select>
 
-      {showDropdown && filteredOptions.length > 0 && (
-        <ul ref={dropdownRef} className="absolute w-72 top-36 left-52 bg-white border rounded-lg mt-1 shadow-lg">
-          {filteredOptions.map((option, index) => (
-            <li
-              key={index}
-              className="px-4 py-2 cursor-pointer hover:bg-gray-100"
-              onClick={() => handleSearch(option)}
-            >
-              {option}
-            </li>
-          ))}
-        </ul>
-      )}
+      {/* Experience */}
+      <select className="p-2 border rounded" value={selectedExperience} onChange={(e) => setSelectedExperience(e.target.value)}>
+        <option value="">Experience</option>
+        <option value="5">5+ Years</option>
+        <option value="10">10+ Years</option>
+        <option value="15">15+ Years</option>
+        <option value="20">20+ Years</option>
+      </select>
 
-        {/* Experience */}
-        <select className="p-2 border rounded" onChange={(e) => {setSelectedExperience(e.target.value)
-        }}>
-          <option value="">Experience</option>
-          <option value="5">5+ Years</option>
-          <option value="10">10+ Years</option>
-          <option value="15">15+ Years</option>
-          <option value="20">20+ Years</option>
-        </select>
+      {/* Stories */}
+      <select className="p-2 border rounded" value={selectedStories} onChange={(e) => setSelectedStories(e.target.value)}>
+        <option value="">Patient Stories</option>
+        <option value="30">30+ Stories</option>
+        <option value="80">80+ Stories</option>
+        <option value="250">250+ Stories</option>
+      </select>
 
-        {/* Patient Stories */}
-        <select className="p-2 border rounded" onChange={(e) =>{ setSelectedStories(e.target.value)
-        }}>
-          <option value="">Patient Stories</option>
-          <option value="30">30+ Stories</option>
-          <option value="80">80+ Stories</option>
-          <option value="250">250+ Stories</option>
-        </select>
+      {/* Gender */}
+      <select className="p-2 border rounded" value={selectedGender} onChange={(e) => setSelectedGender(e.target.value)}>
+        <option value="">Gender</option>
+        <option value="Male">Male Doctor</option>
+        <option value="Female">Female Doctor</option>
+      </select>
 
-        {/* Gender */}
-        <select className="p-2 border rounded" onChange={(e) => {setSelectedGender(e.target.value)
-        }}>
-          <option value="">Gender</option>
-          <option value="Male">Male Doctor</option>
-          <option value="Female">Female Doctor</option>
-        </select>
+      {/* Sorting */}
+      <select className="p-2 border rounded" value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
+        <option value="Relevance">Sort By: Relevance</option>
+        <option value="Patient Stories - High to Low">Patient Stories - High to Low</option>
+        <option value="Experience - High to Low">Experience - High to Low</option>
+        <option value="Consultation Fee - High to Low">Consultation Fee - High to Low</option>
+        <option value="Consultation Fee - Low to High">Consultation Fee - Low to High</option>
+      </select>
+    </div>
+  )}
+</div>
 
-        {/* Sorting */}
-        <select className="p-2 border rounded" onChange={(e) => {setSortOption(e.target.value)
-        }}>
-          <option value="Relevance">Sort By: Relevance</option>
-          <option value="Patient Stories - High to Low">Patient Stories - High to Low</option>
-          <option value="Experience - High to Low">Experience - High to Low</option>
-          <option value="Consultation Fee - High to Low">Consultation Fee - High to Low</option>
-          <option value="Consultation Fee - Low to High">Consultation Fee - Low to High</option>
-        </select>
-      </div>
 
       {/* Doctor List */}
       <div className="mt-6 space-y-4">
       {!query && <p>Please select a treatment</p>}
         {filteredDoctors.length > 0 ? (
-        //   filteredDoctors.map((doctor, index) => (
-        //     <div key={index} className="bg-white p-4 rounded-lg shadow-md flex items-center gap-4">
-        //       <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
-        //       <div className="flex-1">
-        //         <h2 className="text-lg font-semibold text-blue-600">{doctor.name}</h2>
-        //         <p className="text-gray-600">{doctor.experience} years experience</p>
-        //         <p className="text-gray-500">{doctor.location}</p>
-        //         <p className="text-gray-700">₹{doctor.fee} Consultation Fee</p>
-        //       </div>
-        //       <button className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600">
-        //         Book Clinic Visit
-        //       </button>
-        //     </div>
-        //   ))
-        
 
         filteredDoctors.map((doctor) => (
-            // <div key={doc.id} className="flex items-center border p-4 rounded-lg mb-4 shadow-md bg-white">
-            //   <img src={doc.img} alt={doc.name} className="w-20 h-20 rounded-full mr-4" />
-            //   <div className="flex-1">
-            //     <h3 className="text-lg font-semibold text-blue-600">{doc.name}</h3>
-            //     <p className="text-gray-600">{doc.specialty} • {doc.experience} years experience</p>
-            //     <p className="text-gray-500"><FaMapMarkerAlt className="inline mr-1" /> {doc.location}</p>
-            //     <p className="text-gray-700">₹{doc.consultationFee} Consultation Fee</p>
-            //     <p className="text-green-600 font-semibold">{doc.availability}</p>
-            //   </div>
-            //   <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">Book Appointment</button>
-            // </div>
 
 
-
-            <div key={doctor._id} className="flex bg-white p-4 rounded-lg shadow-md items-center gap-4 border">
+            <div key={doctor._id} className="flex flex-col sm:flex-row justify-between bg-white p-4 rounded-lg shadow-md items-center gap-4 border">
       {/* Doctor's Image */}
+      <div className="flex flex-row items-center w-full sm:w-[68%] gap-4 sm:gap-7  ">
       <img
         src={doctor.photo}
         alt={doctor.username}
-        className="w-20 h-20 rounded-full border"
+        className="sm:w-20 w-16 sm:h-20 h-16 rounded-full border"
       />
 
       {/* Doctor's Info */}
-      <div className="flex-1">
+      <Link href={`/doctor?id=${doctor._id}`} passHref><div className="flex-1">
         {/* <h2 className="text-blue-500 font-semibold text-lg">{doctor.name}</h2> */}
-        <Link href={`/doctor?id=${doctor._id}`} passHref>
+        {/* <Link href={`/doctor?id=${doctor._id}`} passHref> */}
           <h2 className="text-blue-500 font-semibold text-lg cursor-pointer hover:underline">
             {doctor.username}
           </h2>
-        </Link>
+        {/* </Link> */}
         <p className="text-gray-600">{doctor.specialty}</p>
-        <p className="text-gray-500 text-sm">{doctor.experience} years experience overall</p>
+        <p className="text-gray-500 text-xs sm:text-sm">{doctor.experience} years experience overall</p>
 
         {/* Clinic Info */}
-        <p className="font-semibold text-gray-700">
-          {doctor.clinicName}, <span className="text-gray-500">{doctor.location}</span>
+        <p className="font-semibold text-gray-700 text-sm sm:text-base">
+          {doctor.clinicName}, <span className="text-gray-500 text-sm sm:text-base">{doctor.location}</span>
         </p>
-        <p className="text-gray-600 text-sm">{doctor.fee} Consultation fee at clinic</p>
+        <p className="text-gray-600 text-xs sm:text-sm">{doctor.fee} Consultation fee at clinic</p>
 
         {/* Ratings & Reviews */}
         <div className="flex items-center mt-2">
-          <span className="bg-green-500 text-white text-xs px-2 py-1 rounded">
-            {doctor.rating}%
+          <span className="bg-green-500 flex text-white text-xs px-2 py-1 rounded">
+            {doctor.rating} <FaStar className="text-yellow-500 mr-1 text-sm sm:text-base" />
           </span>
-          <span className="ml-2 text-blue-600 font-semibold cursor-pointer">
-            {doctor.patientStories} Patient Stories
+          <span className="ml-2 text-blue-600 font-semibold text-sm sm:text-base cursor-pointer">
+            {doctor.reviews.length} Patient Stories
           </span>
         </div>
+      </div></Link>
       </div>
 
-      {/* Availability & Buttons */}
-      <div className="flex flex-col items-end">
-        <p className="text-gray-500 flex items-center gap-1">
-          <FaCalendarAlt className="text-gray-400 text-sm" /> Available Tomorrow
-        </p>
 
-        <button className="bg-blue-500 text-sm text-white px-7 py-1 rounded-lg mt-2 font-semibold shadow">
+      {/* Availability & Buttons */}
+      <div className="flex flex-col  ">
+        <p className="text-gray-500 flex items-center gap-1"> 
+          <FaCalendarAlt className="text-gray-400 text-xs sm:text-sm" /> Available Tomorrow
+        </p>
+        <div className="flex flex-row sm:flex-col gap-2 sm:gap-0">
+        <button className="bg-blue-500 text-xs sm:text-sm  text-white px-3 sm:px-7 py-1 rounded-lg mt-2 font-semibold shadow">
           Book Clinic Visit
           <p className="text-xs font-medium">No Booking Fee</p>
         </button>
 
-        <button className="border text-blue-500 text-sm px-6 py-3 rounded-lg mt-2 flex items-center gap-2 shadow">
+        <button className="border text-blue-500 text-xs sm:text-sm px-2 sm:px-6 py-1 sm:py-3 rounded-lg mt-2 flex items-center gap-2 shadow">
           <FaPhoneAlt />
           Contact Clinic
         </button>
+        </div>
       </div>
     </div>
           ))
@@ -383,11 +407,16 @@ const [filteredDoctors, setFilteredDoctors] = useState(doctors);
           <p className="text-center text-gray-500">No doctors found.</p>
         )}
       </div>
-      {hasMore && query && (
-  <button onClick={() => fetchDoctors(false)} disabled={loading} className="bg-blue-500 text-white px-4 py-2 rounded">
-     {loading ? "Loading..." : "Show More"}
+      {hasMore && (
+  <button
+    onClick={() => query ? fetchDoctors(false) : fetchDoctorAll(false)}
+    disabled={loading}
+    className="bg-blue-500 text-white px-4 py-2 rounded"
+  >
+    {loading ? "Loading..." : "Show More"}
   </button>
 )}
+
     </div>
   );
 }

@@ -84,6 +84,15 @@ const handler = NextAuth({
 
     ],
     callbacks: {
+        async jwt({ token, user }) {
+            // First time: user is available after login
+            if (user) {
+                token.id = user.id;
+                token.email = user.email;
+                token.doctor = user.doctor || false; // whether doctor or not
+            }
+            return token;
+        },
         // async signIn({ user, account, profile }) {
         //     if ( account.provider === "google") {
         //         await connectDB();
@@ -102,15 +111,16 @@ const handler = NextAuth({
         // },
         async session({ session }) {
             await connectDB();
-            let doctor=false;
+            let doctor = false;
             let dbUser = await User.findOne({ email: session.user.email });
             if (!dbUser) {
                 dbUser = await Doctor.findOne({ email: session.user.email });
-                doctor=true;
+                doctor = true;
             }
             if (dbUser) {
                 session.user.name = dbUser.username;
                 session.user.doctor = doctor;
+                session.user.id = dbUser._id
             }
             return session;
         }

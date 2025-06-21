@@ -1,7 +1,9 @@
 "use client"
 import React from 'react'
 import { useParams } from "next/navigation";
+import Sidebar2 from '@/Components/sidebar2';
 import Sidebar from '@/Components/Sidebar';
+
 const Page = () => {
   const { slug } = useParams();
 
@@ -20,6 +22,7 @@ const Page = () => {
   return (
     <div className="flex min-h-screen mt-16 bg-gray-50">
       {/* Sidebar */}
+      {/* <Sidebar2 /> */}
       <Sidebar />
 
       {/* Main Content */}

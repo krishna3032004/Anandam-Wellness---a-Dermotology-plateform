@@ -4,167 +4,171 @@ import { useRouter } from "next/navigation";
 import { updateProfilefull } from "@/actions/useraction";
 import { FaCamera } from "react-icons/fa";
 import { useSession } from "next-auth/react";
-
+import { getuserProfileFromDB } from "@/actions/useraction";
+import LoadingOverlay from "@/Components/LoadingOverlay";
 
 const doctors = [
   {
-      id: 1,
-      name: "Dr. L K Desai",
-      specialty: "Dermatologist",
-      expertise: ["Acne Treatment", "Skin Allergy", "Eczema", "Psoriasis"],
-      experience: 30,
-      location: "Sopan Baug, Pune",
-      clinic: "Dr. Desai Dermacare",
-      consultationFee: 700,
-      patientStories: 338,
-      rating: 94,
-      availability: "Available Tomorrow",
-      gender: "Male",
-      img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-    },
-    {
-      id: 2,
-      name: "Dr. Sonal Chavan",
-      specialty: "Dermatologist",
-      expertise: ["Hair Loss Treatment", "Laser Hair Removal", "Skin Rejuvenation"],
-      experience: 19,
-      location: "Pimple Saudagar, Pune",
-      clinic: "Viva Luxe Aesthetic Clinic",
-      consultationFee: 700,
-      patientStories: 1531,
-      rating: 90,
-      availability: "Available Today",
-      gender: "Female",
-      img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-    },
-    {
-      id: 3,
-      name: "Dr. Rajeev Agarwal",
-      specialty: "Cosmetologist",
-      expertise: ["Botox & Fillers", "Anti-Aging Treatment", "Chemical Peeling"],
-      experience: 15,
-      location: "Koregaon Park, Pune",
-      clinic: "Skin Glow Clinic",
-      consultationFee: 800,
-      patientStories: 421,
-      rating: 88,
-      availability: "Available Tomorrow",
-      gender: "Male",
-      img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-    },
-    {
-      id: 4,
-      name: "Dr. Priya Sharma",
-      specialty: "Dermatologist",
-      expertise: ["Pigmentation Treatment", "Dark Circle Removal", "Acne Scars"],
-      experience: 10,
-      location: "Andheri, Mumbai",
-      clinic: "DermaCare Skin Clinic",
-      consultationFee: 600,
-      patientStories: 210,
-      rating: 92,
-      availability: "Available Today",
-      gender: "Female",
-      img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-    },
-    {
-      id: 5,
-      name: "Dr. Aditya Mehta",
-      specialty: "Plastic Surgeon",
-      expertise: ["Rhinoplasty", "Face Lift", "Scar Revision Surgery"],
-      experience: 20,
-      location: "Bandra, Mumbai",
-      clinic: "Aesthetic Surgeons",
-      consultationFee: 1200,
-      patientStories: 500,
-      rating: 96,
-      availability: "Available Next Week",
-      gender: "Male",
-      img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-    },
-    {
-      id: 6,
-      name: "Dr. Neha Kapoor",
-      specialty: "Trichologist",
-      expertise: ["Hair Transplant", "Dandruff Treatment", "PRP Therapy"],
-      experience: 8,
-      location: "Powai, Mumbai",
-      clinic: "Hair & Scalp Care",
-      consultationFee: 650,
-      patientStories: 189,
-      rating: 85,
-      availability: "Available Today",
-      gender: "Female",
-      img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-    },
-    {
-      id: 7,
-      name: "Dr. Vikram Singh",
-      specialty: "Dermatologist",
-      expertise: ["Laser Treatment", "Mole & Wart Removal", "Tattoo Removal"],
-      experience: 25,
-      location: "Vashi, Navi Mumbai",
-      clinic: "Healthy Skin Clinic",
-      consultationFee: 900,
-      patientStories: 620,
-      rating: 94,
-      availability: "Available Tomorrow",
-      gender: "Male",
-      img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-    },
-    {
-      id: 8,
-      name: "Dr. Radhika Nair",
-      specialty: "Cosmetologist",
-      expertise: ["Skin Brightening", "HydraFacial", "Body Contouring"],
-      experience: 12,
-      location: "Whitefield, Bangalore",
-      clinic: "Glow & Glam Clinic",
-      consultationFee: 700,
-      patientStories: 378,
-      rating: 91,
-      availability: "Available Today",
-      gender: "Female",
-      img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-    },
-    {
-      id: 9,
-      name: "Dr. Anil Verma",
-      specialty: "Aesthetic Surgeon",
-      expertise: ["Liposuction", "Fat Grafting", "Breast Augmentation"],
-      experience: 18,
-      location: "Indiranagar, Bangalore",
-      clinic: "Aesthetic Solutions",
-      consultationFee: 1500,
-      patientStories: 450,
-      rating: 97,
-      availability: "Available Next Week",
-      gender: "Male",
-      img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-    },
-    {
-      id: 10,
-      name: "Dr. Pooja Saxena",
-      specialty: "Dermatologist",
-      expertise: ["Stretch Marks Removal", "Chemical Peeling", "Microneedling"],
-      experience: 9,
-      location: "South Delhi",
-      clinic: "Skin Perfection",
-      consultationFee: 750,
-      patientStories: 276,
-      rating: 89,
-      availability: "Available Tomorrow",
-      gender: "Female",
-      img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
-    }, ];
+    id: 1,
+    name: "Dr. L K Desai",
+    specialty: "Dermatologist",
+    expertise: ["Acne Treatment", "Skin Allergy", "Eczema", "Psoriasis"],
+    experience: 30,
+    location: "Sopan Baug, Pune",
+    clinic: "Dr. Desai Dermacare",
+    consultationFee: 700,
+    patientStories: 338,
+    rating: 94,
+    availability: "Available Tomorrow",
+    gender: "Male",
+    img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
+  },
+  {
+    id: 2,
+    name: "Dr. Sonal Chavan",
+    specialty: "Dermatologist",
+    expertise: ["Hair Loss Treatment", "Laser Hair Removal", "Skin Rejuvenation"],
+    experience: 19,
+    location: "Pimple Saudagar, Pune",
+    clinic: "Viva Luxe Aesthetic Clinic",
+    consultationFee: 700,
+    patientStories: 1531,
+    rating: 90,
+    availability: "Available Today",
+    gender: "Female",
+    img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
+  },
+  {
+    id: 3,
+    name: "Dr. Rajeev Agarwal",
+    specialty: "Cosmetologist",
+    expertise: ["Botox & Fillers", "Anti-Aging Treatment", "Chemical Peeling"],
+    experience: 15,
+    location: "Koregaon Park, Pune",
+    clinic: "Skin Glow Clinic",
+    consultationFee: 800,
+    patientStories: 421,
+    rating: 88,
+    availability: "Available Tomorrow",
+    gender: "Male",
+    img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
+  },
+  {
+    id: 4,
+    name: "Dr. Priya Sharma",
+    specialty: "Dermatologist",
+    expertise: ["Pigmentation Treatment", "Dark Circle Removal", "Acne Scars"],
+    experience: 10,
+    location: "Andheri, Mumbai",
+    clinic: "DermaCare Skin Clinic",
+    consultationFee: 600,
+    patientStories: 210,
+    rating: 92,
+    availability: "Available Today",
+    gender: "Female",
+    img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
+  },
+  {
+    id: 5,
+    name: "Dr. Aditya Mehta",
+    specialty: "Plastic Surgeon",
+    expertise: ["Rhinoplasty", "Face Lift", "Scar Revision Surgery"],
+    experience: 20,
+    location: "Bandra, Mumbai",
+    clinic: "Aesthetic Surgeons",
+    consultationFee: 1200,
+    patientStories: 500,
+    rating: 96,
+    availability: "Available Next Week",
+    gender: "Male",
+    img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
+  },
+  {
+    id: 6,
+    name: "Dr. Neha Kapoor",
+    specialty: "Trichologist",
+    expertise: ["Hair Transplant", "Dandruff Treatment", "PRP Therapy"],
+    experience: 8,
+    location: "Powai, Mumbai",
+    clinic: "Hair & Scalp Care",
+    consultationFee: 650,
+    patientStories: 189,
+    rating: 85,
+    availability: "Available Today",
+    gender: "Female",
+    img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
+  },
+  {
+    id: 7,
+    name: "Dr. Vikram Singh",
+    specialty: "Dermatologist",
+    expertise: ["Laser Treatment", "Mole & Wart Removal", "Tattoo Removal"],
+    experience: 25,
+    location: "Vashi, Navi Mumbai",
+    clinic: "Healthy Skin Clinic",
+    consultationFee: 900,
+    patientStories: 620,
+    rating: 94,
+    availability: "Available Tomorrow",
+    gender: "Male",
+    img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
+  },
+  {
+    id: 8,
+    name: "Dr. Radhika Nair",
+    specialty: "Cosmetologist",
+    expertise: ["Skin Brightening", "HydraFacial", "Body Contouring"],
+    experience: 12,
+    location: "Whitefield, Bangalore",
+    clinic: "Glow & Glam Clinic",
+    consultationFee: 700,
+    patientStories: 378,
+    rating: 91,
+    availability: "Available Today",
+    gender: "Female",
+    img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
+  },
+  {
+    id: 9,
+    name: "Dr. Anil Verma",
+    specialty: "Aesthetic Surgeon",
+    expertise: ["Liposuction", "Fat Grafting", "Breast Augmentation"],
+    experience: 18,
+    location: "Indiranagar, Bangalore",
+    clinic: "Aesthetic Solutions",
+    consultationFee: 1500,
+    patientStories: 450,
+    rating: 97,
+    availability: "Available Next Week",
+    gender: "Male",
+    img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
+  },
+  {
+    id: 10,
+    name: "Dr. Pooja Saxena",
+    specialty: "Dermatologist",
+    expertise: ["Stretch Marks Removal", "Chemical Peeling", "Microneedling"],
+    experience: 9,
+    location: "South Delhi",
+    clinic: "Skin Perfection",
+    consultationFee: 750,
+    patientStories: 276,
+    rating: 89,
+    availability: "Available Tomorrow",
+    gender: "Female",
+    img: "https://i.pinimg.com/474x/b7/14/a2/b714a2713d5d9259dab2a7c0b7df4ff9.jpg",
+  },];
 
-    
+
 export default function ProfilePage() {
   const router = useRouter()
   const { data: session, status } = useSession()
+  
+  const [isLoading, setIsLoading] = useState(true);
   const [formData, setFormData] = useState({
-    name: "Krishna Gupta",
-    phone: "+919109697516",
+    username: "",
+    phone: "",
+    photo: "",
     email: "",
     dob: "",
     gender: "",
@@ -184,12 +188,31 @@ export default function ProfilePage() {
     },
   });
   useEffect(() => {
-    if(session){
-    console.log(session)
+    async function fetchData() {
+
+      if (status === "loading") return; 
+      if (session?.user?.email) {
+        setFormData((prev) => ({
+          ...prev,
+          email: session.user.email,
+        }));
+        const user = await getuserProfileFromDB(session.user.email);
+        console.log(user)
+        if (user) {
+          setIsLoading(false)
+          setFormData((prev) => ({
+            ...prev,
+            ...user,
+          }));
+        }
+
+      } else {
+        router.push("/login")
+      }
     }
-  
-  }, [session])
-  
+    fetchData();
+  }, [session,status])
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -197,19 +220,34 @@ export default function ProfilePage() {
   };
 
   const handleSaveChanges = async () => {
-    // await updateProfilefull(formData)
+    let result = await updateProfilefull(formData)
     // Navigate to the search page
+    if (result.success) {
+      alert("Profile saved!");
+    } else {
+      alert(result.message);
+    }
     router.push("/search");
   };
 
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
-    setFormData((prev) => ({ ...prev, photo: URL.createObjectURL(file) }));
+    if (file) {
+      const previewUrl = URL.createObjectURL(file); // for preview
+
+      setFormData((prev) => ({
+        ...prev,
+        photo: file,            // actual file for upload
+        preview: previewUrl,    // temp preview for UI
+      }));
+    }
   };
 
 
   return (
+    <>
+    {isLoading && <LoadingOverlay />}
     <div className="max-w-4xl mx-auto mt-16 p-6 bg-white shadow-md rounded-lg border border-gray-200">
       {/* Title */}
       <h2 className="text-xl font-semibold text-gray-800 mb-4">Profile Settings</h2>
@@ -220,7 +258,7 @@ export default function ProfilePage() {
           <label className="relative cursor-pointer">
             {formData.photo ? (
               <img
-                src={formData.photo}
+                src={formData.preview || formData.photo}
                 alt="Doctor"
                 className="w-24 h-24 rounded-full object-cover border-4 border-blue-500"
               />
@@ -239,8 +277,8 @@ export default function ProfilePage() {
           <label className="block text-sm font-medium text-gray-700">Name*</label>
           <input
             type="text"
-            name="name"
-            value={formData.name}
+            name="username"
+            value={formData.username}
             onChange={handleChange}
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm"
           />
@@ -253,7 +291,7 @@ export default function ProfilePage() {
             type="text"
             name="phone"
             value={formData.phone}
-            disabled
+            onChange={handleChange}
             className="mt-1 block w-full bg-gray-100 border border-gray-300 rounded-md p-2 text-sm"
           />
         </div>
@@ -276,7 +314,7 @@ export default function ProfilePage() {
           <input
             type="date"
             name="dob"
-            value={formData.dob}
+            value={formData.dob || ""}
             onChange={handleChange}
             className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm"
           />
@@ -303,7 +341,7 @@ export default function ProfilePage() {
           <label className="block text-sm font-medium text-gray-700">Weight (kg)</label>
           <select
             name="weight"
-            value={formData.weight}
+            value={formData.weight ?? "" }
             onChange={handleChange}
             className="mt-1 block w-full border border-gray-300 rounded-md p-2 text-sm"
           >
@@ -389,5 +427,6 @@ export default function ProfilePage() {
         </button>
       </div>
     </div>
+    </>
   );
 }

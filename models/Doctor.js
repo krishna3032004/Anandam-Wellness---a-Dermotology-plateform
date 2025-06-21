@@ -61,6 +61,7 @@ const DoctorSchema = new Schema({
   licenseNumber: {
     type: String,
   },
+  gender: { type: String },
   experience: {
     type: Number,
   },
@@ -106,14 +107,42 @@ const DoctorSchema = new Schema({
     type: [String], // e.g., ["Monday", "Wednesday"]
     default: [],
   },
-  category: {
-    type: String,
-    enum: ["Ayurvedic", "Dermatology", "Cosmetology"],
-  },
+  // category: {
+  //   type: String,
+  //   enum: ["Ayurvedic", "Dermatology", "Cosmetology"],
+  // },
   expertise: {
     type: [String],
     default: [],
   },
+  patientStories: {
+    type: Number,
+    default: 0,
+  },
+  rating: {
+    type: Number,
+    default: 0,
+  },
+  reviews: [
+    {
+      userId: String,
+      title: String,         // e.g., "Visited for Skin Treatment"
+      date: String,          // ISO string
+      rating: Number,        // 1 to 5 stars (✅ NEW)
+      recommended: Boolean,  // true/false
+      tags: [String],        // e.g., ["Doctor Friendliness", "Value for Money"]
+      comment: String,       // optional
+    },
+  ],
+  faqs: [
+    {
+      question: String,
+      answer: String,
+    },
+  ],
+  chattedWith: [{ type: mongoose.Schema.Types.ObjectId, ref: "Doctor" }],
+  // paidDoctors: [{ type: mongoose.Schema.Types.ObjectId, ref: "Doctor" }],
+
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 })

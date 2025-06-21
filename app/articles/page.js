@@ -57,7 +57,7 @@ export default function ArticlesPage() {
   ]);
 
   return (
-    <div className="max-w-3xl mx-auto mt-24 p-6 bg-white shadow-md rounded-lg">
+    <div className="max-w-3xl mx-auto mt-24 p-2 bg-white shadow-md rounded-lg">
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">Common Skincare Articles</h2>
       {articles.map((article) => (
         <div key={article.id} className="mb-6 p-4 border-b border-gray-300">

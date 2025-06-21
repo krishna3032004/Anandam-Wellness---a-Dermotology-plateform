@@ -6,6 +6,7 @@ import { registerUser, verify } from '@/actions/useraction'
 import { confirmcode } from '@/actions/useraction'
 import { createUser, createDoctor, resetPassword,updateProfile } from '@/actions/useraction'
 import { useRouter } from "next/navigation";
+import LoadingOverlay from "@/Components/LoadingOverlay";
 
 export default function AuthPage() {
   const [isRegistering, setIsRegistering] = useState(false);
@@ -82,7 +83,7 @@ export default function AuthPage() {
       // else {
       //   window.location.href = result.callbackUrl;
       // }
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
 
@@ -99,6 +100,7 @@ export default function AuthPage() {
         setIsLoading(false);
         return false;
       }
+      setMessage("")
       return true;
     } catch (error) {
       console.log("Registration error:", error);
@@ -197,6 +199,7 @@ export default function AuthPage() {
       console.log("Wrong verification code")
       setIsLoading(false)
     }
+    setMessage2("")
   }
 
 
@@ -262,6 +265,8 @@ export default function AuthPage() {
   };
 
   return (
+    <>
+      {isLoading && <LoadingOverlay />}
     <div className="flex items-center justify-center mt-16 min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <div className="flex justify-center">
@@ -349,6 +354,7 @@ export default function AuthPage() {
               <p className="text-center text-blue-500 cursor-pointer" onClick={() => {setIsForgotPassword(false)
                  setErrors({})
                  setMessage("")
+                 setMessage2("")
                  setForm({ fullName: "", email: "", password: "", mobile: "", license: "", specialization: "", clinic: "" })
               }}>
                 Back to Login
@@ -539,5 +545,6 @@ export default function AuthPage() {
         {message2 && <p className="text-blue-600 text-center mt-4">{message2}</p>}
       </div>
     </div>
+    </>
   );
 }
