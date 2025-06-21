@@ -1,5 +1,5 @@
 "use client"
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { PhoneOff } from 'lucide-react';
@@ -13,7 +13,6 @@ let socket;
 export default function chat() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [patientId, setPatientId] = useState(null);
 
   useEffect(() => {
