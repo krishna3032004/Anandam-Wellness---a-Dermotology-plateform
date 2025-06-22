@@ -231,6 +231,7 @@ export default function chat() {
 
     socket.on("connect", () => {
       console.log("Connected to socket:", socket.id);
+      console.log("Connected to socket:", socket.id);
       socket.emit("joinRoom", roomId);
       setSocketReady(true);
     });
