@@ -1,10 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    './app/**/*.{js,ts,jsx,tsx}',     // ✅ App Router
-    './pages/**/*.{js,ts,jsx,tsx}',   // ✅ Pages Router
-    './components/**/*.{js,ts,jsx,tsx}',
-    "./src/**/*.{js,ts,jsx,tsx}" // if you're using src folder
+    "./app/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./**/*.{js,ts,jsx,tsx}", // covers all files
+  ],
+  safelist: [
+    "hidden",
+    "block",
+    "md:hidden",
+    "md:block",
+    "text-white",
+    "text-blue-500",
   ],
   theme: {
     extend: {
@@ -15,7 +23,7 @@ export default {
     },
   },
   plugins: [
-    require('tailwind-scrollbar-hide'),
-    require('tailwind-scrollbar'),
+    require("tailwind-scrollbar-hide"),
+    require("tailwind-scrollbar"),
   ],
 };
