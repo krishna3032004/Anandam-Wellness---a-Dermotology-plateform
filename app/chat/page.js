@@ -26,11 +26,11 @@ export default function Chat() {
 
     useEffect(() => {
         if (!searchParams) return;
-    
+
         const id = searchParams.get("doctorId");
         console.log("userId from query:", id);
         if (id) setDoctorId(id);
-      }, [searchParams]);
+    }, [searchParams]);
     // useEffect(() => {
     //     // if (userId) {
     //       console.log("Updated patientId from query:", userId);
@@ -408,7 +408,8 @@ export default function Chat() {
             text: messageInput,
             roomId,
         };
-console.log("agar send ho rha h ai to")
+        console.log("agar send ho rha h ai to")
+        console.log("agar send ho rha h ai to ho rha hai bahi")
         socket.emit("sendMessage", message);
         // setMessages((prevMessages) => [...prevMessages, message]);
         setMessageInput("");
