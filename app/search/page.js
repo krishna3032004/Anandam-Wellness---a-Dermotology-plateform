@@ -3,7 +3,6 @@ import { useState,useEffect,useRef } from "react";
 // import { useRouter } from "next/router";
 import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
 import { FaCalendarAlt, FaPhoneAlt } from "react-icons/fa";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { fetchDoctor, getDoctorsByExpertise,getDoctorAll } from "@/actions/useraction";
 import { FaStar } from "react-icons/fa";
@@ -55,10 +54,14 @@ const [showFilters, setShowFilters] = useState(false);
   const [problem, setproblem] = useState(null)
   // console.log(problem)
   useEffect(() => {
-    const searchParams = useSearchParams();
-    const id2 = searchParams.get("problem");
-    setproblem(id2)
+    const id = new URLSearchParams(window.location.search).get("problem");
+    if (id) setproblem(id);
   }, []);
+  // useEffect(() => {
+  //   const searchParams = useSearchParams();
+  //   const id2 = searchParams.get("problem");
+  //   setproblem(id2)
+  // }, []);
 
   useEffect(() => {
     if(problem){

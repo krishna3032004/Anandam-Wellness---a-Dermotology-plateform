@@ -1,7 +1,6 @@
 "use client"
 import DoctorProfile from "@/Components/DoctorProfile";
-import { useEffect, useState, use } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState, use } from "react"
 import { fetchDoctorbyid } from "@/actions/useraction";
 
 // const doctors = [
@@ -47,10 +46,14 @@ const Page = () => {
   const [doctor, setDoctor] = useState(null);
   // const id = searchParams.get("id");
   const [id, setid] = useState(null)
+  // useEffect(() => {
+  //   const searchParams = useSearchParams();
+  //   const id2 = searchParams.get("doctorId");
+  //   setid(id2)
+  // }, []);
   useEffect(() => {
-    const searchParams = useSearchParams();
-    const id2 = searchParams.get("doctorId");
-    setid(id2)
+    const id = new URLSearchParams(window.location.search).get("doctorId");
+    if (id) setid(id);
   }, []);
   useEffect(() => {
     async function fetchdoctor() {

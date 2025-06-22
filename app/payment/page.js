@@ -2,7 +2,6 @@
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSearchParams } from "next/navigation";
 import { useSession } from 'next-auth/react';
 import { fetchDoctorbyid } from '@/actions/useraction';
 import { initiatepayment } from '@/actions/useraction';
@@ -20,10 +19,14 @@ export default function PaymentPage() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const searchParams = useSearchParams();
-        const id2 = searchParams.get("doctorId");
-        setdoctorId(id2)
+        const id = new URLSearchParams(window.location.search).get("doctorId");
+        if (id) setdoctorId(id);
       }, []);
+    // useEffect(() => {
+    //     const searchParams = useSearchParams();
+    //     const id2 = searchParams.get("doctorId");
+    //     setdoctorId(id2)
+    //   }, []);
 
     useEffect(() => {
         if (status === "loading") return; // wait till session loads
