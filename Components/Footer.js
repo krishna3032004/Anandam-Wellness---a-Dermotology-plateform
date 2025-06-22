@@ -12,9 +12,9 @@ export default function Footer() {
         <div>
           {/* <h2 className="text-3xl font-extrabold text-white mb-4">Anandam Wellness</h2> */}
           <Link href="/">
-    <span className="text-[#f6d365] text-3xl font-semibold font-[Poppins]">Anandam</span>
-    <span className="text-white font-thin font-[Lora] italic">Well</span>
-  </Link>
+            <span className="text-[#f6d365] text-3xl font-semibold font-[Poppins]">Anandam</span>
+            <span className="text-white font-thin font-[Lora] italic">Well</span>
+          </Link>
           <p className="text-gray-300 text-sm leading-6">
             Your trusted healthcare partner for a healthier life. Stay connected with us for the best medical solutions.
           </p>
@@ -25,21 +25,21 @@ export default function Footer() {
           <h3 className="text-xl font-semibold text-white mb-4">Quick Links</h3>
           <ul className="space-y-3 text-gray-400 text-sm">
             {/* {["Home", "About Us", "Services", "Doctors", "Contact Us"].map((link, index) => ( */}
-              <Link  href={`/`}><li  className="hover:text-blue-400 transition my-3 duration-300 cursor-pointer">
-                Home
-              </li></Link>
-              <Link  href={`/about`}><li  className="hover:text-blue-400 transition my-3 duration-300 cursor-pointer">
-                About Us
-              </li></Link>
-              <Link href={`/services`}><li  className="hover:text-blue-400 transition my-3 duration-300 cursor-pointer">
-                Services
-              </li></Link>
-              <Link  href={`/search`}><li  className="hover:text-blue-400 transition my-3 duration-300 cursor-pointer">
-                Doctors
-              </li></Link>
-              <Link  href={`/contact`}><li  className="hover:text-blue-400 transition my-3 duration-300 cursor-pointer">
-                Contact Us
-              </li></Link>
+            <Link href={`/`}><li className="hover:text-blue-400 transition my-3 duration-300 cursor-pointer">
+              Home
+            </li></Link>
+            <Link href={`/about`}><li className="hover:text-blue-400 transition my-3 duration-300 cursor-pointer">
+              About Us
+            </li></Link>
+            <Link href={`/services`}><li className="hover:text-blue-400 transition my-3 duration-300 cursor-pointer">
+              Services
+            </li></Link>
+            <Link href={`/search`}><li className="hover:text-blue-400 transition my-3 duration-300 cursor-pointer">
+              Doctors
+            </li></Link>
+            <Link href={`/contact`}><li className="hover:text-blue-400 transition my-3 duration-300 cursor-pointer">
+              Contact Us
+            </li></Link>
             {/* ))} */}
           </ul>
         </div>
