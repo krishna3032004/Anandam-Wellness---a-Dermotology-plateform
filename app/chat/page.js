@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 // import { useSearchParams } from "next/navigation";
 import { SquareDashedMousePointer } from 'lucide-react';
+import { useSearchParams } from 'next/navigation';
 import io from 'socket.io-client';
 import SimplePeer from 'simple-peer';
 import { useRef } from 'react';
@@ -14,6 +15,8 @@ let socket;
 
 export default function Chat() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const doctorIdf = searchParams.get('doctorId');
 
     const { data: session, status } = useSession()
 
@@ -21,13 +24,19 @@ export default function Chat() {
     const [doctorId, setDoctorId] = useState(null);
 
     useEffect(() => {
-        const id = new URLSearchParams(window.location.search).get("doctorId");
-        if (id) setDoctorId(id);
-      }, []);
+        // if (userId) {
+          console.log("Updated patientId from query:", userId);
+          setDoctorId(doctorIdf);
+        // }
+      }, [doctorIdf]);
+    // useEffect(() => {
+    //     const id = new URLSearchParams(window.location.search).get("doctorId");
+    //     if (id) setDoctorId(id);
+    // }, []);
     // const userId = "67c04abd7270925f79ef38a1"; // Replace with actual user ID from session or auth
     const [userId, setuserId] = useState("")
 
-    const roomId =  doctorId && userId ? [doctorId, userId].sort().join('-') : null;
+    const roomId = doctorId && userId ? [doctorId, userId].sort().join('-') : null;
     const [doctors, setDoctors] = useState([]);
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
@@ -293,6 +302,7 @@ export default function Chat() {
     }, [selectedDoctor, userId, consultationEnded, reviewPrompted]);
 
     const handleDoctorClick = (docId) => {
+
         router.push(`/chat?doctorId=${docId}`);
     };
 
@@ -400,7 +410,11 @@ export default function Chat() {
 
         const lastPrescriptionMsg = [...messages]
             .reverse()
-            .find((msg) => msg.mediaType.includes("prescription") && msg.senderId === doctorId);
+            .find((msg) => {
+                if (msg?.mediaType) {
+                    msg.mediaType.includes("prescription") && msg.senderId === doctorId
+                }
+            });
 
         if (!lastPrescriptionMsg) return;
 
@@ -523,7 +537,7 @@ export default function Chat() {
             {isLoading && <LoadingOverlay />}
             <div className="flex h-screen bg-gray-100 text-gray-800 relative overflow-hidden px-1 sm:px-2 md:px-4  lg:px-32 pt-24 lg:pt-28 pb-5 lg:pb-9">
                 {/* Sidebar */}
-                <div className="fixed lg:static top-6 left-0 z-50 bg-white w-64 lg:w-72 rounded-lg  overflow-y-auto border-r shadow-xl transform transition-transform duration-300 -translate-x-full lg:translate-x-0">
+                <div className="fixed   lg:static ztop-6 left-0- z-40 bg-white w-64 lg:w-72 rounded-lg  overflow-y-auto border-r shadow-xl transform transition-transform duration-300 -translate-x-full lg:translate-x-0">
                     <div className="p-4 bg-blue-600 text-white font-bold text-center rounded-t-lg">
                         Start a new consultation
                     </div>

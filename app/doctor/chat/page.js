@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { PhoneOff } from 'lucide-react';
 import io from 'socket.io-client';
+import { useSearchParams } from 'next/navigation';
 import SimplePeer from 'simple-peer';
 import html2canvas from 'html2canvas';
 import { fetchDoctorbyid } from '@/actions/useraction';
@@ -14,11 +15,23 @@ export default function chat() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const router = useRouter();
   const [patientId, setPatientId] = useState(null);
+  const [change, setchange] = useState(false)
 
+  const searchParams = useSearchParams();
+  const userId = searchParams.get('userId');
   useEffect(() => {
-        const id = new URLSearchParams(window.location.search).get("userId");
-        if (id) setPatientId(id);
-      }, []);
+    // if (patientId) {
+      console.log("Updated patientId from query:", userId);
+      setPatientId(userId);
+    // }
+  }, [userId]);
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     let id = new URLSearchParams(window.location.search).get("userId");
+  //     console.log(id)
+  //     if (id) setPatientId(id);
+  //   }
+  // }, [router.asPath]);
 
   const { data: session, status } = useSession();
   const [doctorId, setDoctorId] = useState("");
@@ -161,10 +174,10 @@ export default function chat() {
 
   const [roomId, setRoomId] = useState(null)
   useEffect(() => {
-  if (doctorId && patientId) {
-    setRoomId([doctorId, patientId].sort().join('-'));
-  }
-}, [doctorId, patientId]);
+    if (doctorId && patientId) {
+      setRoomId([doctorId, patientId].sort().join('-'));
+    }
+  }, [doctorId, patientId]);
   // const roomId = [doctorId, patientId].sort().join('-');
 
   useEffect(() => {
@@ -177,11 +190,12 @@ export default function chat() {
       }
     };
     if (doctorId) fetchPatients();
-  }, [doctorId]);
+  }, [doctorId, patientId]);
 
   useEffect(() => {
     if (patientId && patients.length > 0) {
       const found = patients.find(p => p._id === patientId);
+      console.log(found)
       setSelectedPatient(found);
     }
   }, [patientId, patients]);
@@ -463,6 +477,7 @@ export default function chat() {
               key={p._id}
               onClick={() => {
                 router.push(`/doctor/chat?userId=${p._id}`);
+                setchange(!change)
                 // setIsSidebarOpen(false);
               }}
               className={`flex items-center gap-4 p-4 border-b  cursor-pointer hover:bg-green-100 transition-all duration-200 ${selectedPatient?._id === p._id ? 'bg-green-200' : ''

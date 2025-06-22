@@ -65,12 +65,13 @@ const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
     if(problem){
+      console.log(problem)
       const formattedProblem = problem ? problem.replace(/-/g, " ") : "Loading...";
       setQuery(formattedProblem)
     }
   
     
-  }, [])
+  }, [problem])
   
   useEffect(() => {
     

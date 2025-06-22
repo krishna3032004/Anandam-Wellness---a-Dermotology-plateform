@@ -52,7 +52,8 @@ const Page = () => {
   //   setid(id2)
   // }, []);
   useEffect(() => {
-    const id = new URLSearchParams(window.location.search).get("doctorId");
+    const id = new URLSearchParams(window.location.search).get("id");
+    console.log(id)
     if (id) setid(id);
   }, []);
   useEffect(() => {
