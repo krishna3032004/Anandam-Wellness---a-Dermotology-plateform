@@ -7,6 +7,7 @@ import { fetchDoctorbyid } from '@/actions/useraction';
 import { initiatepayment } from '@/actions/useraction';
 import LoadingOverlay from '@/Components/LoadingOverlay';
 import { stubTrue } from 'lodash';
+import { useSearchParams } from 'next/navigation';
 
 export default function PaymentPage() {
     const { data: session, status } = useSession()
@@ -17,11 +18,20 @@ export default function PaymentPage() {
     // const searchParams = useSearchParams();
     // const doctorId = searchParams.get("doctorId");
     const [isLoading, setIsLoading] = useState(true);
+    const searchParams = typeof window !== 'undefined' ? useSearchParams() : null;
 
     useEffect(() => {
-        const id = new URLSearchParams(window.location.search).get("doctorId");
+        if (!searchParams) return;
+    
+        const id = searchParams.get("doctorId");
+        console.log("userId from query:", id);
         if (id) setdoctorId(id);
-      }, []);
+      }, [searchParams]);
+
+    // useEffect(() => {
+    //     const id = new URLSearchParams(window.location.search).get("doctorId");
+    //     if (id) setdoctorId(id);
+    //   }, []);
     // useEffect(() => {
     //     const searchParams = useSearchParams();
     //     const id2 = searchParams.get("doctorId");

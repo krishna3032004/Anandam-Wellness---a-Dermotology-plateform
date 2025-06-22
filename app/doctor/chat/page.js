@@ -17,14 +17,21 @@ export default function chat() {
   const [patientId, setPatientId] = useState(null);
   const [change, setchange] = useState(false)
 
-  const searchParams = useSearchParams();
-  const userId = searchParams.get('userId');
+  const searchParams = typeof window !== 'undefined' ? useSearchParams() : null;
+  // const userId = searchParams.get('userId');
   useEffect(() => {
-    // if (patientId) {
-      console.log("Updated patientId from query:", userId);
-      setPatientId(userId);
-    // }
-  }, [userId]);
+    if (!searchParams) return;
+
+    const id = searchParams.get("userId");
+    console.log("userId from query:", id);
+    if (id) setPatientId(id);
+  }, [searchParams]);
+  // useEffect(() => {
+  //   // if (patientId) {
+  //     console.log("Updated patientId from query:", userId);
+  //     setPatientId(userId);
+  //   // }
+  // }, [userId]);
   // useEffect(() => {
   //   if (typeof window !== 'undefined') {
   //     let id = new URLSearchParams(window.location.search).get("userId");

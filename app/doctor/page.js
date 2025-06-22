@@ -2,6 +2,7 @@
 import DoctorProfile from "@/Components/DoctorProfile";
 import { useEffect, useState, use } from "react"
 import { fetchDoctorbyid } from "@/actions/useraction";
+import { useSearchParams } from "next/navigation";
 
 // const doctors = [
 //   {
@@ -43,6 +44,8 @@ import { fetchDoctorbyid } from "@/actions/useraction";
 const Page = () => {
   // const { id } = param.slug2;
   // const unwrappedParams = use(params); // Unwrap params using use()
+  const searchParams = typeof window !== 'undefined' ? useSearchParams() : null;
+
   const [doctor, setDoctor] = useState(null);
   // const id = searchParams.get("id");
   const [id, setid] = useState(null)
@@ -52,10 +55,17 @@ const Page = () => {
   //   setid(id2)
   // }, []);
   useEffect(() => {
-    const id = new URLSearchParams(window.location.search).get("id");
-    console.log(id)
+    if (!searchParams) return;
+
+    const id = searchParams.get("id");
+    console.log("userId from query:", id);
     if (id) setid(id);
-  }, []);
+  }, [searchParams]);
+  // useEffect(() => {
+  //   const id = new URLSearchParams(window.location.search).get("id");
+  //   console.log(id)
+  //   if (id) setid(id);
+  // }, []);
   useEffect(() => {
     async function fetchdoctor() {
       if (id) {
