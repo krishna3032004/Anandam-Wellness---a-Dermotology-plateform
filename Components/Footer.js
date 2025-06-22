@@ -2,7 +2,7 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn, FaYoutube } from "re
 import Link from "next/link";
 export default function Footer() {
   return (
-    <footer className="relative bg-gray-900 text-white w-full py-12 px-6">
+    <footer className="relative z-50 bg-gray-900 text-white w-full py-12 px-6">
       {/* Floating Gradient Effect */}
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-blue-500 to-indigo-500 opacity-10"></div>
 
