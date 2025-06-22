@@ -287,7 +287,10 @@ export default function chat() {
 
 
   const sendMessage = () => {
-    if (!messageInput.trim() || !socketReady || !doctorId || !patientId) return;
+    if (!messageInput.trim() || !socketReady || !doctorId || !patientId) {
+      console.log("bhai send kyu ni ho rha tu")
+      return;
+    }
 
     const msg = {
       senderId: doctorId,

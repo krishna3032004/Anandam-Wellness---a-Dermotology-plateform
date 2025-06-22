@@ -398,6 +398,7 @@ export default function Chat() {
     const sendMessage = () => {
         if (!messageInput.trim() || !socketReady || !doctorId || !userId) {
             console.warn("Socket not initialized yet!");
+            console.log("send hi nhi ho rha");
             return;
         }
         const roomId = [doctorId, userId].sort().join('-');
@@ -407,7 +408,7 @@ export default function Chat() {
             text: messageInput,
             roomId,
         };
-
+console.log("agar send ho rha h ai to")
         socket.emit("sendMessage", message);
         // setMessages((prevMessages) => [...prevMessages, message]);
         setMessageInput("");
