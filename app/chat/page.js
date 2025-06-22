@@ -336,8 +336,8 @@ export default function Chat() {
 
         fetchMessages();
 
-        socket = io({
-            path: "/api/socket",
+        socket = io("https://anandam-socket-server.onrender.com", {
+            transports: ["websocket"],
         });
 
         socket.on("connect", () => {

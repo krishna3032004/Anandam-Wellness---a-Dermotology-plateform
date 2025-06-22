@@ -4,7 +4,7 @@ export default {
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
-    "./**/*.{js,ts,jsx,tsx}", // covers all files
+    // "./**/*.{js,ts,jsx,tsx}", // covers all files
   ],
   safelist: [
     "hidden",

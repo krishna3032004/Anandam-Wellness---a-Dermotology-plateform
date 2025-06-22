@@ -224,7 +224,10 @@ export default function chat() {
 
     fetchMessages();
 
-    socket = io({ path: "/api/socket" });
+    // socket = io({ path: "/api/socket" });
+    socket = io("https://anandam-socket-server.onrender.com", {
+      transports: ["websocket"],
+    });
 
     socket.on("connect", () => {
       console.log("Connected to socket:", socket.id);
