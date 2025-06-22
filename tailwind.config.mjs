@@ -4,6 +4,7 @@ export default {
     './app/**/*.{js,ts,jsx,tsx}',     // ✅ App Router
     './pages/**/*.{js,ts,jsx,tsx}',   // ✅ Pages Router
     './components/**/*.{js,ts,jsx,tsx}',
+    "./src/**/*.{js,ts,jsx,tsx}" // if you're using src folder
   ],
   theme: {
     extend: {
