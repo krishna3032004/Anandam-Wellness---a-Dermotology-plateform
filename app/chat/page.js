@@ -15,8 +15,9 @@ let socket;
 
 export default function Chat() {
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const doctorIdf = searchParams.get('doctorId');
+    // const searchParams = useSearchParams();
+    const searchParams = typeof window !== 'undefined' ? useSearchParams() : null;
+    // const doctorIdf = searchParams.get('doctorId');
 
     const { data: session, status } = useSession()
 
@@ -24,11 +25,18 @@ export default function Chat() {
     const [doctorId, setDoctorId] = useState(null);
 
     useEffect(() => {
-        // if (userId) {
-          console.log("Updated patientId from query:", userId);
-          setDoctorId(doctorIdf);
-        // }
-      }, [doctorIdf]);
+        if (!searchParams) return;
+    
+        const id = searchParams.get("doctorId");
+        console.log("userId from query:", id);
+        if (id) setDoctorId(id);
+      }, [searchParams]);
+    // useEffect(() => {
+    //     // if (userId) {
+    //       console.log("Updated patientId from query:", userId);
+    //       setDoctorId(doctorIdf);
+    //     // }
+    //   }, [doctorIdf]);
     // useEffect(() => {
     //     const id = new URLSearchParams(window.location.search).get("doctorId");
     //     if (id) setDoctorId(id);
