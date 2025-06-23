@@ -61,7 +61,7 @@ This platform connects patients with verified doctors for real-time consultation
   - **Join rooms**
   - **Exchange messages**
   - **Video call signaling**
-- Socket server repo: [👉 View Socket Server Code](https://github.com/your-username/anandam-socket-server)
+- Socket server repo: [👉 View Socket Server Code](https://github.com/krishna3032004/anandam-socket-server.git)
 - Backend built with:
   - **MongoDB**
   - **Express**
