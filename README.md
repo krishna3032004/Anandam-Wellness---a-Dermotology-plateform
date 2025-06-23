@@ -12,29 +12,63 @@ Anandam Wellness is a full-stack telemedicine and dermatology consultation platf
 
 ## 💬 How to Use the Platform
 
-### ✅ Doctor Flow
+This platform connects patients with verified doctors for real-time consultations via **chat** and **video call**. It also includes **Razorpay** payment integration and prescription sharing.
 
-1. Register/Login as a **Doctor**.
-2. Fill in your **profile details** – including name, specialization, experience, photo, and availability.
-3. Submit your profile for **admin verification**.
-4. Once verified by the admin, your profile will be live on the platform.
-5. Patients can now **book consultations** with you.
-6. After payment, you’ll be able to:
-   - **Chat** with the patient in real-time.
-   - **Initiate or accept video calls**.
-   - **Generate and send prescriptions**.
+> ⚡ **Note:** The real-time chat and video functionality is powered by a separate **dedicated Socket.IO server**, which is hosted independently and maintained in [this separate GitHub repository](https://github.com/your-username/anandam-socket-server).
 
-### 👤 Patient Flow
+---
 
-1. Register/Login as a **Patient**.
-2. Browse the list of **verified doctors** by specialization, location, or name.
-3. Choose a doctor and click **"Book Appointment"**.
-4. Complete payment securely via **Razorpay**.
-5. After payment, you'll be redirected to a **chat room** with the doctor.
-6. You can:
-   - **Chat** in real-time with the doctor.
-   - **Join a video consultation** when the doctor initiates a call.
-   - **Receive prescriptions or medical advice** in the chat.
+### 👨‍⚕️ Doctor Flow
+
+1. Register or Login as a **Doctor**.
+2. Complete your **Doctor Profile** by filling in:
+   - Full name
+   - Specialization
+   - Years of experience
+   - Consultation fee
+   - Profile photo
+3. Click **"Save"** – your profile will be submitted to the **Admin** for verification.
+4. After admin approval, your profile becomes **visible to patients**.
+5. When a patient books a consultation:
+   - You'll be notified.
+   - You can open the **chat page** and begin consultation.
+   - Optionally, you can start a **video call** directly from the chat.
+6. After diagnosis, you can fill out a **prescription form** which generates a downloadable prescription image.
+
+---
+
+### 🧑‍💻 Patient Flow
+
+1. Register or Login as a **Patient**.
+2. Explore available doctors using filters for:
+   - **Expertise**
+   - **Location**
+   - **Name Search**
+3. Click on a doctor to view their profile and click **"Book Appointment"**.
+4. Complete the **secure payment** via Razorpay.
+5. You are redirected to the **chat page** with the selected doctor.
+6. From the chat page, you can:
+   - Exchange text messages.
+   - View and download **prescriptions**.
+   - Join a **video consultation** when prompted.
+
+---
+
+### 🧠 Behind the Scenes
+
+- The platform uses **WebSockets** (Socket.IO) for real-time chat & video calls.
+- A separate backend socket server handles all socket communication:
+  - **Join rooms**
+  - **Exchange messages**
+  - **Video call signaling**
+- Socket server repo: [👉 View Socket Server Code](https://github.com/your-username/anandam-socket-server)
+- Backend built with:
+  - **MongoDB**
+  - **Express**
+  - **Next.js App Router**
+  - **Tailwind CSS** for frontend styling
+  - **Cloudinary** for image uploads
+
 
 
 ---
