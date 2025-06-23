@@ -10,6 +10,34 @@ Anandam Wellness is a full-stack telemedicine and dermatology consultation platf
 
 ---
 
+## 💬 How to Use the Platform
+
+### ✅ Doctor Flow
+
+1. Register/Login as a **Doctor**.
+2. Fill in your **profile details** – including name, specialization, experience, photo, and availability.
+3. Submit your profile for **admin verification**.
+4. Once verified by the admin, your profile will be live on the platform.
+5. Patients can now **book consultations** with you.
+6. After payment, you’ll be able to:
+   - **Chat** with the patient in real-time.
+   - **Initiate or accept video calls**.
+   - **Generate and send prescriptions**.
+
+### 👤 Patient Flow
+
+1. Register/Login as a **Patient**.
+2. Browse the list of **verified doctors** by specialization, location, or name.
+3. Choose a doctor and click **"Book Appointment"**.
+4. Complete payment securely via **Razorpay**.
+5. After payment, you'll be redirected to a **chat room** with the doctor.
+6. You can:
+   - **Chat** in real-time with the doctor.
+   - **Join a video consultation** when the doctor initiates a call.
+   - **Receive prescriptions or medical advice** in the chat.
+
+
+---
 ## 📌 Features
 
 - 🔐 **Authentication** with NextAuth (Doctors & Patients)
@@ -79,3 +107,22 @@ RAZORPAY_KEY_SECRET=your_razorpay_secret
 ```bash
 npm run dev
 ```
+
+
+
+
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
