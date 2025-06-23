@@ -6,7 +6,7 @@ Anandam Wellness is a full-stack telemedicine and dermatology consultation platf
 
 ## 🔗 Live Demo
 
-🌐 [Visit Live Site](https://your-deployment-url.com)
+🌐 [Visit Live Site](https://anandamwellness-xi.vercel.app/)
 
 ---
 
@@ -14,7 +14,7 @@ Anandam Wellness is a full-stack telemedicine and dermatology consultation platf
 
 This platform connects patients with verified doctors for real-time consultations via **chat** and **video call**. It also includes **Razorpay** payment integration and prescription sharing.
 
-> ⚡ **Note:** The real-time chat and video functionality is powered by a separate **dedicated Socket.IO server**, which is hosted independently and maintained in [this separate GitHub repository](https://github.com/your-username/anandam-socket-server).
+> ⚡ **Note:** The real-time chat and video functionality is powered by a separate **dedicated Socket.IO server**, which is hosted independently and maintained in [this separate GitHub repository](https://github.com/krishna3032004/anandam-socket-server.git).
 
 ---
 
