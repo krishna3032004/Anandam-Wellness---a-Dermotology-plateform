@@ -1,7 +1,7 @@
 "use client"
 import { useState,useEffect,useRef } from "react";
 // import { useRouter } from "next/router";
-import { FaSearch, FaMapMarkerAlt } from "react-icons/fa";
+import { FaSearch, FaMapMarkerAlt, FaLessThanEqual } from "react-icons/fa";
 import { FaCalendarAlt, FaPhoneAlt } from "react-icons/fa";
 import Link from "next/link";
 import { fetchDoctor, getDoctorsByExpertise,getDoctorAll } from "@/actions/useraction";
@@ -17,6 +17,7 @@ export default function Home() {
   const [selectedGender, setSelectedGender] = useState("");
   const [sortOption, setSortOption] = useState("Relevance");
   const [doctors, setDoctors] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
 const [loading, setLoading] = useState(false);
 // const [page, setPage] = useState(0);
 const [skip, setSkip] = useState(0);
@@ -100,6 +101,7 @@ const [showFilters, setShowFilters] = useState(false);
       setSkip((prev) => prev + limitValue);
     }
   
+    setIsLoading(false)
     setHasMore(data.hasMore);
   };
   
@@ -122,6 +124,7 @@ const [showFilters, setShowFilters] = useState(false);
       setSkip((prev) => prev + 20);
     }
 
+    setIsLoading(false)
     setHasMore(data.hasMore);
   };
 
@@ -414,7 +417,14 @@ const [showFilters, setShowFilters] = useState(false);
       </div>
     </div>
           ))
-        ) : (
+        ) : ( isLoading ? 
+          <div className=" inset-0  bg-opacity-50 flex items-center justify-center backdrop-blur-sm">
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <div className="w-10 h-10 border-4 border-gray-300 border-t-transparent rounded-full animate-spin" />
+          {/* <p className="text-white text-lg font-semibold animate-pulse">Loading...</p> */}
+        </div>
+      </div>
+      :
           <p className="text-center text-gray-500">No doctors found.</p>
         )}
       </div>
