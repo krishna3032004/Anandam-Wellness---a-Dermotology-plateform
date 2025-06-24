@@ -562,7 +562,7 @@ export default function Chat() {
                                 <img src={doc.photo} alt="doctor" className="w-10 h-10 rounded-full object-cover shadow" />
                                 :
                                 <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-600 font-bold text-xl'>
-                                    <div>{p.username?.charAt(0)?.toUpperCase()}</div>
+                                    <div>{doc.username?.charAt(0)?.toUpperCase()}</div>
                                 </div>
                             }
                             <div>
