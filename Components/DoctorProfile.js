@@ -13,33 +13,33 @@ const DoctorProfile = ({ doctor }) => {
   const { data: session, status } = useSession()
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("info");
- let doctorId = doctor._id
- 
- const [isLoading, setIsLoading] = useState(false);
+  let doctorId = doctor._id
 
-const faqs = [
-  {
-    "question": "Where does Dr. L K Desai practice?",
-    "answer": "Dr. L K Desai practices at Dr. Desai Dermacare - Skin, Hair & Laser Clinic - Sopan Baug.",
-    "_id": {
-      "$oid": "683ff800ecf106eeaaa20c61"
+  const [isLoading, setIsLoading] = useState(false);
+
+  const faqs = [
+    {
+      "question": "Where does Dr. L K Desai practice?",
+      "answer": "Dr. L K Desai practices at Dr. Desai Dermacare - Skin, Hair & Laser Clinic - Sopan Baug.",
+      "_id": {
+        "$oid": "683ff800ecf106eeaaa20c61"
+      }
+    },
+    {
+      "question": "How can I take Dr. L K Desai's appointment?",
+      "answer": "You can take an appointment online through Practo for in-clinic visits with the doctor.",
+      "_id": {
+        "$oid": "683ff800ecf106eeaaa20c62"
+      }
     }
-  },
-  {
-    "question": "How can I take Dr. L K Desai's appointment?",
-    "answer": "You can take an appointment online through Practo for in-clinic visits with the doctor.",
-    "_id": {
-      "$oid": "683ff800ecf106eeaaa20c62"
-    }
-  }
-]
+  ]
 
   const handleBook = () => {
     setIsLoading(true)
     router.push(`/payment?doctorId=${doctorId}`);
   };
 
-  
+
 
   const handlecheck = () => {
     if (!session) {
@@ -51,7 +51,7 @@ const faqs = [
     const now = new Date();
     const date = new Date(dateString);
     const seconds = Math.floor((now - date) / 1000);
-  
+
     if (seconds < 60) return `${seconds} sec ago`;
     const minutes = Math.floor(seconds / 60);
     if (minutes < 60) return `${minutes} min ago`;
@@ -66,10 +66,10 @@ const faqs = [
     const years = Math.floor(days / 365);
     return `${years} year${years > 1 ? 's' : ''} ago`;
   };
-  
+
   return (
     <>
-    {isLoading && <LoadingOverlay />}
+      {isLoading && <LoadingOverlay />}
       <Script
         src="https://checkout.razorpay.com/v1/checkout.js"
         strategy="afterInteractive" // ✅ Important
@@ -85,7 +85,15 @@ const faqs = [
         <div className="md:col-span-2 bg-white flex flex-col gap-5 py-6 px-2 sm:px-6 shadow-lg rounded-lg">
           {/* Doctor Header */}
           <div className="flex items-center">
-            <img src={doctor.photo} alt={doctor.username} className="w-20 sm:w-24 h-20 sm:h-24 rounded-full border-4 border-blue-500" />
+            {doctor?.photo ? (
+              <img src={doctor.photo} alt={doctor.username} className="w-20 sm:w-24 h-20 sm:h-24 rounded-full object-cover shadow" />
+            ) : (
+              // <div className='w-10 h-10 rounded-full items-center justify-center shadow font-bold text-xl'> 
+              <div className='w-20 sm:w-24 h-20 sm:h-24 rounded-full overflow-hidden bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-600 font-bold text-xl'>
+                <div>{doctor?.username?.charAt(0)?.toUpperCase()}</div>
+              </div>
+            )}
+            {/* <img src={doctor.photo} alt={doctor.username} className="w-20 sm:w-24 h-20 sm:h-24 rounded-full border-4 border-blue-500" /> */}
             <div className="ml-4">
               <h2 className="text-xl sm:text-2xl font-bold text-blue-700">{doctor.username}</h2>
               <p className="text-sm sm:text-base text-gray-600">{doctor.specialty} • {doctor.experience} years experience</p>
@@ -192,12 +200,12 @@ const faqs = [
                     <FaCheckCircle className="text-purple-600 mr-1" /> Prime Verified Details
                   </p>
                 </div>
-                
-                  <button onClick={handleBook} className="mt-4 w-full bg-blue-500 text-sm sm:text-base text-white py-2 rounded-md hover:bg-blue-700 flex items-center justify-center space-x-2">
-                    <FaCalendarAlt />
-                    <span>Book Appointment</span>
-                  </button>
-                
+
+                <button onClick={handleBook} className="mt-4 w-full bg-blue-500 text-sm sm:text-base text-white py-2 rounded-md hover:bg-blue-700 flex items-center justify-center space-x-2">
+                  <FaCalendarAlt />
+                  <span>Book Appointment</span>
+                </button>
+
               </div>
             )}
 

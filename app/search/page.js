@@ -362,11 +362,19 @@ const [showFilters, setShowFilters] = useState(false);
             <div key={doctor._id} className="flex flex-col sm:flex-row justify-between bg-white p-4 rounded-lg shadow-md items-center gap-4 border">
       {/* Doctor's Image */}
       <div className="flex flex-row items-center w-full sm:w-[68%] gap-4 sm:gap-7  ">
-      <img
+        {doctor?.photo ? (
+                <img src={doctor.photo} alt={doctor.username} className="sm:w-20 w-16 sm:h-20 h-16 rounded-full object-cover shadow" />
+              ) : (
+                // <div className='w-10 h-10 rounded-full items-center justify-center shadow font-bold text-xl'> 
+                <div className='sm:w-20 w-16 sm:h-20 h-16 rounded-full overflow-hidden bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-600 font-bold text-xl'>
+                  <div>{doctor?.username?.charAt(0)?.toUpperCase()}</div>
+                </div>
+              )}
+      {/* <img
         src={doctor.photo}
         alt={doctor.username}
         className="sm:w-20 w-16 sm:h-20 h-16 rounded-full border"
-      />
+      /> */}
 
       {/* Doctor's Info */}
       <Link href={`/doctor?id=${doctor._id}`} passHref><div className="flex-1">

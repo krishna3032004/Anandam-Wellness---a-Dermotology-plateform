@@ -558,7 +558,13 @@ export default function Chat() {
                             className={`flex items-center gap-3 p-4 border-b cursor-pointer hover:bg-blue-50 transition-all duration-200 ${selectedDoctor?._id === doc._id ? 'bg-blue-100' : ''
                                 }`}
                         >
-                            <img src={doc.photo} alt="doctor" className="w-10 h-10 rounded-full object-cover shadow" />
+                            {doc.photo ?
+                                <img src={doc.photo} alt="doctor" className="w-10 h-10 rounded-full object-cover shadow" />
+                                :
+                                <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-600 font-bold text-xl'>
+                                    <div>{p.username?.charAt(0)?.toUpperCase()}</div>
+                                </div>
+                            }
                             <div>
                                 <p className="font-semibold text-sm">{doc.username}</p>
                                 {/* <p className="text-xs text-gray-500">{doc.lastMsg}</p> */}
@@ -572,7 +578,15 @@ export default function Chat() {
                     {/* Chat header */}
                     <div className="flex items-center justify-between px-6 py-4 border-b relative">
                         <div className="flex items-center gap-3">
-                            <img src={selectedDoctor?.photo} alt="doctor" className="w-10 h-10 rounded-full" />
+                            {selectedDoctor?.photo ? (
+                                <img src={selectedDoctor.photo} alt="doctor" className="w-10 h-10 rounded-full object-cover shadow" />
+                            ) : (
+                                // <div className='w-10 h-10 rounded-full items-center justify-center shadow font-bold text-xl'> 
+                                <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-600 font-bold text-xl'>
+                                    <div>{selectedDoctor?.username?.charAt(0)?.toUpperCase()}</div>
+                                </div>
+                            )}
+                            {/* <img src={selectedDoctor?.photo} alt="doctor" className="w-10 h-10 rounded-full" /> */}
                             <div>
                                 <h2 className="font-semibold">{selectedDoctor?.username}</h2>
                                 <p className="text-xs text-gray-500">{selectedDoctor?.messagesLeft} msgs left</p>

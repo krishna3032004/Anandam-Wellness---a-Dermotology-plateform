@@ -22,11 +22,11 @@ export default function PaymentPage() {
 
     useEffect(() => {
         if (!searchParams) return;
-    
+
         const id = searchParams.get("doctorId");
         console.log("userId from query:", id);
         if (id) setdoctorId(id);
-      }, [searchParams]);
+    }, [searchParams]);
 
     // useEffect(() => {
     //     const id = new URLSearchParams(window.location.search).get("doctorId");
@@ -171,12 +171,21 @@ export default function PaymentPage() {
             <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
                 {!session?.user?.doctor ?
                     (doctor ? (
-                        <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full text-center">
-                            <img
+                        <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full items-center text-center">
+                            {doctor?.photo ? (
+                                <img src={doctor.photo} alt="Doctor" className="w-24 h-24  rounded-full object-cover shadow" />
+                            ) : (
+                                // <div className='w-10 h-10 rounded-full items-center justify-center shadow font-bold text-xl'> 
+
+                                <div className='w-24 h-24 mx-auto rounded-full text-center overflow-hidden bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-600 font-bold text-xl'>
+                                    <div>{doctor?.username?.charAt(0)?.toUpperCase()}</div>
+                                </div>
+                            )}
+                            {/* <img
                                 src={doctor.photo || '/default-doctor.png'}
                                 alt="Doctor"
                                 className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
-                            />
+                            /> */}
                             <h2 className="text-xl sm:text-2xl font-semibold text-gray-800"> {doctor.username}</h2>
                             <p className="text-gray-500 mb-2 text-sm sm:text-base">{doctor.specialty[0] || 'Dermatologist'}</p>
                             <p className="text-md sm:text-lg text-gray-700 mb-4">Consultation Fee: <span className="font-bold text-indigo-600">₹{doctor.onlineFee}</span></p>
