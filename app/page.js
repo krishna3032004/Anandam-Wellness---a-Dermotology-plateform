@@ -143,7 +143,7 @@ const HomePage = () => {
   useEffect(() => {
     const animateScroll = (element, direction) => {
       let speed = 1; // Adjust speed for smooth effect
-
+     
       const move = () => {
         if (direction === "ltr") {
           element.scrollLeft += speed;
