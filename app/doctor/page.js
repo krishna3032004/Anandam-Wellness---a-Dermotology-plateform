@@ -56,14 +56,7 @@ const Page = () => {
       setid(id);
     }
   }, []);
-    console.log("userId from query:", id);
-    if (id) setid(id);
-  }, [searchParams]);
-  // useEffect(() => {
-  //   const id = new URLSearchParams(window.location.search).get("id");
-  //   console.log(id)
-  //   if (id) setid(id);
-  // }, []);
+
   useEffect(() => {
     async function fetchdoctor() {
       if (id) {
