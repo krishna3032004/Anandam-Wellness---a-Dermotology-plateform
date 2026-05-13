@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
 import { useSession } from 'next-auth/react';
+import Image from 'next/image';
 import { PhoneOff } from 'lucide-react';
 import io from 'socket.io-client';
 import SimplePeer from 'simple-peer';
@@ -498,7 +499,7 @@ export default function Chat() {
                 }`}
             >
               {p.photo ? (
-                <img src={p.photo} alt="patient" className="w-10 h-10 rounded-full object-cover shadow" />
+                <Image src={p.photo} alt="patient" width={40} height={40} className="w-10 h-10 rounded-full object-cover shadow" unoptimized />
               ) : (
                 // <div className='w-10 h-10 rounded-full items-center justify-center shadow font-bold text-xl'> 
                 <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-600 font-bold text-xl'>
@@ -521,7 +522,7 @@ export default function Chat() {
           <div className="flex  sm:items-center justify-between gap-4 px-6 py-4 border-b bg-gray-50">
             <div className="flex items-center gap-4">
               {selectedPatient?.photo ? (
-                <img src={selectedPatient.photo} alt="patient" className="w-10 h-10 rounded-full object-cover shadow" />
+                <Image src={selectedPatient.photo} alt="patient" width={40} height={40} className="w-10 h-10 rounded-full object-cover shadow" unoptimized />
               ) : (
                 // <div className='w-10 h-10 rounded-full items-center justify-center shadow font-bold text-xl'> 
                 <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-600 font-bold text-xl'>
@@ -538,7 +539,7 @@ export default function Chat() {
                 onClick={() => setShowPrescriptionForm(true)}
                 className="flex items-center gap-2 bg-blue-600 hover:scale-105 text-white px-4 py-2 text-sm rounded-md shadow-md transition-all duration-200 hover:bg-blue-700 "
               >
-                <img src="/prescription.png" alt="" className='w-5' />
+                <Image src="/prescription.png" alt="" width={20} height={20} className='w-5' />
                 <span className="hidden sm:inline"> Prescription</span>
               </button>
               <button
@@ -631,6 +632,7 @@ export default function Chat() {
               <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50 p-4">
                 <div className="bg-white p-6 rounded-xl shadow-2xl flex flex-col items-center gap-4 max-w-md w-full">
                   {pendingFile.type.startsWith("image") ? (
+                    // eslint-disable-next-line @next/next/no-img-element
                     <img src={previewUrl} alt="preview" className="max-h-80 rounded-md" />
                   ) : (
                     <p className="text-blue-600 underline text-center break-words">📄 {pendingFile.name}</p>
@@ -662,10 +664,13 @@ export default function Chat() {
 
                   {!callAccepted ? (
                     <div className="flex flex-col items-center justify-center h-full text-center">
-                      <img
+                      <Image
                         src={selectedPatient?.photo || "/default-avatar.png"}
                         alt={selectedPatient?.username || "Patient"}
+                        width={112}
+                        height={112}
                         className="w-28 h-28 rounded-full border-4 border-white shadow-md object-cover mb-6"
+                        unoptimized
                       />
                       <h2 className="text-2xl font-semibold text-white mb-2">
                         {selectedPatient?.username || "Patient"}
@@ -726,15 +731,21 @@ export default function Chat() {
                           onClick={toggleMute}
                           className="relative bg-gray-700 hover:bg-gray-600 text-white rounded-full p-3 w-12 h-12 shadow-md flex items-center justify-center"
                         >
-                          <img
+                          <Image
                             src="/mute-icon.png"
                             alt="Mute"
+                            width={24}
+                            height={24}
                             className={`absolute transition-all duration-300 ${isMuted ? 'opacity-100 scale-[0.60]' : 'opacity-0 scale-0'}`}
+                            unoptimized
                           />
-                          <img
+                          <Image
                             src="/unmute-icon.png"
                             alt="Unmute"
+                            width={24}
+                            height={24}
                             className={`absolute transition-all duration-300 ${!isMuted ? 'opacity-100 scale-[0.60]' : 'opacity-0 scale-0'}`}
+                            unoptimized
                           />
                         </button>
 
@@ -743,15 +754,21 @@ export default function Chat() {
                           onClick={toggleVideo}
                           className="relative bg-gray-700 hover:bg-gray-600 text-white rounded-full p-3 w-12 h-12 shadow-md flex items-center justify-center"
                         >
-                          <img
+                          <Image
                             src="/videooff-icon.png"
                             alt="Video Off"
+                            width={24}
+                            height={24}
                             className={`absolute transition-all duration-300 ${isVideoOff ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
+                            unoptimized
                           />
-                          <img
+                          <Image
                             src="/videoon-icon.png"
                             alt="Video On"
+                            width={24}
+                            height={24}
                             className={`absolute transition-all duration-300 ${!isVideoOff ? 'opacity-100 scale-[0.60]' : 'opacity-0 scale-0'}`}
+                            unoptimized
                           />
                         </button>
 
@@ -785,7 +802,7 @@ export default function Chat() {
 
             {imagePreview && (
               <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
-                <img src={imagePreview} alt="Preview" className="max-w-[90%] max-h-[90%] rounded-lg shadow-lg" />
+                <Image src={imagePreview} alt="Preview" width={800} height={600} className="max-w-[90%] max-h-[90%] rounded-lg shadow-lg" unoptimized />
                 <button
                   onClick={() => setImagePreview(null)}
                   className="absolute top-5 right-5 text-white text-3xl font-bold hover:text-red-400"
@@ -815,8 +832,7 @@ export default function Chat() {
                 >
                   {msg.media ? (
                     msg.mediaType.includes("image") ? (
-                      <img src={msg.media} alt="sent media" className="w-40 h-40 object-cover rounded-lg cursor-pointer hover:scale-105 transition-transform duration-300"
-                        onClick={() => setImagePreview(msg.media)} />
+                      <Image src={msg.media} alt="sent media" width={160} height={160} className="w-40 h-40 object-cover rounded-lg cursor-pointer hover:scale-105 transition-transform duration-300" onClick={() => setImagePreview(msg.media)} unoptimized />
                     ) : (
                       <a href={msg.media} target="_blank" rel="noopener noreferrer" className="text-blue-700 underline">
                         📄 View PDF
@@ -848,10 +864,10 @@ export default function Chat() {
               id="fileInput"
             />
             <label htmlFor="fileInput" className="cursor-pointer w-12 bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm">
-              <img src="/link.png" alt="" />
+              <Image src="/link.png" alt="" width={16} height={16} unoptimized />
             </label>
             <button onClick={sendMessage} className="bg-blue-300 w-12 text-white px-4 py-2 rounded-md text-sm">
-              <img src="/send-message.png" alt="" />
+              <Image src="/send-message.png" alt="" width={16} height={16} unoptimized />
             </button>
           </div>
         </div>

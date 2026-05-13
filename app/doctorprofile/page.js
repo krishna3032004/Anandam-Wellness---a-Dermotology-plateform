@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { FaCamera } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -50,6 +51,8 @@ const DoctorDashboard = () => {
       },
     ],
   });
+
+  const displayDoctorPhoto = doctorData.preview || (typeof doctorData.photo === "string" ? doctorData.photo : null);
 
   const expertiseOptions = [
     "Acne Treatment", "Skin Allergy", "Eczema", "Psoriasis", "Hair Loss Treatment",
@@ -151,11 +154,14 @@ const DoctorDashboard = () => {
           {/* Profile Photo Upload */}
           <div className="flex flex-col items-center mb-6">
             <label className="relative cursor-pointer">
-              {doctorData.photo ? (
-                <img
-                  src={doctorData.preview || doctorData.photo}
+              {displayDoctorPhoto ? (
+                <Image
+                  src={displayDoctorPhoto}
                   alt="Doctor"
+                  width={96}
+                  height={96}
                   className="w-24 h-24 rounded-full object-cover border-4 border-blue-500"
+                  unoptimized
                 />
               ) : (
                 <div className="w-24 h-24 rounded-full flex items-center justify-center bg-gray-200 border-4 border-gray-300">

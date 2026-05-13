@@ -7,6 +7,7 @@ import Switch from "@/Components/Switch";
 import { CircularProgressbarWithChildren, buildStyles } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
 import LoadingOverlay from "@/Components/LoadingOverlay";
+import Image from 'next/image';
 import { setLazyProp } from "next/dist/server/api-utils";
 
 export default function AdminDoctorControl() {
@@ -111,10 +112,13 @@ export default function AdminDoctorControl() {
 
                         {/* Doctor details */}
                         <div className="flex flex-col sm:flex-row items-start gap-6">
-                            <img
+                            <Image
                                 src={selectedDoctor.photo || "/default-doctor.png"}
                                 alt="Doctor"
+                                width={96}
+                                height={96}
                                 className="w-24 h-24 object-cover rounded-lg border"
+                                unoptimized
                             />
                             <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-sm text-gray-700">
                                 <div><strong>Name:</strong> {selectedDoctor.username}</div>

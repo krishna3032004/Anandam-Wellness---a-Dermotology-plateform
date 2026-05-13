@@ -1,4 +1,5 @@
 "use client"
+import Image from 'next/image';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -172,7 +173,7 @@ export default function PaymentPage() {
                     (doctor ? (
                         <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full items-center text-center">
                             {doctor?.photo ? (
-                                <img src={doctor.photo} alt="Doctor" className="w-24 h-24  rounded-full object-cover shadow" />
+                                <Image src={doctor.photo} alt="Doctor" width={96} height={96} className="w-24 h-24  rounded-full object-cover shadow" unoptimized />
                             ) : (
                                 // <div className='w-10 h-10 rounded-full items-center justify-center shadow font-bold text-xl'> 
 

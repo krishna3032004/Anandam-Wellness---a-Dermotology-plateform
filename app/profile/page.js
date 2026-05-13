@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { updateProfilefull } from "@/actions/useraction";
 import { FaCamera } from "react-icons/fa";
@@ -187,6 +188,8 @@ export default function ProfilePage() {
       language: "English",
     },
   });
+
+  const profilePhotoSrc = formData.preview || (typeof formData.photo === "string" ? formData.photo : null);
   useEffect(() => {
     async function fetchData() {
 
@@ -256,11 +259,14 @@ export default function ProfilePage() {
         {/* Profile Photo */}
         <div className="flex flex-col items-center space-y-2">
           <label className="relative cursor-pointer">
-            {formData.photo ? (
-              <img
-                src={formData.preview || formData.photo}
+            {profilePhotoSrc ? (
+              <Image
+                src={profilePhotoSrc}
                 alt="Doctor"
+                width={96}
+                height={96}
                 className="w-24 h-24 rounded-full object-cover border-4 border-blue-500"
+                unoptimized
               />
             ) : (
               <div className="w-24 h-24 rounded-full flex items-center justify-center bg-gray-200 border-4 border-gray-300">

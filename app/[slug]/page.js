@@ -1,5 +1,6 @@
 "use client"
 import React from 'react'
+import Image from 'next/image';
 import { useParams } from "next/navigation";
 import Sidebar2 from '@/Components/sidebar2';
 import Sidebar from '@/Components/Sidebar';
@@ -27,7 +28,7 @@ const Page = () => {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-12 bg-white shadow-md rounded-md mt-6 mr-6 ml-4">
-        <img src="/empty.png" alt="No Data" className="w-20 h-20 mb-4 opacity-75" />
+        <Image src="/empty.png" alt="No Data" width={80} height={80} className="w-20 h-20 mb-4 opacity-75" />
         <p className="text-gray-600 text-sm">{pageContent[slug] || "Page not found"}</p>
       </div>
     </div>

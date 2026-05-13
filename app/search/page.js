@@ -1,5 +1,6 @@
 "use client"
 import { useState,useEffect,useRef } from "react";
+import Image from "next/image";
 // import { useRouter } from "next/router";
 import { FaSearch, FaMapMarkerAlt, FaLessThanEqual } from "react-icons/fa";
 import { FaCalendarAlt, FaPhoneAlt } from "react-icons/fa";
@@ -363,7 +364,7 @@ const [showFilters, setShowFilters] = useState(false);
       {/* Doctor's Image */}
       <div className="flex flex-row items-center w-full sm:w-[68%] gap-4 sm:gap-7  ">
         {doctor?.photo ? (
-                <img src={doctor.photo} alt={doctor.username} className="sm:w-20 w-16 sm:h-20 h-16 rounded-full object-cover shadow" />
+                <Image src={doctor.photo} alt={doctor.username} width={80} height={80} className="sm:w-20 w-16 sm:h-20 h-16 rounded-full object-cover shadow" unoptimized />
               ) : (
                 // <div className='w-10 h-10 rounded-full items-center justify-center shadow font-bold text-xl'> 
                 <div className='sm:w-20 w-16 sm:h-20 h-16 rounded-full overflow-hidden bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-600 font-bold text-xl'>
