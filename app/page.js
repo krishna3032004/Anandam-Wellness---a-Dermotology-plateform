@@ -252,7 +252,7 @@ const HomePage = () => {
                      transition hover:scale-110 animate-slide-in"
         >
           <FaComments className="text-lg" />
-          <span className="text-sm font-medium">Chat with Bot</span>
+          <span className="text-sm font-medium">Chat with Bot mere laal</span>
         </button>
 
         {/* Chat Window */}
