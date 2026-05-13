@@ -43,7 +43,6 @@ import { fetchDoctorbyid } from "@/actions/useraction";
 const Page = () => {
   // const { id } = param.slug2;
   // const unwrappedParams = use(params); // Unwrap params using use()
-  const searchParams = typeof window !== 'undefined' ? useSearchParams() : null;
 
   const [doctor, setDoctor] = useState(null);
   // const id = searchParams.get("id");
