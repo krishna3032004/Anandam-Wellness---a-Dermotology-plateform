@@ -14,7 +14,6 @@ import { fetchUser, fetchDoctor } from '@/actions/useraction'
 const handler = NextAuth({
     secret: process.env.NEXTAUTH_SECRET, // ✅ Required in production
     session: {
-        debug: true,
         strategy: 'jwt',
     },
     providers: [
@@ -109,7 +108,7 @@ const handler = NextAuth({
         //     }
         //     return true;
         // },
-        async session({ session }) {
+        async session({ session, token }) {
             await connectDB();
             let doctor = false;
             let dbUser = await User.findOne({ email: session.user.email });
