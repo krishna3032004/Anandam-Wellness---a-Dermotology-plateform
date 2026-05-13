@@ -28,7 +28,7 @@
 //   // ],
 // };
 
-import scrollbarHide from "tailwind-scrollbar-hide";
+// import scrollbarHide from "tailwind-scrollbar-hide";
 import scrollbar from "tailwind-scrollbar";
 
 /** @type {import('tailwindcss').Config} */
@@ -57,5 +57,5 @@ export default {
     },
   },
 
-  plugins: [scrollbarHide, scrollbar],
+  plugins: [scrollbar],
 };
