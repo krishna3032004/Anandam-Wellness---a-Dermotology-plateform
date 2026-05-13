@@ -69,24 +69,25 @@ import scrollbar from "tailwind-scrollbar";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
+  // content: [
+  //   './app/**/*.{js,ts,jsx,tsx}',
+  //   './pages/**/*.{js,ts,jsx,tsx}',
+  //   './components/**/*.{js,ts,jsx,tsx}',
+  // ],
+  content: ["./**/*.{js,ts,jsx,tsx,mdx}"],
 
-  safelist: [
-    "pl-4",
-    "pr-6",
-    "space-x-6",
-    "p-3",
-    "py-4",
-    "px-5",
-    "rounded-full",
-    "flex",
-    "items-center",
-    "justify-between",
-  ],
+  // safelist: [
+  //   "pl-4",
+  //   "pr-6",
+  //   "space-x-6",
+  //   "p-3",
+  //   "py-4",
+  //   "px-5",
+  //   "rounded-full",
+  //   "flex",
+  //   "items-center",
+  //   "justify-between",
+  // ],
 
   theme: {
     extend: {
