@@ -6,7 +6,7 @@ const ContactPage = () => {
   {/* Contact Card */}
   <div className="bg-white rounded-3xl shadow-2xl border border-blue-200 p-8 md:p-12 w-full max-w-4xl transition-all duration-300 hover:scale-[1.01] hover:shadow-blue-200 animate-fade-in">
     <h2 className="text-3xl md:text-4xl font-extrabold text-blue-700 text-center mb-3">📩 Get in Touch</h2>
-    <p className="text-gray-600 text-center mb-8 max-w-xl mx-auto">We'd love to hear from you! Feel free to reach out anytime.</p>
+    <p className="text-gray-600 text-center mb-8 max-w-xl mx-auto">We&apos;d love to hear from you! Feel free to reach out anytime.</p>
 
     {/* Contact Info */}
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10 text-center">

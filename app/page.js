@@ -488,7 +488,7 @@ const HomePage = () => {
                         {/* Name and Answer */}
                         <div className="ml-4 text-left">
                           <p className="text-gray-900 font-medium text-sm sm:text-base">{user.name}</p>
-                          <p className="text-gray-600 text-xs sm:text-sm italic">"{user.answer}"</p>
+                          <p className="text-gray-600 text-xs sm:text-sm italic">&quot;{user.answer}&quot;</p>
                         </div>
                       </div>
                     ))}

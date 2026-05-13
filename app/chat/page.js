@@ -2,9 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-// import { useSearchParams } from "next/navigation";
 import { SquareDashedMousePointer } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
 import io from 'socket.io-client';
 import SimplePeer from 'simple-peer';
 import { useRef } from 'react';
@@ -15,22 +13,19 @@ let socket;
 
 export default function Chat() {
     const router = useRouter();
-    // const searchParams = useSearchParams();
-    const searchParams = typeof window !== 'undefined' ? useSearchParams() : null;
-    // const doctorIdf = searchParams.get('doctorId');
 
     const { data: session, status } = useSession()
 
-    // const searchParams = useSearchParams();
     const [doctorId, setDoctorId] = useState(null);
 
     useEffect(() => {
-        if (!searchParams) return;
-
-        const id = searchParams.get("doctorId");
-        console.log("userId from query:", id);
-        if (id) setDoctorId(id);
-    }, [searchParams]);
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get("doctorId");
+            console.log("doctorId from query:", id);
+            if (id) setDoctorId(id);
+        }
+    }, []);
     // useEffect(() => {
     //     // if (userId) {
     //       console.log("Updated patientId from query:", userId);

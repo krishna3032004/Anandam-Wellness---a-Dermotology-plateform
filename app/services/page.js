@@ -60,10 +60,10 @@ const Services = () => {
       <div className="p-10 bg-[#FAFAFA] text-gray-800 rounded-lg shadow-lg text-center">
         <h3 className="text-2xl sm:text-3xl font-bold text-[#333] drop-shadow-md"> Why Choose Us? </h3>
         <p className="mt-4 text-base sm:text-lg text-gray-600">
-          Our platform offers "expert dermatology care" with a seamless and premium experience.
+          Our platform offers &quot;expert dermatology care&quot; with a seamless and premium experience.
         </p>
         <p className="mt-2 text-sm sm:text-base text-gray-500">
-          Get access to "top-rated specialists, priority consultations, and advanced treatments" all in one place.
+          Get access to &quot;top-rated specialists, priority consultations, and advanced treatments&quot; all in one place.
         </p>
       </div>
     </div>

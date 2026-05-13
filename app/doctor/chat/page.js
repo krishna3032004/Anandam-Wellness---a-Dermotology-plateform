@@ -10,7 +10,7 @@ import { fetchDoctorbyid } from '@/actions/useraction';
 import LoadingOverlay from '@/Components/LoadingOverlay';
 let socket;
 
-export default function chat() {
+export default function Chat() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const router = useRouter();
   const [patientId, setPatientId] = useState(null);
