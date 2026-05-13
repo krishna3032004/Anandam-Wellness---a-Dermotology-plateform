@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function AboutPage() {
     return (
         <div className="min-h-screen bg-gradient-to-br  from-white to-gray-100 text-gray-800 px-4 sm:px-8 pt-20 py-12">
@@ -38,12 +40,12 @@ export default function AboutPage() {
                 <h2 className="text-xl sm:text-2xl font-bold text-center text-blue-700 mb-6">Meet the Team</h2>
                 <div className="flex flex-wrap justify-center gap-8">
                     <div className="text-center">
-                        <img src="/team1.jpg" alt="Team Member" className="w-24 h-24 rounded-full mx-auto mb-2 object-cover" />
+                        <Image src="/team1.jpg" alt="Team Member" width={96} height={96} className="w-24 h-24 rounded-full mx-auto mb-2 object-cover" />
                         <p className="font-semibold">Dr. Priya Sharma</p>
                         <p className="text-sm text-gray-500">Lead Dermatologist</p>
                     </div>
                     <div className="text-center">
-                        <img src="/team2.jpg" alt="Team Member" className="w-24 h-24 rounded-full mx-auto mb-2 object-cover" />
+                        <Image src="/team2.jpg" alt="Team Member" width={96} height={96} className="w-24 h-24 rounded-full mx-auto mb-2 object-cover" />
                         <p className="font-semibold">Krishna Gupta</p>
                         <p className="text-sm text-gray-500">Full-Stack Developer</p>
                     </div>

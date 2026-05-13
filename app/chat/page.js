@@ -7,6 +7,7 @@ import io from 'socket.io-client';
 import SimplePeer from 'simple-peer';
 import { useRef } from 'react';
 import LoadingOverlay from '@/Components/LoadingOverlay';
+import Image from 'next/image';
 
 
 let socket;
@@ -554,7 +555,7 @@ export default function Chat() {
                                 }`}
                         >
                             {doc.photo ?
-                                <img src={doc.photo} alt="doctor" className="w-10 h-10 rounded-full object-cover shadow" />
+                                <Image src={doc.photo} alt="doctor" width={40} height={40} className="w-10 h-10 rounded-full object-cover shadow" />
                                 :
                                 <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-600 font-bold text-xl'>
                                     <div>{doc.username?.charAt(0)?.toUpperCase()}</div>
@@ -574,7 +575,7 @@ export default function Chat() {
                     <div className="flex items-center justify-between px-6 py-4 border-b relative">
                         <div className="flex items-center gap-3">
                             {selectedDoctor?.photo ? (
-                                <img src={selectedDoctor.photo} alt="doctor" className="w-10 h-10 rounded-full object-cover shadow" />
+                                <Image src={selectedDoctor.photo} alt="doctor" width={40} height={40} className="w-10 h-10 rounded-full object-cover shadow" />
                             ) : (
                                 // <div className='w-10 h-10 rounded-full items-center justify-center shadow font-bold text-xl'> 
                                 <div className='w-10 h-10 rounded-full overflow-hidden bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-600 font-bold text-xl'>
@@ -606,7 +607,7 @@ export default function Chat() {
                             <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex justify-center items-center z-50 p-4">
                                 <div className="bg-white p-6 rounded-xl shadow-2xl flex flex-col items-center gap-4 max-w-md w-full">
                                     {pendingFile.type.startsWith("image") ? (
-                                        <img src={previewUrl} alt="preview" className="max-h-80 rounded-md" />
+                                        <Image src={previewUrl} alt="preview" width={320} height={320} className="max-h-80 rounded-md" />
                                     ) : (
                                         <p className="text-blue-600 underline text-center break-words">📄 {pendingFile.name}</p>
                                     )}
@@ -658,14 +659,18 @@ export default function Chat() {
                                                 onClick={toggleMute}
                                                 className="relative bg-gray-700 hover:bg-gray-600 text-white rounded-full p-3 w-12 h-12 shadow-md flex items-center justify-center"
                                             >
-                                                <img
+                                                <Image
                                                     src="/mute-icon.png"
                                                     alt="Mute"
+                                                    width={24}
+                                                    height={24}
                                                     className={`absolute transition-all duration-300 ${isMuted ? 'opacity-100 scale-[0.60]' : 'opacity-0 scale-0'}`}
                                                 />
-                                                <img
+                                                <Image
                                                     src="/unmute-icon.png"
                                                     alt="Unmute"
+                                                    width={24}
+                                                    height={24}
                                                     className={`absolute transition-all duration-300 ${!isMuted ? 'opacity-100 scale-[0.60]' : 'opacity-0 scale-0'}`}
                                                 />
                                             </button>
@@ -675,14 +680,18 @@ export default function Chat() {
                                                 onClick={toggleVideo}
                                                 className="relative bg-gray-700 hover:bg-gray-600 text-white rounded-full p-3 w-12 h-12 shadow-md flex items-center justify-center"
                                             >
-                                                <img
+                                                <Image
                                                     src="/videooff-icon.png"
                                                     alt="Video Off"
+                                                    width={24}
+                                                    height={24}
                                                     className={`absolute transition-all duration-300 ${isVideoOff ? 'opacity-100 scale-100' : 'opacity-0 scale-0'}`}
                                                 />
-                                                <img
+                                                <Image
                                                     src="/videoon-icon.png"
                                                     alt="Video On"
+                                                    width={24}
+                                                    height={24}
                                                     className={`absolute transition-all duration-300 ${!isVideoOff ? 'opacity-100 scale-[0.60]' : 'opacity-0 scale-0'}`}
                                                 />
                                             </button>
@@ -743,7 +752,7 @@ export default function Chat() {
                         )}
                         {imagePreview && (
                             <div className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
-                                <img src={imagePreview} alt="Preview" className="max-w-[90%] max-h-[90%] rounded-lg shadow-lg" />
+                                <Image src={imagePreview} alt="Preview" width={800} height={600} className="max-w-[90%] max-h-[90%] rounded-lg shadow-lg" />
                                 <button
                                     onClick={() => setImagePreview(null)}
                                     className="absolute top-5 right-5 text-white text-3xl font-bold hover:text-red-400"
@@ -906,7 +915,7 @@ export default function Chat() {
                                     {/* {msg.media && (<div> sahi mai kya </div> )} */}
                                     {msg.media ? (
                                         msg.mediaType.includes("image") ? (
-                                            <img src={msg.media} alt="sent media" className="w-40 h-40 object-cover rounded-lg cursor-pointer hover:scale-105 transition-transform duration-300"
+                                            <Image src={msg.media} alt="sent media" width={160} height={160} className="w-40 h-40 object-cover rounded-lg cursor-pointer hover:scale-105 transition-transform duration-300"
                                                 onClick={() => setImagePreview(msg.media)} />
                                         ) : (
                                             <a href={msg.media} target="_blank" rel="noopener noreferrer" className="text-blue-700 underline">
@@ -940,10 +949,10 @@ export default function Chat() {
                             id="fileInput"
                         />
                         <label htmlFor="fileInput" className="cursor-pointer w-12 bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded text-sm">
-                            <img src="/link.png" alt="" />
+                            <Image src="/link.png" alt="" width={16} height={16} />
                         </label>
                         <button onClick={sendMessage} className="bg-blue-300 w-12 text-white px-4 py-2 rounded-md text-sm">
-                            <img src="/send-message.png" alt="" />
+                            <Image src="/send-message.png" alt="" width={16} height={16} />
                         </button>
                     </div>
                 </div>

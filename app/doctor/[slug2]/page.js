@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import Sidebar2 from '@/Components/sidebar2';
 import Sidebar from '@/Components/Sidebar';
 import PatientList from '@/Components/PatientList';
+import Image from 'next/image';
 
 const Page = () => {
     const { slug2 } = useParams();

@@ -275,10 +275,10 @@ const HomePage = () => {
 
         {/* Background Image Row */}
         <div className="absolute inset-0 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 px-4 sm:px-0">
-          <img src="https://st.depositphotos.com/1719616/53474/i/450/depositphotos_534748396-stock-photo-face-teenage-girl-pimples-acne.jpg" alt="Skin 1" className="w-[90%] sm:w-[20%] h-[200px] sm:h-[75%] object-cover rounded-xl shadow-lg" />
-          <img src="https://www.themodelbuilders.co.uk/wp-content/uploads/2022/05/shutterstock_1093078484.jpg" alt="Skin 2" className="w-[90%] sm:w-[20%] h-[220px] sm:h-[85%] object-cover rounded-xl shadow-lg" />
-          <img src="https://plus.unsplash.com/premium_photo-1706044172154-b16cc0126275?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmFjZSUyMHdpdGglMjBwaW1wbGVzfGVufDB8fDB8fHww" alt="Skin 3" className="w-[90%] sm:w-[20%] h-[210px] sm:h-[80%] object-cover rounded-xl shadow-lg" />
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLAhwzAWsDZw0qNTbA1P99xFhR25XHdfKcb5EG3hCKoI3SBcnDw4bnDAGjpWgmFafQwYs&usqp=CAU" alt="Skin 4" className="w-[90%] sm:w-[20%] h-[200px] sm:h-[75%] object-cover rounded-xl shadow-lg" />
+          <Image src="https://st.depositphotos.com/1719616/53474/i/450/depositphotos_534748396-stock-photo-face-teenage-girl-pimples-acne.jpg" alt="Skin 1" width={300} height={200} className="w-[90%] sm:w-[20%] h-[200px] sm:h-[75%] object-cover rounded-xl shadow-lg" />
+          <Image src="https://www.themodelbuilders.co.uk/wp-content/uploads/2022/05/shutterstock_1093078484.jpg" alt="Skin 2" width={300} height={220} className="w-[90%] sm:w-[20%] h-[220px] sm:h-[85%] object-cover rounded-xl shadow-lg" />
+          <Image src="https://plus.unsplash.com/premium_photo-1706044172154-b16cc0126275?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmFjZSUyMHdpdGglMjBwaW1wbGVzfGVufDB8fDB8fHww" alt="Skin 3" width={300} height={210} className="w-[90%] sm:w-[20%] h-[210px] sm:h-[80%] object-cover rounded-xl shadow-lg" />
+          <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLAhwzAWsDZw0qNTbA1P99xFhR25XHdfKcb5EG3hCKoI3SBcnDw4bnDAGjpWgmFafQwYs&usqp=CAU" alt="Skin 4" width={300} height={200} className="w-[90%] sm:w-[20%] h-[200px] sm:h-[75%] object-cover rounded-xl shadow-lg" />
         </div>
 
         {/* Fading Gradient Overlay */}
@@ -343,9 +343,11 @@ const HomePage = () => {
                   className="w-[260px] md:w-[280px] lg:w-[220px] xl:w-[260px] cursor-pointer   h-[350px] bg-white shadow-md rounded-lg overflow-hidden flex-shrink-0 hover:shadow-2xl hover:scale-105 transition-all duration-300 snap-center group"
                 >
                   <div className="relative w-full h-48 overflow-hidden">
-                    <img
+                    <Image
                       src={service.image}
                       alt={service.title}
+                      width={260}
+                      height={192}
                       className="w-full h-full object-cover  transform group-hover:scale-110 transition-transform duration-500"
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -478,9 +480,11 @@ const HomePage = () => {
                       >
                         {/* Circular Profile Image */}
                         <div className="w-10 h-10 p-1 sm:w-14 sm:h-14 rounded-full border-2 border-indigo-500 bg-white overflow-hidden flex-shrink-0">
-                          <img
+                          <Image
                             src={user.image}
                             alt={user.name}
+                            width={56}
+                            height={56}
                             className="w-full h-full  object-cover rounded-full"
                           />
                         </div>

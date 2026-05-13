@@ -8,6 +8,7 @@ import { initiatepayment } from "@/actions/useraction";
 import Script from "next/script";
 import LoadingOverlay from "./LoadingOverlay";
 import Razorpay from "razorpay";
+import Image from "next/image";
 
 const DoctorProfile = ({ doctor }) => {
   const { data: session, status } = useSession()
@@ -86,7 +87,7 @@ const DoctorProfile = ({ doctor }) => {
           {/* Doctor Header */}
           <div className="flex items-center">
             {doctor?.photo ? (
-              <img src={doctor.photo} alt={doctor.username} className="w-20 sm:w-24 h-20 sm:h-24 rounded-full object-cover shadow" />
+              <Image src={doctor.photo} alt={doctor.username} width={96} height={96} className="w-20 sm:w-24 h-20 sm:h-24 rounded-full object-cover shadow" />
             ) : (
               // <div className='w-10 h-10 rounded-full items-center justify-center shadow font-bold text-xl'> 
               <div className='w-20 sm:w-24 h-20 sm:h-24 rounded-full overflow-hidden bg-gray-100 border border-gray-300 flex items-center justify-center text-gray-600 font-bold text-xl'>
