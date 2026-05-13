@@ -4,7 +4,6 @@ import { useEffect, useState, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { PhoneOff } from 'lucide-react';
 import io from 'socket.io-client';
-import { useSearchParams } from 'next/navigation';
 import SimplePeer from 'simple-peer';
 import html2canvas from 'html2canvas';
 import { fetchDoctorbyid } from '@/actions/useraction';
@@ -17,13 +16,12 @@ export default function chat() {
   const [patientId, setPatientId] = useState(null);
   const [change, setchange] = useState(false)
 
-  const searchParams = useSearchParams();
-  // const userId = searchParams.get('userId');
   useEffect(() => {
-    const id = searchParams.get("userId");
+    if (typeof window === 'undefined') return;
+    const id = new URLSearchParams(window.location.search).get("userId");
     console.log("userId from query:", id);
     if (id) setPatientId(id);
-  }, [searchParams]);
+  }, []);
   // useEffect(() => {
   //   // if (patientId) {
   //     console.log("Updated patientId from query:", userId);
