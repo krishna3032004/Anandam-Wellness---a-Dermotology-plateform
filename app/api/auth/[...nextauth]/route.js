@@ -108,7 +108,10 @@ const handler = NextAuth({
         //     }
         //     return true;
         // },
-        async session({ session, token }) {
+        async session({ session }) {
+            if (!session?.user?.email) {
+                return session;
+            }
             await connectDB();
             let doctor = false;
             let dbUser = await User.findOne({ email: session.user.email });
@@ -119,7 +122,7 @@ const handler = NextAuth({
             if (dbUser) {
                 session.user.name = dbUser.username;
                 session.user.doctor = doctor;
-                session.user.id = dbUser._id
+                session.user.id = dbUser._id?.toString?.() ?? dbUser._id;
             }
             return session;
         }
