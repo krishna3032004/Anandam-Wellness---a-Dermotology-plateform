@@ -252,7 +252,7 @@ const HomePage = () => {
                      transition hover:scale-110 animate-slide-in"
         >
           <FaComments className="text-lg" />
-          <span className="text-sm font-medium">Chat with Bot mere laal</span>
+          <span className="text-sm font-medium">Chat with Bot</span>
         </button>
 
         {/* Chat Window */}
@@ -276,9 +276,9 @@ const HomePage = () => {
         {/* Background Image Row */}
         <div className="absolute inset-0 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 px-4 sm:px-0">
           <Image src="https://st.depositphotos.com/1719616/53474/i/450/depositphotos_534748396-stock-photo-face-teenage-girl-pimples-acne.jpg" alt="Skin 1" width={300} height={200} loading="eager" className="w-[90%] sm:w-[20%] h-[200px] sm:h-[75%] object-cover rounded-xl shadow-lg" />
-          <Image src="https://www.themodelbuilders.co.uk/wp-content/uploads/2022/05/shutterstock_1093078484.jpg" alt="Skin 2" width={300} height={220} loading="eager" className="w-[90%] sm:w-[20%] h-[220px] sm:h-[85%] object-cover rounded-xl shadow-lg" />
-          <Image src="https://plus.unsplash.com/premium_photo-1706044172154-b16cc0126275?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmFjZSUyMHdpdGglMjBwaW1wbGVzfGVufDB8fDB8fHww" alt="Skin 3" width={300} height={210} loading="eager" className="w-[90%] sm:w-[20%] h-[210px] sm:h-[80%] object-cover rounded-xl shadow-lg" />
-          <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLAhwzAWsDZw0qNTbA1P99xFhR25XHdfKcb5EG3hCKoI3SBcnDw4bnDAGjpWgmFafQwYs&usqp=CAU" alt="Skin 4" width={300} height={200} loading="eager" className="w-[90%] sm:w-[20%] h-[200px] sm:h-[75%] object-cover rounded-xl shadow-lg" />
+          <Image src="/image2.png" alt="Skin 2" width={300} height={220}  unoptimized loading="eager" className="w-[90%] sm:w-[20%] h-[220px] sm:h-[85%] object-cover rounded-xl shadow-lg" />
+          <Image src="/image3.png" alt="Skin 3" width={300} height={210}  unoptimized loading="eager" className="w-[90%] sm:w-[20%] h-[210px] sm:h-[80%] object-cover rounded-xl shadow-lg" />
+          <Image src="/image4.png" alt="Skin 4" width={300} height={200}  unoptimized loading="eager" className="w-[90%] sm:w-[20%] h-[200px] sm:h-[75%] object-cover rounded-xl shadow-lg" />
         </div>
 
         {/* Fading Gradient Overlay */}

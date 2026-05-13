@@ -74,7 +74,13 @@ export default {
   //   './pages/**/*.{js,ts,jsx,tsx}',
   //   './components/**/*.{js,ts,jsx,tsx}',
   // ],
-  content: ["./**/*.{js,ts,jsx,tsx,mdx}"],
+  // content: ["./**/*.{js,ts,jsx,tsx,mdx}"],
+  content: [
+  "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  "./Components/**/*.{js,ts,jsx,tsx,mdx}",
+  "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+  "./src/**/*.{js,ts,jsx,tsx,mdx}",
+],
 
   // safelist: [
   //   "pl-4",
