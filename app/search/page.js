@@ -220,7 +220,7 @@ const [showFilters, setShowFilters] = useState(false);
         };
       
         filterDoctors();
-      }, [query, selectedLocation, selectedExperience, selectedStories, selectedGender, sortOption, doctors]);
+      }, [query, search, selectedLocation, selectedExperience, selectedStories, selectedGender, sortOption, doctors]);
       
   
     const handleSearch = (searchTerm) => {

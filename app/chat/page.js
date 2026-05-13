@@ -280,7 +280,7 @@ export default function Chat() {
             }
         };
         if (session?.user?.id) fetchDoctors();
-    }, [session?.user?.id]);
+    }, [session?.user?.id, doctorId]);
 
 
     useEffect(() => {

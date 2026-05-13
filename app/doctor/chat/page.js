@@ -17,11 +17,9 @@ export default function chat() {
   const [patientId, setPatientId] = useState(null);
   const [change, setchange] = useState(false)
 
-  const searchParams = typeof window !== 'undefined' ? useSearchParams() : null;
+  const searchParams = useSearchParams();
   // const userId = searchParams.get('userId');
   useEffect(() => {
-    if (!searchParams) return;
-
     const id = searchParams.get("userId");
     console.log("userId from query:", id);
     if (id) setPatientId(id);
@@ -58,7 +56,11 @@ export default function chat() {
   const [diagnosis, setDiagnosis] = useState("");
   const [medicines, setMedicines] = useState([]);
   const [newMed, setNewMed] = useState({ name: "", instruction: "" });
-  const [date, setDate] = useState(() => new Date().toLocaleDateString("en-IN"));
+  const [date, setDate] = useState("");
+
+  useEffect(() => {
+    setDate(new Date().toLocaleDateString("en-IN"));
+  }, []);
   const [doctorDetails, setDoctorDetails] = useState({});
   const regNo = "MP/23/2241";
 
